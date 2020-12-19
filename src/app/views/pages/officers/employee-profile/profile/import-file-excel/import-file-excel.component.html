@@ -1,0 +1,37 @@
+<kt-portlet>
+
+  <kt-portlet-header [title]="'Thông báo'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button (click)="closeModal()" aria-label="Close" class="btn-close-h">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <p style="margin: 30px 0px;">Nhập dữ liệu từ Excel:
+          <span class="excel-template">Tải file mẫu</span>
+        </p>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" placeholder="Chọn file..." class="filename w-100" kendoTextBox>
+        <input type="file" id="file-upload" accept=".xlsx, .xls" hidden />
+      </div>
+      <div class="col-sm-2">
+        <button [iconClass]="'fas fa-search'" class="choose" kendoButton>Chọn file
+        </button>
+      </div>
+
+    </div>
+  </kt-portlet-body>
+
+  <kt-portlet-footer>
+    <div class="justify-content-around col-12 text-center">
+      <button kendoButton (click)="close()" class="button-input-no btn-custom mr-10">Đóng </button>
+      <button kendoButton (click)="close()" primary="true" class="button-input-yes btn-custom"> Nhập dữ liệu </button>
+    </div>
+  </kt-portlet-footer>
+
+</kt-portlet>

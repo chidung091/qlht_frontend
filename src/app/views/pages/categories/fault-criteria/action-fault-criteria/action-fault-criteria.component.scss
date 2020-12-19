@@ -1,0 +1,39 @@
+.grid-wrapper {
+  position: relative;
+  z-index: 1000;
+}
+
+.modal-header{
+  position: relative;
+  .bt-close{
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    background: none;
+    border: none;
+    span{
+      font-size: 23px;
+    }
+  }
+}
+.k-form-hint{
+  margin-top: 5px !important;
+  color: white !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -o-user-select: none !important;
+  user-select: none !important;
+}
+
+.k-form-error, .k-text-error, .k-form-field-error .k-label{
+  margin-top: 5px !important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

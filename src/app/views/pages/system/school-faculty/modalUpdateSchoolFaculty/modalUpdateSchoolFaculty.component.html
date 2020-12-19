@@ -1,0 +1,53 @@
+<!--<script src="modalUpdateDepartment.component.ts"></script>-->
+<div class="card-body">
+  <form [formGroup]="form">
+    <div class="">
+      <label class="col-form-label" for="tenbomon">Tên tổ bộ môn <span style="color: red">*</span></label>
+      <kendo-formfield>
+        <input name="tenbomon" [disabled]="true" [formControlName]="'tenBoMon'" id="tenbomon" class="form-control"
+               (ngModelChange)="changeDeparment()"
+               placeholder="Nhập tên tổ bộ môn" (blur)="formatvalue()" #faculityName  kendoTextBox>
+
+        <kendo-formerror *ngIf="form.controls.tenBoMon.errors?.required">
+          {{VI_LANG.FIELD.SCHOOL_FACULTY_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+        </kendo-formerror>
+        <kendo-formerror *ngIf="form.controls.tenBoMon.errors?.maxlength">
+          {{VI_LANG.FIELD.SCHOOL_FACULTY_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+        </kendo-formerror>
+        <kendo-formerror *ngIf="form.controls.tenBoMon.hasError('pattern')">
+          {{VI_LANG.FIELD.SCHOOL_FACULTY_NAME}} {{VI_LANG.COMMON_ERROR.PATTERN_INVALID_CHAR}}
+        </kendo-formerror>
+      </kendo-formfield>
+    </div>
+    <div class="">
+      <label class="col-form-label" for="canboquanly">Cán bộ quản lý :</label>
+      <div class="inputWithIcon" id="canboquanly">
+<!--        <i style="font-size: x-large;z-index: 1" class="fas fa-search"></i>-->
+        <kendo-formfield class="">
+          <input name="hoTenCanBoQuanLy" [disabled]="true" [formControlName]="'hoTenCanBoQuanLy'" id="hoTenCanBoQuanLy" class="form-control"
+                 (ngModelChange)="changeDeparment()"
+                 placeholder="Nhập tên cán bộ quản lý" (blur)="formatvalue()" #hoTenCanBoQuanLy  kendoTextBox>
+          <kendo-formerror *ngIf="form.controls.hoTenCanBoQuanLy.errors?.maxlength">
+            {{VI_LANG.FIELD.MANAGER_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_100}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+    <div class="">
+      <label class="col-form-label">Ghi chú :</label>
+      <div class="">
+        <kendo-formfield>
+          <input type="text" class="form-control" id="note"
+                 [formControlName]="'ghiChu'"
+                 (ngModelChange)="changeDeparment()"
+                 (blur)="formatNote()"
+                 placeholder="Nhập ghi chú" kendoTextBox>
+          <kendo-formerror *ngIf="form.controls.ghiChu.errors?.maxlength">
+            {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_300}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,36 @@
+.panel-title {
+  height: initial;
+  padding: 8px;
+  background: #51aab2 !important;
+  text-align: left;
+  position: relative;
+
+  .title {
+    text-decoration: none;
+    color: #fff;
+    height: 20px;
+    vertical-align: middle;
+    //padding: 6px 4px 1px 8px;
+    font-weight: bold;
+    padding: 0 8px;
+  }
+}
+
+.btn-custom {
+  background-color: #017284 !important;
+  border-radius: 100px;
+  color: white;
+  height: 32px;
+  font-size: 13px;
+  padding: 0 20px;
+}
+.label-custom{
+  margin: 7px 0;
+}
+
+.kendo-form{
+  margin-bottom: 15px;
+}
+.list-btn{
+  margin-top: 30px;
+}

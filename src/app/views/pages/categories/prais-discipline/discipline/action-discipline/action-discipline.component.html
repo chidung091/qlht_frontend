@@ -1,0 +1,65 @@
+
+<div class="modal-body">
+  <form [formGroup]="form">
+
+    <div class="pt-5 row">
+      <div class="col-sm-4">
+        <label for="content3">{{VI_LANG.FIELD.CONTENT}}<span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-8">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" id="content3" class="form-control" placeholder="Nhập nội dung"
+                 [formControlName]="'content'" #noiDung
+                 (change)="actionDis()"
+                 smasTrim>
+          <kendo-formhint>{{VI_LANG.FIELD.CONTENT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.content.errors?.required">
+            {{VI_LANG.FIELD.CONTENT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.content.errors?.maxlength">
+              {{VI_LANG.FIELD.CONTENT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+
+    <div class="pt-5 row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-8">
+        <input type="checkbox" id="conduct5" class="p-2 border bd-radius-5"
+               placeholder="Điểm trừ hạnh kiểm" [formControlName]="'biTruDiemHanhKiem'" (click)="check()"
+               (change)="actionDis()" >
+        <label for="conduct5" class="pl-10">{{VI_LANG.FIELD.DESTINATION_SCORE}}</label>
+      </div>
+    </div>
+
+    <div class="pt-5 row">
+      <div class="col-sm-4">
+        <label for="sub7">{{VI_LANG.FIELD.MINUS_POINT}}</label>
+      </div>
+      <div class="col-sm-8">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="number" id="sub7" class="form-control" placeholder="Nhập điểm trừ" #diemTru
+                 [disabled]="model.terms === false" [formControlName]="'minusMarkConduct'"
+                 (change)="actionDis()">
+          <kendo-formhint>Validate điểm trừ hạnh kiểm</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.minusMarkConduct.errors?.required">
+            {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.minusMarkConduct.hasError('pattern')">
+              {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_DOT_1}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.minusMarkConduct.errors?.max">
+              {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_4}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+  </form>
+</div>

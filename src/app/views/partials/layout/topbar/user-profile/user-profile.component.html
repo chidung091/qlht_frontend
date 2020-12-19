@@ -1,0 +1,138 @@
+<!--begin::User-->
+<div ngbDropdown placement="bottom-right" *ngIf="user$ | async as _user" class="dropdown dropdown-fluid">
+    <!--begin::Toggle-->
+    <div ngbDropdownToggle class="topbar-item">
+        <!-- <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2">
+      <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Xin chào,</span>
+      <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{_user.fullName}}</span>
+      <span class="symbol symbol-35 symbol-light-success">
+        <span class="symbol-label font-size-h5 font-weight-bold">{{_user?.fullName|firstLetter}}</span>
+        <img src="../../../../../../assets/media/avt-defaut.png" alt="">
+			</span>
+    </div> -->
+        <div class="d-flex align-items-center btn">
+            <div>
+                {{_user.fullName}}
+            </div>
+            <div style="background-color: #347B85; width: 30px; height: 30px; border-radius: 50%;display: flex;justify-content: center;
+      align-items: center; margin-left: 10px;">
+                <img src="../../../../../../assets/media/avt-defaut.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!--end::Toggle-->
+
+    <!--begin::Dropdown-->
+    <div ngbDropdownMenu class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg p-0">
+        <ng-container *ngIf="userDropdownStyle === 'light'">
+            <!--begin: Head -->
+            <div class="d-flex align-items-center p-8 rounded-top">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
+                    <!-- Doc: Use the placeholder instead of the image above
+              <span class="symbol-label font-size-h5 text-primary">S</span>
+             -->
+                    <span class="symbol-label font-size-h5 text-primary">{{_user?.fullName|firstLetter}}</span>
+                    <!--<img alt="Pic" [attr.src]="_user.pic"/>-->
+                    <!--style="background-image: url(./assets/media/misc/bg-1.jpg)"-->
+                </div>
+                <!--end::Symbol-->
+
+                <!--begin::Text-->
+                <div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
+                    {{_user?.fullName}}
+                </div>
+                <!-- <span class="label label-light-success label-lg font-weight-bold label-inline">3 messages</span> -->
+                <!--end::Text-->
+            </div>
+            <!--end: Head -->
+        </ng-container>
+
+        <ng-container *ngIf="userDropdownStyle === 'dark'">
+            <!--begin::Header-->
+            <div class="d-flex align-items-center justify-content-between flex-wrap p-8 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(./assets/media/misc/bg-1.jpg)">
+                <div class="d-flex align-items-center mr-2">
+                    <!--begin::Symbol-->
+                    <div class="symbol bg-white-o-15 mr-3">
+                        <span class="symbol-label text-success font-weight-bold font-size-h4">{{_user?.fullName|firstLetter}}</span>
+                        <!--<img alt="Pic" src="<?php echo Page::getMediaPath();?>users/300_25.jpg"/>-->
+                    </div>
+                    <!--end::Symbol-->
+
+                    <!--begin::Text-->
+                    <div class="text-white m-0 flex-grow-1 mr-3 font-size-h5">
+                        {{_user?.fullName}}
+                    </div>
+                    <!--end::Text-->
+                </div>
+                <span class="label label-success label-lg font-weight-bold label-inline">3 messages</span>
+            </div>
+            <!--end::Header-->
+        </ng-container>
+        <!--begin::Nav-->
+        <div class="navi navi-spacer-x-0 pt-5">
+            <!--begin::Item-->
+            <!-- <a ngbDropdownItem routerLink="profile" href="javascript:;" class="navi-item px-8">
+				<div class="navi-link">
+					<div class="navi-icon mr-2">
+						<i class="flaticon2-calendar-3 text-success"></i>
+					</div>
+          <div class="navi-text">
+            <div class="font-weight-bold">
+              Thông tin cá nhân
+            </div>
+            <div class="text-muted">
+              Cập nhật thông tin cá nhân
+              <span class="label label-light-danger label-inline font-weight-bold">update</span>
+            </div>
+          </div>
+				</div>
+			</a> -->
+            <!--end::Item-->
+
+            <!-- begin::Item-->
+            <a ngbDropdownItem routerLink="profile" href="javascript:;" class="navi-item px-8" (click)="changePassword()">
+                <div class="navi-link">
+                    <div class="navi-icon mr-2">
+                        <i class="flaticon2-rocket-1 text-danger"></i>
+                    </div>
+                    <div class="navi-text">
+                        <div class="font-weight-bold">
+                            Đổi mật khẩu
+                        </div>
+
+                    </div>
+                </div>
+            </a>
+            <!--end::Item-->
+
+
+            <!-- <a ngbDropdownItem routerLink="profile" href="javascript:;" class="navi-item px-8">
+        <div class="navi-link">
+          <div class="navi-icon mr-2">
+            <i class="flaticon2-hourglass text-primary"></i>
+          </div>
+          <div class="navi-text">
+            <div class="font-weight-bold">
+              My Tasks
+            </div>
+            <div class="text-muted">
+              latest tasks and projects
+            </div>
+          </div>
+        </div>
+			</a> -->
+            <!--end::Item-->
+
+            <!--begin::Footer-->
+            <div class="navi-separator mt-3"></div>
+            <div class="navi-footer  px-8 py-5">
+                <a href="javascript:;" (click)="logout()" class="btn btn-light-primary font-weight-bold">Đăng xuất</a>
+            </div>
+            <!--end::Footer-->
+        </div>
+        <!--end::Nav-->
+    </div>
+    <!--end::Dropdown-->
+</div>
+<!--end::User-->

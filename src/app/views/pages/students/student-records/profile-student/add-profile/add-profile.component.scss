@@ -1,0 +1,70 @@
+.title-add-pf{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ededed;
+    padding: 10px 25px;
+    span{
+        font-size:16px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+}
+
+.pf-control{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 15px;
+    label{
+        margin-right: 10px;
+        margin-bottom: 0 !important;
+        text-align: right;
+        display: block;
+        width: 30%;
+    }
+    .kendo-form{
+        width: 70%;
+    }
+    .pf-required{
+        color: red;
+    }
+}
+.pf-checkbox{
+    text-align: right;
+    margin-bottom: 20px;
+}
+.mt-45{
+    margin-top: 45px;
+}
+.mb-mt-20{
+    margin-top: 25px;
+}
+
+.img-add-profile img{
+    width: 100%;
+    object-fit: cover;
+}
+
+.btn-custom-h-reset{
+    border: 1px solid #b5b5c3;
+}
+.mt--10{
+    margin-top: -10px;
+}
+
+@media(max-width: 767px){
+    .mb-mt-20{
+        margin-top: 0;
+    }
+    .title-add-pf{
+        display: block !important;
+        text-align: center;
+        .title-add-pf{
+            margin-top: 10px;
+        }
+    }
+    .mbi-15{
+        margin-bottom: 15px;
+    }
+}

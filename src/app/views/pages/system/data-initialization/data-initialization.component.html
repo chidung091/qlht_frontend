@@ -1,0 +1,116 @@
+<kendo-tabstrip [tabAlignment]="alignment" (tabSelect)="onTabSelect($event)" class="custom-tabstrip-h">
+  <kendo-tabstrip-tab [selected]="selectedTab == 0">
+    <ng-template kendoTabTitle class="text-center">
+      <div class="text-tab-h">
+        <i class="wizard-icon flaticon-list"></i>
+        <h3> 1. Cập nhật thông tin trường </h3>
+      </div>
+    </ng-template>
+    <ng-template kendoTabContent>
+      <kt-school-information [initInfo]="true" (initNext)="openApproachTab1()"></kt-school-information>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab [selected]="selectedTab == 1" [disabled]="selectedTab < 1">
+    <ng-template kendoTabTitle class="text-center">
+      <div class="text-tab-h">
+        <i class="flaticon-folder-1"></i>
+        <h3>2. Cập nhật dữ liệu cơ bản</h3>
+      </div>
+    </ng-template>
+    <ng-template kendoTabContent>
+      <div class="card-header h-auto d-flex justify-content-between align-items-center pt-3">
+        <div class=" px-2 ">
+          <i class="fas fa-database  ml-2 mr-2"></i><b>{{itemTitle}}</b>
+        </div>
+        <div>
+          <button kendoButton (click)="openApproachTab2()"
+            class="btn-custom btn-custom button-next-step mr-2 border-radius">
+            Tiếp tục
+            <span class="k-icon k-i-arrow-right k-icon-32 ml-1 " style="color: white"></span>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <kendo-grid scrollable="none" [data]="gridData" class="body-grid-scroll">
+          <kendo-grid-column field="" title="Loại dữ liệu" class="w-85">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <div><span class="{{dataItem.icon}}"></span> <span class="ml-10">{{ dataItem.title }}</span></div>
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column field="Discontinued" title="Thao tác">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <div>
+                <button kendoButton class="float-left btn-custom" [routerLink]="dataItem.edit"
+                  style="background: #67A7AC">
+                  <span class="k-icon k-i-edit k-icon-32" style="color: white"></span>
+                </button>
+                <div class="example-wrapper">
+                  <button kendoButton (click)="open()" class="float-right btn-custom">
+                    <span class="k-icon k-i-upload k-icon-32"></span>
+                  </button>
+                  <kendo-dialog title="Thông báo" *ngIf="opened" (close)="close('cancel')" [height]="275" [width]="533"
+                    class="dialog-upload">
+                    <div style="overflow: hidden">
+                      <p style="margin: 30px 0px;">Nhập dữ liệu từ Excel:
+                        <span class="excel-template">
+                          Tải file mẫu
+                        </span>
+                      </p>
+
+                      <input type="text" [(ngModel)]="currentInput" placeholcder="Chọn file..." class="filename"
+                        disabled>
+                      <input type="file" id="file-upload" accept=".xlsx, .xls" (change)="onFileSelected($event)"
+                        hidden />
+                      <label for="file-upload" class="choose">
+                        <i class="fas fa-search" style="color: black"></i>Chọn file
+                      </label>
+
+                      <div class="d-flex justify-content-around mt-8 pb-10">
+                        <button kendoButton (click)="close('no')" class="button-input-no btn-custom">Đóng
+                        </button>
+                        <button kendoButton (click)="close('yes')" primary="true" [disabled]="currentInput === null"
+                          class="button-input-yes btn-custom">
+                          Nhập dữ liệu
+                        </button>
+                      </div>
+                    </div>
+                  </kendo-dialog>
+                </div>
+              </div>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab [selected]="selectedTab == 2" [disabled]="selectedTab < 2">
+    <ng-template kendoTabTitle class="text-center">
+      <div class="text-tab-h">
+        <i class="flaticon-interface-5"></i>
+        <h3> 3. Hoàn thành</h3>
+      </div>
+    </ng-template>
+    <ng-template kendoTabContent>
+      <div class="overflow-hidden d-inline-flex d-flex p-5 content-step-three">
+        <div>
+          <i class="fas fa-check mr-5 fa-8x" style="color: #67A7AC"></i>
+        </div>
+        <div>
+          <h2>Hoàn thành</h2>
+          <p>Chúc mừng bạn đã hoàn thành công việc khởi tạo dữ liệu cho trường.<br />
+
+            Hãy chọn các chức năng trong danh sách bên trái cửa sổ để trải nghiệm phần mềm.<br />
+
+            Vui lòng tham khảo <a href="">Hướng dẫn sử dụng</a> để biết được đầy đủ các tính năng của hệ thống.<br />
+
+            Nếu bạn gặp khó khăn, hãy gọi điện đến số Hotline <b>1800 8000</b>.</p>
+          <button kendoButton [routerLink]="'/dashboard'" class="button-home btn-custom">
+            Đến màn hình chính
+            <span class="k-icon k-i-arrow-right k-icon-48 ml-1" style="color: white"></span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>

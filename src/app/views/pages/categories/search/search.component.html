@@ -1,0 +1,306 @@
+<!--lỗi vi phạm-->
+<div *ngIf="component ==='fault-criteria'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <!--      <div class="col-md-5 row mt-2 align-items-center">-->
+                    <!--        <label class="col-sm-3 col-md-4 ">-->
+                    <!--          Nhóm lỗi vi phạm :-->
+                    <!--        </label>-->
+                    <!--        <div class="col-sm-8">-->
+                    <!--          <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center" [data]="listGroupFaultCriteria"-->
+                    <!--                              [textField]="'tenNhomLoiViPham'" [valueField]="'id'" [(ngModel)]="nhomLoiViPhamId"-->
+                    <!--                              [defaultItem]="groupF" [valuePrimitive]="true">-->
+                    <!--          </kendo-dropdownlist>-->
+                    <!--        </div>-->
+                    <!--      </div>-->
+                    <div class="col-md-12 row">
+                        <label for="fault" class="col-sm-2 m-auto text-center">
+                            Lỗi vi phạm :
+                        </label>
+                        <div class="col-sm-5">
+                            <kendo-formfield>
+                                <input id="fault" type="text" class="form-control" placeholder="Nhập lỗi vi phạm"
+                                    [(ngModel)]="tenLoiViPham" (keydown.enter)="submitFault()" #search
+                                    (blur)="formatFault()" formControlName="tenFault">
+                                <kendo-formerror *ngIf="form.controls.tenFault.errors?.maxlength">Hiển thị quá giới hạn
+                                </kendo-formerror>
+                            </kendo-formfield>
+                        </div>
+                      <div class="col-md-5">
+                        <button type="submit" class="btn btn-primary m-auto" (click)="submitFault()"><i
+                          class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<div class="custom-loading-h">
+  <div *ngIf="boolSearch" class="k-i-loading"></div>
+</div>
+<!--khen thưởng -->
+<div *ngIf="component ==='praise'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class=" col-md-12 row">
+                        <div class="col-sm-2 m-auto text-center">
+                            <span>Nội dung </span>
+                        </div>
+                        <div class="col-sm-5">
+                            <kendo-formfield>
+                                <input type="text" class="form-control" placeholder="Nhập nội dung tìm kiếm"
+                                    [(ngModel)]="rewardValue" #search (keydown.enter)="submitReward()"
+                                    (blur)="formatP()" formControlName="tenP">
+                                <kendo-formerror *ngIf="form.controls.tenP.errors?.maxlength">Hiển thị quá giới hạn
+                                </kendo-formerror>
+                            </kendo-formfield>
+                        </div>
+                      <div class="col-md-5">
+                        <button type="submit" class="btn btn-primary" (click)="submitReward()"><i
+                          class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<!--kỷ luật-->
+<div *ngIf="component ==='discipline'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class="col-sm-2 m-auto text-center">
+                        <span>Nội dung</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <kendo-formfield>
+                            <input type="text" class="form-control" placeholder="Nhập nội dung tìm kiếm"
+                                [(ngModel)]="disciplineValue" #search (keyup.enter)="submitDiscipline()"
+                                (blur)="formatD()" formControlName="tenD">
+                            <kendo-formerror *ngIf="form.controls.tenD.errors?.maxlength">Hiển thị quá giới hạn
+                            </kendo-formerror>
+                        </kendo-formfield>
+                    </div>
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary" (click)="submitDiscipline()"><i
+                                class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<!--sáng kiến kinh nghiệm-->
+<div *ngIf="component ==='experience-type'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class="col-sm-3 m-auto text-center">
+                        <span>Tên sáng kiến kinh nghiệm</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <kendo-formfield>
+                            <input type="text" class="form-control" placeholder="Nhập sáng kiến kinh nghiệm"
+                                [(ngModel)]="expTypeValue" #search (keyup.enter)="submitExpType()" (blur)="formatExp()"
+                                formControlName="tenExp">
+                            <kendo-formerror *ngIf="form.controls.tenExp.errors?.maxlength">Tên sáng kiến kinh nghiệm
+                                không được nhập quá 250 kí tự
+                            </kendo-formerror>
+                        </kendo-formfield>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary" (click)="submitExpType()"><i
+                                class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<!--công việc kiêm nhiệm-->
+<div *ngIf="component ==='concurrent-work-type'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class="col-sm-3 m-auto text-center">
+                        <span>Tên công việc kiêm nhiệm</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <kendo-formfield>
+                            <input type="text" class="form-control" [(ngModel)]="expWorkValue" #search
+                                placeholder="Nhập công việc kiêm nhiệm" (keyup.enter)="submitExpWork()"
+                                (blur)="formatWork()" formControlName="tenWork">
+                            <kendo-formerror *ngIf="form.controls.tenWork.errors?.maxlength">Tên công việc kiêm nhiệm
+                                không được nhập quá 250 kí tự
+                            </kendo-formerror>
+                        </kendo-formfield>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary" (click)="submitExpWork()">
+                            <i class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<!--lỗi vi phạm quy chế-->
+<div *ngIf="component ==='exam-violation-type'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class="col-sm-3 m-auto text-center">
+                        <span>Tên lỗi vi phạm quy chế thi</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <kendo-formfield>
+                            <input type="text" class="form-control" placeholder="Nhập lỗi vi phạm quy chế thi"
+                                [(ngModel)]="errorExamValue" #search (keydown.enter)="submitErrorExam()"
+                                (blur)="formatExam()" formControlName="tenExam">
+                            <kendo-formerror *ngIf="form.controls.tenExam.errors?.maxlength">Tên lỗi vi phạm qui chế thi
+                                không được nhập quá 250 kí tự
+                            </kendo-formerror>
+                        </kendo-formfield>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary" (click)="submitErrorExam()"><i
+                                class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<!--loại điểm thi đua-->
+<div *ngIf="component ==='emulation-criteria'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class="col-sm-3 m-auto text-center ">
+                        <span>Tên loại điểm thi đua</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <kendo-formfield>
+                            <input type="text" class="form-control" placeholder="Nhập loại điểm thi đua" #search
+                                [(ngModel)]="scoreTypeValue" formControlName="tenThiDua"
+                                (keyup.enter)="submitScoreType()" (blur)="formatDiemThiDua()">
+                            <kendo-formerror *ngIf="form.controls.tenThiDua.errors?.maxlength">Tên loại điểm thi đua
+                                không được quá 250 ký tự</kendo-formerror>
+                            <kendo-formerror *ngIf="form.controls.tenThiDua.errors?.pattern"> Không cho phép nhập ký tự
+                                đặc biệt</kendo-formerror>
+                        </kendo-formfield>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary" (click)="submitScoreType()"><i
+                                class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>
+<!--khen thưởng-->
+<div *ngIf="component ==='reward-final'">
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+            (click)="isCollapsed = !isCollapsed">
+            <ng-container ktPortletTools>
+                <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body>
+            <form [formGroup]="form">
+                <div class="card-body row" *ngIf="isCollapsed">
+                    <div class="col-sm-3 m-auto text-center">
+                        <span>Hình thức khen thưởng</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <kendo-formfield>
+                            <input type="text" class="form-control" id="search" [(ngModel)]="endingRewardValue" #search
+                                (keyup.enter)="submitEndingReward()" placeholder="Nhập hình thức khen thưởng"
+                                (blur)="formatRF()" formControlName="tenRF">
+                            <kendo-formerror *ngIf="form.controls.tenRF.errors?.maxlength">Hiển thị quá giới hạn
+                            </kendo-formerror>
+                        </kendo-formfield>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary" (click)="submitEndingReward()"><i
+                                class="fas fa-filter"></i>Tìm kiếm
+                        </button>
+                      <div class="custom-loading-h">
+                        <div *ngIf="boolSearch" class="k-i-loading"></div>
+                      </div>
+                    </div>
+                </div>
+            </form>
+        </kt-portlet-body>
+    </kt-portlet>
+</div>

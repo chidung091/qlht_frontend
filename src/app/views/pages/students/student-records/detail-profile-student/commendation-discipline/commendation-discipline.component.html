@@ -1,0 +1,44 @@
+<!-- Danh sách khen thưởng-->
+<kt-portlet>
+  <kt-portlet-header [title]="'Khen thưởng'" [class]="'card-head-lg bgr-custom'">
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="col-lg-12">
+      <kendo-grid>
+        <kendo-grid-column title="STT" [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Ngày khen thưởng" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Hình thức khen thưởng" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Địa điểm khen thưởng" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Nội dung khen thưởng " field="">
+        </kendo-grid-column>
+      </kendo-grid>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+<!-- Danh sách kỷ luật-->
+<kt-portlet>
+  <kt-portlet-header [title]="'Kỷ luật'" [class]="'card-head-lg bgr-custom'">
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="col-lg-12">
+      <kendo-grid>
+        <kendo-grid-column title="STT" [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Ngày kỷ luật" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Hình thức kỷ luật" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Địa điểm kỷ luật" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text" title="Nội dung kỷ luật" field="">
+        </kendo-grid-column>
+      </kendo-grid>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

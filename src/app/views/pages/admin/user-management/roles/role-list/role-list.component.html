@@ -1,0 +1,141 @@
+<kt-portlet>
+    <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+        (click)="isCollapsed = !isCollapsed">
+        <ng-container ktPortletTools>
+            <i [hidden]="!isCollapsed" class="fas fa-angle-double-down"></i>
+            <i [hidden]="isCollapsed" class="fas fa-angle-double-up"></i>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body *ngIf="isCollapsed">
+        <form [formGroup]="formSearch">
+            <div class="col-lg-12 search-box-header">
+                <div class="row">
+                    <!-- <div class="col-xl-4 col-lg-3">
+                    <div class="col-form-row">
+                        <label class="col-form-label">Hệ thống:</label>
+                        <input type="text" class="form-control form-control-solid" value="SMAS 4.0" readonly>
+                        <kendo-dropdownlist style="width: 100%;" id="listLevelSchool" class="f-group-dropdownlist"
+                            [data]="levelSchool">
+                        </kendo-dropdownlist>
+                    </div>
+                </div> -->
+                    <div class="col-lg-2">
+                        <label class="col-form-label">Tên vai trò:</label>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="col-form-row">
+                            <input type="text" formControlName="tenvaitro" (focusout)="trimSpace('tenvaitro')"
+                                (keyup.enter)="search()" class="form-control form-control-solid"
+                                placeholder="Nhập tên vai trò">
+                            <div
+                                *ngIf="submitted && f.tenvaitro.errors || f.tenvaitro.errors && (f.tenvaitro.dirty || f.tenvaitro.touched)">
+                                <div class="text-error">
+                                    <div *ngIf="f.tenvaitro.errors.maxlength">
+                                        Tên vai trò tối đa 100 ký tự!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <button type="submit" class="btn btn-primary" (click)="search()">
+                            <i class="fas fa-filter"></i> Tìm kiếm
+                        </button>
+                        <!-- <button type="button" class="btn bnt-res" (click)="Reset()">
+                        Reset
+                    </button> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+    <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách vai trò'" [class]="'card-head-lg bgr-custom'">
+        <ng-container ktPortletTools>
+            <button placement="bottom" ngbTooltip="Thêm mới vai trò" type="button" class="btn btn-primary btn-sm mr-2"
+                *ktPermission="roleCreate" (click)="openModalCreate()" container="body">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button type="button" ngbTooltip="Xóa vai trò" placement="bottom" container="body"
+                class="btn btn-danger btn-sm" *ktPermission="roleDelete" (click)="openModalDeleteList()"
+                [disabled]="disableBtnDele">
+                <i class="far fa-trash-alt"></i>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <kendo-grid *ngIf="isLoading$ | async" [data]="gridView" kendoGridSelectBy="id" [pageSize]="_pageSize"
+            [pageable]="true" scrollable="scrollable" [sortable]="true" [reorderable]="true" [resizable]="false"
+            [height]="500" [selectable]="{mode: 'multiple',enable: true, checkboxOnly: true}"
+            [style]="{'border-radius': '25px'}" (pageChange)="pageChange($event)" [skip]="skip"
+            (selectedKeysChange)="onChange($event)" [selectedKeys]="mySelection" [style]="{'border-radius': '25px'}" [style.maxHeight.px]="600">
+
+            <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false" showSelectAll="true">
+            </kendo-grid-checkbox-column>
+
+            <kendo-grid-column title="TT" [width]="45" headerClass="text-center font-weight-bold" [class]="'text-center'">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column [width]="200" field="name" title="Mã vai trò " 
+                                 headerClass="text-center font-weight-bold" [class]="'text-center'">
+            </kendo-grid-column>
+
+            <kendo-grid-column [width]="200" field="remark" title="Tên vai trò"
+                                headerClass="text-center font-weight-bold" [class]="'text-center'"></kendo-grid-column>
+
+            <kendo-grid-column [width]="200" field="description" title="Mô tả" 
+                                headerClass="text-center font-weight-bold">
+            </kendo-grid-column>
+
+            <kendo-grid-column [width]="200" field="active" editor="text" title="Trạng thái" [width]="150"
+                                headerClass="text-center font-weight-bold" [class]="'text-center'">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.isActive === false ? 'Không hoạt động' : 'Hoạt động'}}
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-command-column title="Thao tác" [width]="105" [resizable]="false" sortable="false"
+                [columnMenu]="false" headerClass="text-center font-weight-bold">
+                <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
+                    <div class="d-flex justify-content-around align-items-center">
+                        <button placement="left" container="body" ngbTooltip="Sửa" kendoGridEditCommand
+                            *ktPermission="roleEdit" (click)="openModalEdit(dataItem)">
+                            <i class="fas fa-pencil-alt " style="color: #419197"></i>
+                        </button>
+                        <button placement="left" container="body" ngbTooltip="Phân quyền" kendoGridEditCommand
+                            *ktPermission="rolePemiss" (click)="openModalSettings(dataItem)"><i
+                                class="fa fa-cog"></i></button>
+                        <!-- <button kendoGridEditCommand (click)="openModalDelete($event, dataItem)"><i class="fas fa-trash-alt "></i></button> -->
+                    </div>
+                </ng-template>
+            </kendo-grid-command-column>
+            <ng-template kendoPagerTemplate let-currentPage="currentPage" let-total="total" let-skip="skip"
+                let-pageSize="pageSize">
+                <div class="d-lg-flex d-md-block justify-content-between w-100">
+                    <div class="p-1 d-flex d-sm-flex justify-content-between">
+                        <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [defaultItem]="5"
+                            [(ngModel)]="_pageSize" (ngModelChange)="pageSizeChange()">
+                        </kendo-dropdownlist>
+                        <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+                            - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+                    </div>
+                    <div class="d-flex justify-content-center custom-mt-15">
+                        <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                        <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                        <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template kendoGridNoRecordsTemplate>
+                Không có dữ liệu
+            </ng-template>
+        </kendo-grid>
+        <div class="custom-loading-h">
+            <div *ngIf="isloading" class="k-i-loading"></div>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

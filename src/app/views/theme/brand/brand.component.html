@@ -1,0 +1,19 @@
+<!-- begin:: Brand -->
+<div class="brand flex-column-auto" [ngClass]="brandClasses" id="kt-aside" style="background-color: #e1f0ff">
+  <!--begin::Logo-->
+  <a href="javascript:;" routerLink="/" class="brand-logo">
+    <img width="80%" alt="logo" [attr.src]="headerLogo" />
+  </a>
+  <!-- <h5 class="m-0 text-white" id="logo_brand">Chức năng</h5> -->
+  <!--end::Logo-->
+
+  <ng-container *ngIf="asideSelfMinimizeToggle">
+    <!--begin::Toggle-->
+    <button class="brand-toggle px-0" style="border: 0 !important; background: none !important;" id="kt_aside_toggle" (click)="toggleAsideClick()">
+      <span class="svg-icon svg-icon-xl"
+        [inlineSVG]="'./assets/media/svg/icons/Navigation/Angle-double-left.svg'"></span>
+    </button>
+    <!--end::Toolbar-->
+  </ng-container>
+</div>
+<!-- end:: Brand -->

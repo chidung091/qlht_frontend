@@ -1,0 +1,186 @@
+<kt-portlet>
+  <kt-portlet-header [title]="'Chuyển công tác'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button (click)="closeModal()" aria-label="Close" class="btn-close-h">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="k-form-field text-center">
+      <input type="radio" name="checkMode" id="oneCheck" value="oneCheck" class="k-radio right"
+             [(ngModel)]="checkMode" />
+      <label class="k-radio-label right" for="oneCheck">Trường trong hệ thống</label>
+      <input type="radio" name="checkMode" id="twoCheck" value="twoCheck" class="k-radio"
+             [(ngModel)]="checkMode" />
+      <label class="k-radio-label" for="twoCheck">Trường ngoài hệ thống</label>
+    </div>
+
+    <kt-portlet *ngIf="checkMode == 'oneCheck'">
+      <kt-portlet-body>
+        <form class="form">
+
+          <div class="row">
+            <div class="col-4">
+              <label class="mt-md mt-5" for="province">Tỉnh/TP <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <kendo-dropdownlist [data]="province$ | async"
+                                  [textField]="'provinceName'"
+                                  [valueField]="'provinceCode'"
+                                  [valuePrimitive]="true"
+                                  id="province"
+                                  style="width: 100%">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-3" for="districts">Quận/Huyện <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <kendo-dropdownlist [data]="districts$ | async"
+                                  [textField]="'districtName'"
+                                  [valueField]="'districtCode'"
+                                  [valuePrimitive]="true"
+                                  id="districts"
+                                  style="width: 100%">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-3" for="wards">Phường/Xã <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <kendo-dropdownlist [data]="districts$ | async"
+                                  [textField]="'districtName'"
+                                  [valueField]="'districtCode'"
+                                  [valuePrimitive]="true"
+                                  id="wards"
+                                  style="width: 100%">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-md" for="school">Trường <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <kendo-dropdownlist [data]="ward$ | async"
+                                  [textField]="'wardName'"
+                                  [valueField]="'wardCode'"
+                                  [valuePrimitive]="true"
+                                  class="w-100"
+                                  id="school">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-md" for="delivery-date">Ngày chuyển <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <kendo-datepicker placeholder="Nhập ngày chuyển" id="delivery-date"
+                                class="date-picker w-100"
+                                [format]="'dd/MM/yyyy'">
+              </kendo-datepicker>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-md" for="decision-to-change-schools">QĐ chuyển trường <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="w-100" id="decision-to-change-schools" kendoTextBox>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-12">
+              <label class="mt-md" for="note">Ghi chú</label>
+            </div>
+            <div class="col-12">
+              <textarea class="w-100" id="note" kendoTextArea></textarea>
+            </div>
+          </div>
+
+        </form>
+      </kt-portlet-body>
+
+      <kt-portlet-footer>
+        <div class="group-button text-center">
+          <button class="btn btn-secondary mr-3" type="button" (click)="closeModal()">Đóng</button>
+          <button class="btn btn-secondary mr-3" type="button">Hủy chuyển công tác</button>
+          <button class="btn btn-secondary mr-3" type="button">Lưu</button>
+        </div>
+      </kt-portlet-footer>
+
+    </kt-portlet>
+
+    <kt-portlet *ngIf="checkMode == 'twoCheck'">
+      <kt-portlet-body>
+        <form class="form">
+          <div class="row">
+            <div class="col-4 mt-5">
+              <label class="mt-md" for="deliver-place">Nơi chuyển đến<span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="w-100" id="deliver-place" kendoTextBox>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-md" for="delivery-date-box2">Ngày chuyển <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <kendo-datepicker placeholder="Nhập ngày chuyển" id="delivery-date-box2"
+                                class="date-picker w-100"
+                                [format]="'dd/MM/yyyy'">
+              </kendo-datepicker>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-4">
+              <label class="mt-md" for="decision-to-change-schools-box2">QĐ chuyển trường <span style="color: red">*</span></label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="w-100" id="decision-to-change-schools-box2" kendoTextBox>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-12">
+              <label class="mt-md" for="note-box2">Ghi chú</label>
+            </div>
+            <div class="col-12">
+              <textarea class="w-100" id="note-box2" kendoTextArea></textarea>
+            </div>
+          </div>
+        </form>
+      </kt-portlet-body>
+
+      <kt-portlet-footer>
+        <div class="group-button text-center">
+          <button class="btn btn-secondary mr-3" type="button">Đóng</button>
+          <button class="btn btn-secondary mr-3" type="button">Lưu</button>
+        </div>
+      </kt-portlet-footer>
+
+    </kt-portlet>
+  </kt-portlet-body>
+
+</kt-portlet>
+

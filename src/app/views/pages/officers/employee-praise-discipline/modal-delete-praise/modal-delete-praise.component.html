@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Xóa khen thưởng</h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-delete-h">
+    <img class="d-block m-auto" src="/assets/media/bg/normal_u546.svg">
+    <p class="text-center mt-5">{{VI_LANG.NOTIFICATION.CONFIRM_DELETE}}</p>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingDelete | async" class="k-i-loading"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Hủy bỏ</button>
+    <button type="button" class="btn  btn-primary" id="deletePraise" (click)="onSubmit()">Đồng ý</button>
+  </div>
+</div>

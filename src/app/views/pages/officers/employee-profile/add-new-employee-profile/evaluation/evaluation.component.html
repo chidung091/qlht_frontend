@@ -1,0 +1,80 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Tự đánh giá</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="employeeSelfAssessmentResult">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Cấp trên đánh giá</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="superiorSelfAssessmentResult">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Đánh giá viên chức</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="3">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Giáo viên dạy giỏi</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="4">
+    </div>
+    <div class="col-md-2 mb-5"></div>
+    <div class="col-md-4 mb-5">
+      <span class="font-note">Kết quả được lấy từ chức năng "Đánh giá xếp loại" theo năm học</span>
+    </div>
+    <div class="col-md-2 mb-5"></div>
+    <div class="col-md-4 mb-5">
+      <span class="font-note">Kết quả được lấy từ chức năng "Đánh giá xếp loại" theo năm học</span>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Danh hiệu phong tặng</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="appellationAward" smasTrim  maxlength="250">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Giáo viên chủ nhiệm dạy giỏi</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="_6$ | async"
+                          [loading]=" _6Loaded$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="goodHeadTeacherCode"
+                          [valuePrimitive]="true"
+                          (selectionChange)="cateSelected($event,'goodHeadTeacherName')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Tổng phụ trách Đội giỏi</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="_7$ | async"
+                          [loading]=" _7Loaded$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="goodTeamGeneralCode"
+                          [valuePrimitive]="true"
+                          (selectionChange)="cateSelected($event,'goodTeamGeneralName')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div *ngIf="loadEdit" class="col-md-6 row" >
+      <div class="col-md-4 mb-5 align-self-center pr-0">
+        <label>Kết quả chuẩn nghề nghiệp</label>
+      </div>
+      <div class="col-md-8 mb-5 ">
+        <ng-container ktPortletTools>
+            <i class="fa fa-book" placement="top" [ngbTooltip]="'Chi tiết'"  (click)="openModal()" style="margin-left: 10px"></i>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</form>

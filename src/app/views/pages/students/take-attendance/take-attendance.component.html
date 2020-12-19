@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-xl-2">
+    <kendo-treeview kendoTreeViewExpandable
+                    kendoTreeViewSelectable
+                    kendoTreeViewHierarchyBinding
+                    [nodes]="_data"
+                    [(expandedKeys)]="_expandedKeys"
+                    [(selectedKeys)]="_selectedKeys"
+                    expandBy="text"
+                    selectBy="text"
+                    textField="text"
+                    childrenField="items"
+                    [children]="fetchChildren">
+    </kendo-treeview>
+  </div>
+  <div class="col-xl-10">
+    <kt-portlet>
+      <kt-portlet-header>
+        <ng-container ktPortletTitle>
+          <div class="attendance d-flex flex-row align-items-center">
+            <div class="day d-flex flex-row align-items-center">
+              <span class="lbl_txt pr-3">Buổi sáng</span>
+              <kendo-dropdownlist [data]="_items" [defaultItem]="_valueDefault"></kendo-dropdownlist>
+            </div>
+            <div class="month ml-5 d-flex flex-row align-items-center">
+              <span class="lbl_txt pr-3">Tháng</span>
+              <kendo-dropdownlist [data]="_month" [defaultItem]="_valueMonth"></kendo-dropdownlist>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox"
+                       class="form-check-input"
+                       name="" id=""
+                       value="checkedValue">
+                Điểm danh tuần
+              </label>
+            </div>
+            <div class="form-group d-flex flex-row align-items-center mb-0">
+              <label class="mb-0" for="date">Ngày</label>
+              <input type="text"
+                     class="form-control ml-3"
+                     name=""
+                     id="date"
+                     disabled
+                     [value]="_dateNow | date : 'dd/MM/yyyy'"
+                     placeholder="">
+            </div>
+          </div>
+        </ng-container>
+        <ng-container ktPortletTools>
+          <kendo-dropdownbutton [data]="_dataItems" [icon]="'cog'"></kendo-dropdownbutton>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <div class="title-header d-flex flex-row align-items-center">
+          <span>Bảng điểm danh</span>
+          <span
+            class="font-weight-bold flex-grow-1 d-flex justify-content-center text-uppercase">{{_selectedKeys}}</span>
+        </div>
+        <div class="note text-right mt-5">
+          <i>
+            <span class="text-danger">Lưu ý:</span>
+            Nhập P-Nghỉ có phép; K-Nghỉ không phép; C-Có mặt
+          </i>
+          <div class="btn-color">
+            <span class="title title-saturday">Thứ bảy</span>
+            <span class="title title-sunday">Chủ nhật</span>
+          </div>
+        </div>
+        <ng-container>
+          <kendo-grid>
+            <kendo-grid-column title="TT" width="40"></kendo-grid-column>
+            <kendo-grid-column title="Họ và tên" width="120"></kendo-grid-column>
+            <ng-container *ngFor="let item of _day let i = index">
+              <kendo-grid-column [title]="item" width="40"></kendo-grid-column>
+            </ng-container>
+            <kendo-grid-column title="C" width="40"></kendo-grid-column>
+            <kendo-grid-column title="K" width="40"></kendo-grid-column>
+            <kendo-grid-column title="P" width="40"></kendo-grid-column>
+            <kendo-grid-column title="Tổng" width="40"></kendo-grid-column>
+          </kendo-grid>
+        </ng-container>
+      </kt-portlet-body>
+    </kt-portlet>
+  </div>
+</div>

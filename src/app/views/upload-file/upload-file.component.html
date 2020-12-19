@@ -1,0 +1,28 @@
+<div class="message" *ngIf="(isReady$ | async) || (hasFailed$ | async)">
+    <input #file type="file" multiple (change)="uploadFile($event)" />
+</div>
+
+<div class="message" *ngIf="(isInProgress$ | async)">
+    <div style="margin-bottom: 14px;">Uploading... {{ progress$ | async }}%</div>
+</div>
+
+<div class="message" *ngIf="(isInProgress$ | async)">
+    <button (click)="cancelUpload()">Cancel Upload</button>
+</div>
+
+<div class="message" *ngIf="(completed$ | async)">
+    <h4>
+        File has been uploaded successfully!
+    </h4>
+    <button (click)="resetUpload()">Upload Another File</button>
+</div>
+
+<div class="message error" *ngIf="(hasFailed$ | async)">
+    Error: {{ error$ | async }}
+</div>
+
+<!-- <div class="block">
+    <label id="lbl">File </label>
+    <input #fileInput type='file' (change)="onChange($event)" />
+    <button class="btn btn-sm" (click)="uploadFile()">Upload The JSON File</button>
+</div> -->

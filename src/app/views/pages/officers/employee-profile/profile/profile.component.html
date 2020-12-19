@@ -1,0 +1,318 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body *ngIf="!isCollapsed">
+    <form [formGroup]="formSearch">
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Tổ bộ môn</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist formControlName="department" class="dropdown-css"
+                                  style="width: 100%"
+                                  [valuePrimitive]="true" [loading]="!(schoolFacultyLoaded$ | async)"
+                                  [data]="schoolFaculty$ | async"
+                                  [defaultItem]="defaultDepartment"
+                                  [textField]="'facultyName'"
+                                  [valueField]="'id'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Công việc</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist formControlName="dmLoaiCanBo" class="dropdown-css"
+                                  style="width: 100%" [loading]="!(employeesTypeLoaded$ | async)"
+                                  [valuePrimitive]="true"
+                                  [defaultItem]="defaultCategory"
+                                  [data]="employeesType$ | async"
+                                  [textField]="'cateName'"
+                                  [valueField]="'cateCode'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Trạng thái</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist formControlName="dmTrangThaiCanBo" class="dropdown-css"
+                                  style="width: 100%" [valuePrimitive]="true"
+                                  [data]="staffStatus$ | async" [loading]="!(staffStatusLoaded$ | async)"
+                                  [defaultItem]="defaultCategory"
+                                  [textField]="'cateName'"
+                                  [valueField]="'cateCode'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Giới tính</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist formControlName="dmSex" class="dropdown-css w-100"
+                                  style="width: 100%" [valuePrimitive]="true"
+                                  [data]="gender$ | async" [defaultItem]="defaultCategory"
+                                  [textField]="'cateName'" [loading]="!(genderLoaded$ | async)"
+                                  [valueField]="'cateCode'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Hình thức hợp đồng</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist formControlName="dmHinhThucHopDong" class="dropdown-css w-100"
+                                  style="width: 100%" [defaultItem]="defaultCategory"
+                                  [valuePrimitive]="true" [loading]="!(contractFormLoaded$ | async)"
+                                  [data]="contractForm$ | async"
+                                  [textField]="'cateName'"
+                                  [valueField]="'cateCode'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Trình độ đào tạo</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist formControlName="dmTrinhDoChuyenMon" class="dropdown-css"
+                                  style="width: 100%" [defaultItem]="defaultCategory"
+                                  [valuePrimitive]="true" [loading]="!(qualificationLoaded$ | async)"
+                                  [data]="qualification$ | async"
+                                  [textField]="'cateName'"
+                                  [valueField]="'cateCode'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Mã cán bộ</label>
+            </div>
+            <div class="col-sm-8">
+              <kendo-formfield>
+                <input placeholder="Nhập mã cán bộ" kendoTextBox formControlName="code" class="w-100"
+                       (focusout)="trimSpace('code')" id="code" maxlength="50">
+                <kendo-formerror *ngIf="formSearch.controls.code.errors?.maxlength">
+                  Mã cán bộ không được quá 50 ký tự
+                </kendo-formerror>
+              </kendo-formfield>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Tên cán bộ</label>
+            </div>
+            <div class="col-sm-8">
+              <kendo-formfield>
+                <input class="w-100" placeholder="Nhập tên cán bộ" kendoTextBox formControlName="fullName"
+                       (focusout)="trimSpace('fullName')" id="fullName" maxlength="50">
+                <kendo-formerror *ngIf="formSearch.controls.fullName.errors?.maxlength">
+                  Tên cán bộ không được quá 50 ký tự
+                </kendo-formerror>
+              </kendo-formfield>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4">
+              <label class="col-form-label w-100">Ngày sinh</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-datepicker placeholder="Nhập ngày sinh cán bộ" formControlName="birthDate"
+                                class="date-picker" [max]="maxDate"
+                                [readOnlyInput]="true"
+                                [format]="'dd/MM/yyyy'">
+              </kendo-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 text-center mt-8">
+          <button type="button" class="btn btn-custom-h-cl btn-primary" (click)="searchEmployee()">
+            <i class="fas fa-filter"></i> Tìm kiếm
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+
+  <kt-portlet-header [icon]="'fas fa-th-list'" [title]="'Danh sách cán bộ'" [class]="'card-head-lg'">
+    <ng-container ktPortletTools>
+      <button type="button" class="mr-2 btn btn-success btn-sm" placement="top" container="body"
+              ngbTooltip="Nhập dữ liệu từ Excel" (click)="openImportFileExcel()"><i class="fas fa-file-export"></i>
+      </button>
+      <button [iconClass]="'fas fa-plus'" class="btn btn-primary btn-sm mr-2" (click)="openModalAdd()"  ngbTooltip="Thêm mới" kendoButton type="button"></button>
+
+      <button [iconClass]="'far fa-trash-alt'" ngbTooltip="Xoá bỏ" [disabled]="checkDeleteMany"
+              (click)="openModalDelete(dataItem)" class="btn btn-danger btn-sm mr-2" kendoButton type="button"></button>
+
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <kendo-grid
+      (pageChange)="pageChange($event)"
+      (selectedKeysChange)="onChange($event)"
+      [pageSize]="_pageSize"
+      [pageable]="true"
+      [selectedKeys]="mySelection"
+      kendoGridSelectBy="id"
+      [skip]="skip"
+      [data]="gridView"
+      [sortable]="false"
+      [selectable]="{checkboxOnly: true}"
+      [reorderable]="false"
+      [resizable]="false"
+      [height]="500"
+      [style]="{'border-radius': '25px'}">
+
+      <kendo-grid-checkbox-column [width]="40" [resizable]="false" [columnMenu]="false"
+                                  headerClass="text-center font-weight-bold" class="text-center" showSelectAll="true">
+      </kendo-grid-checkbox-column>
+
+      <kendo-grid-column title="TT" headerClass="text-center font-weight-bold" class="text-center" [width]="60" [resizable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column editor="text" title="Họ tên cán bộ" [width]="200" field="fullName"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="150" editor="text" title="Mã cán bộ" field="code"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="200" editor="text" title="Ngày sinh" field="birthDate" filter="date"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" class="text-center">
+        <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.birthDate | date: 'dd/MM/yyyy'}}</ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="100" editor="text" title="Giới tính" field="genderName"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="120" editor="text" title="Chức vụ" field="positionGroupName"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold">
+
+      </kendo-grid-column>
+
+      <kendo-grid-column title="Trạng thái" [width]="110" editor="text" field="status"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+          {{dataItem.status===1? 'Đang hoạt động' : 'Không hoạt động'}}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-command-column [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold"
+                                 class="text-center"
+                                 [width]="60" title="Sửa">
+        <ng-template kendoGridCellTemplate let-dataGridItem let-isNew class="text-center">
+          <kendo-dropdownbutton [data]="dataButtonFix" [primary]="true" [iconClass]="'fas fa-cogs'"  ngbTooltip="Hành động" placement="left" container="body">
+            <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+              <button type="button" kendoButton (click)="openModalConfig(dataItem, dataGridItem)">{{dataItem.text}}</button>
+            </ng-template>
+          </kendo-dropdownbutton>
+        </ng-template>
+      </kendo-grid-command-column>
+
+      <ng-template kendoPagerTemplate
+                   let-currentPage="currentPage"
+                   let-total="total"
+                   let-skip="skip"
+                   let-pageSize="pageSize">
+        <div class="d-flex justify-content-between w-100">
+          <div class="p-1 d-flex d-sm-flex justify-content-between">
+            <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [(ngModel)]="_pageSize"
+                                (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex page-number">
+            <kendo-pager-prev-buttons class="pagenumbernext"></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons class="pagenumberlast"></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template kendoGridNoRecordsTemplate>Không tìm thấy kết quả </ng-template>
+    </kendo-grid>
+    <div class="custom-loading-h">
+      <div *ngIf="loadingKendoGrid | async" class="k-i-loading"></div>
+    </div>
+  </kt-portlet-body>
+
+</kt-portlet>
+
+<ng-template #deleteDialog class="modal-dialog modal-dialog-centered modal-dialog-scrollable" let-c="close"
+             let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <p class="modal-title" id="modalDeleteSchool" style="font-size: large; font-weight: bold">Xóa cán bộ?</p>
+      <button (click)="closeModalDelete()" aria-label="Close" class="close" type="button">
+        <i class="fas fa-times" style="font-size: large"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="question" style="display: flex">
+        <i class="far fa-question-circle" style="font-size: 100px; color: red"></i>
+        <p style="text-align: center; margin-top: 35px; margin-left: 30px; margin-right: 30px">
+          {{VI_LANG.NOTIFICATION.CONFIRM_DELETE}} </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="closeModalDelete()" class="btn btn-secondary mr-3"
+              type="button">{{VI_LANG.BUTTON.CANCEL}}</button>
+      <button #deleteElement (click)="submitDelete()" class="btn  btn-primary" id="deleteElement"
+              type="button">{{VI_LANG.BUTTON.OK}}</button>
+    </div>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingSubmit" class="k-i-loading"></div>
+  </div>
+</ng-template>

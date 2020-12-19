@@ -1,0 +1,14 @@
+.li-block{
+  padding: 1rem 0;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+  &:hover{
+    background: #eeeeee80;;
+  }
+}
+.activeKHOI{
+  background: #eeeeee80;
+  color: #087d8c;
+}

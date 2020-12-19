@@ -1,0 +1,24 @@
+.custom-border {
+    border: solid rgb(255, 61, 95);
+  }
+.custom-bg {
+    background: royalblue;
+  }
+.btn-excel{
+  position: relative;
+  width: calc(1.5em + 0.75rem + 2px);
+  height: calc(1.5em + 0.75rem + 2px);
+  border: 1px solid gray !important;
+  .fa-file-excel{
+    font-size: 22px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+  .fa-upload{
+    position: absolute;
+    bottom: 1px;
+    right: 4px;
+    font-size: 13px;
+  }
+}

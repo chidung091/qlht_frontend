@@ -1,0 +1,85 @@
+//custom css
+.form-control.form-control-solid{
+  background: white !important
+}
+.col-form-label{
+  font-weight: bold;
+}
+.bnt-s{
+  height: auto;
+  align-items: center;
+  background-color: #419197;color: #ffffff;
+}
+
+.btn {
+  line-height: 1 !important;
+}
+
+//.btn:hover {
+//  background-color: #5cb7be !important;
+//  box-shadow: 2px 1px #5cb7be;
+//}
+.bnt-res{
+  background-color: #333;color: #ffffff; margin-left: 30px;
+}
+
+.card-header.bg-dark-o-20.d-flex.justify-content-between{
+  height: 50px;
+}
+
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+}
+
+@media(max-width: 1290px){
+  .bnt-res{
+    margin-left: 4px;
+  }
+}
+@media(max-width: 768px){
+  .elem {
+    margin-bottom: 5px;
+    padding: 10px;
+  }
+
+  .no-padding {
+    padding: 0;
+    margin: 0;
+  }
+}
+@media(min-width: 768px){
+  .no-padding-left {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .no-padding-right {
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+}
+@media(max-width: 767px){
+  .bnt-s, .bnt-res{
+    margin-top: 15px;
+  }
+  .custom-mt-15{
+    margin-top: 15px;
+  }
+}
+
+.card-body{
+  padding: 10px 0 !important;
+  margin: 0 10px !important;
+}
+.bgr-custom{
+  background: rgba(24, 28, 50, 0.08) !important;
+}
+

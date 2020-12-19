@@ -1,0 +1,161 @@
+<script src="concurrent-work.component.ts"></script>
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách kiêm nhiệm'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button placement="bottom" ngbTooltip="Thêm mới" type="button" class="btn btn-primary btn-sm mr-2"
+              *ktPermission="ConcurrentWorkCreate" (click)="openDialog()">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button placement="bottom" ngbTooltip="Xóa" type="button" class="btn btn-danger btn-sm"
+              [disabled]="mySelection.length === 0"
+              *ktPermission="ConcurrentWorkDelete" (click)="openDelete(modelDelete)">
+        <i class="far fa-trash-alt"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <!--    <div class="card-body " style="overflow-x: auto">-->
+    <kendo-grid
+      *ngIf="loadingPage|async"
+      [data]="gridView"
+      kendoGridSelectBy="id"
+      [selectable]="{checkboxOnly : true}"
+      [selectedKeys]="mySelection"
+      [pageSize]="_pageSize"
+      [pageable]="true"
+      [skip]="skip"
+      (pageChange)="pageChange($event)"
+      (selectedKeysChange)="onChange($event)"
+      [style]="{'border-radius': '25px'}"
+      (edit)="editHandler($event)"
+      (save)="saveHandler($event)"
+      (cancel)="cancelHandler($event)"
+    >
+      <kendo-grid-checkbox-column
+        class="text-center"
+        [width]="45"
+        [resizable]="false"
+        [columnMenu]="false"
+        headerClass="text-center font-weight-bold"
+        showSelectAll="true"
+      >
+      </kendo-grid-checkbox-column>
+      <kendo-grid-column field="id" class="text-center" headerClass="text-center font-weight-bold" title="TT"
+                         [width]="45"
+                         editable="false"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="employeeCode" editor="text" title="Mã cán bộ"
+                         headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column [width]="200" field="employeeName" editor="text" title="Họ và tên"
+                         headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column [width]="200" field="facultyName" editor="text" title="Tổ bộ môn"
+                         headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column [width]="200" field="positionStaffName" editor="text" title="Vị trí làm việc"
+                         headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column [width]="200" field="concurrentworkTypeName" editor="text" title="Công việc phụ trách"
+                         headerClass="text-center font-weight-bold">
+        <ng-template kendoGridEditTemplate let-column="column">
+          <kendo-autocomplete
+            class="form-control"
+            #input
+            [data]="dataConcurrent"
+            [valueField]="'name'"
+            [filterable]="true"
+            (filterChange)="handleFilter($event)"
+            (valueChange)="checkCateName($event)"
+            [formControl]="formData.get(column.field)"
+          >
+          </kendo-autocomplete>
+          <kendo-popup
+            [anchor]="input"
+            *ngIf="!formData.get(column.field)"
+            popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          >
+            <span class="k-icon k-i-warning"></span>
+            {{VI_LANG.FIELD.CONCURRENT_WORK_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-popup>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="sectionPerWeek" editor="text" title="Số tiết kiêm nhiệm"
+                         headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column [width]="200" field="semester" editor="text" title="Áp dụng HK"
+                         headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.semester === 1?'Học kỳ 1':(dataItem.semester === 2?'Học kỳ 2': 'Cả năm')}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formData">
+          <kendo-formfield class="w-100">
+            <kendo-dropdownlist  class="w-100"
+                                [data]="semesterList"
+                                [formControl]="formData.get('semester')" textField="text" valueField="code"
+                                (selectionChange)="check()"
+                                [valuePrimitive]="true">
+            </kendo-dropdownlist>
+          </kendo-formfield>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="Thao tác" *ktPermission="ConcurrentWorkEdit" [width]="120"
+                                 headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-isNew="isNew" class="text-center">
+          <button kendoGridEditCommand ngbTooltip="Sửa" placement="left"
+                  class="btn btn-primary btn-sm"
+                  style="margin-left: 25px"
+                  [iconClass]="'fas fa-pencil-alt'"></button>
+          <button kendoGridSaveCommand ngbTooltip="Lưu" placement="left"
+                  class="btn btn-primary btn-sm h-35px mt-2 mb-2"
+                  [iconClass]="'fas fa-check'"
+                  [disabled]="boolSave"
+          ></button>
+          <button kendoGridCancelCommand ngbTooltip="Đóng" placement="left"
+                  class="btn btn-danger btn-sm h-35px mt-2 mb-2"
+                  [iconClass]="'fas fa-times'"></button>
+        </ng-template>
+      </kendo-grid-command-column>
+      <ng-template kendoPagerTemplate let-currentPage="currentPage" let-total="total" let-skip="skip"
+                   let-pageSize="pageSize">
+        <div class="d-lg-flex d-md-block justify-content-between w-100">
+          <div class="p-1 d-flex d-sm-flex justify-content-between">
+            <kendo-dropdownlist style="width: 60px;" [data]="pageSizes"
+                                [(ngModel)]="_pageSize" (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex justify-content-center custom-mt-15">
+            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template kendoGridNoRecordsTemplate>
+        {{VI_LANG.NOTIFICATION.NO_DATA}}
+      </ng-template>
+    </kendo-grid>
+    <div *ngIf="boolPage" class="k-i-loading"></div>
+    <!--    </div>-->
+  </kt-portlet-body>
+</kt-portlet>
+<ng-template #modelDelete let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title-delete">Xóa phân công kiêm nhiệm</h4>
+    <button kendoButton type="button" (click)="d('Save click')" [iconClass]="'fas fa-times'">
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-delete-h">
+      <img class="d-block m-auto" src="/assets/media/bg/normal_u546.svg">
+      <p class="text-center mt-5">{{VI_LANG.NOTIFICATION.CONFIRM_DELETE}}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary mr-2" (click)="d('Save click')">{{VI_LANG.BUTTON.CANCEL}}
+    </button>
+    <input type="submit" class="btn btn-primary" [disabled]="okLoadingDelete | async"
+           (click)="deleteConcurent()" tabindex="0" id="deleteConcurent" value="{{VI_LANG.BUTTON.OK}}" #deleteOk/>
+    <div *ngIf="boolDelete" class="k-i-loading"></div>
+  </div>
+</ng-template>

@@ -1,0 +1,113 @@
+<system-search component="subject" (submitClass)="submitClass($event)" (submitSearch)="submitSearch($event)">
+</system-search>
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách môn học của lớp'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button *ktPermission="classSubjectEdit" ngbTooltip="Lưu cho toàn khối" type="button" title="Lưu cho toàn khối" (click)="open()"
+              [disabled]="nullDataDisable" class="btn btn-primary btn-sm mr-2">
+        <span class="acpAll"> <i class="fas fa-save mr-2"></i> Áp dụng toàn khối</span>
+      </button>
+      <button *ktPermission="classSubjectEdit" ngbTooltip="Lưu" type="button" title="Lưu" [disabled]="nullDataDisable"
+              (click)="saveOne()" class="btn btn-primary btn-sm">
+        <i class="far fa-save"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div>
+      <kendo-grid *ngIf="isLoading$ | async " [data]="listDataSubject" scrollable="scrollable"
+                  [selectable]="selectTableSetting" class="mb-4">
+        <kendo-grid-column field="id" title="TT" [width]="50" [resizable]="false" [columnMenu]="false"
+                           class="text-center" headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [width]="120" field="subjectName" headerClass="text-center font-weight-bold" title="Tên môn học">
+        </kendo-grid-column>
+
+        <kendo-grid-column [width]="100" field="acronymName" title="Viết tắt" class="text-center"
+                           headerClass="text-center font-weight-bold">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="subjectType" class="text-center" [width]="120" [columnMenu]="false"
+                           headerClass="text-center font-weight-bold" [width]="150" title="Loại môn">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+            <kendo-dropdownlist #subjectType [disabled]="nullClassDisable" style="width: 100%; height: 100%; align-items: center;"
+                                class="drop{{rowIndex}} subject-dropdown" [data]="listTypeOfSubject" [value]="dataItem.subjectType"
+                                textField="name" valueField="value" [valuePrimitive]="true"
+                                (selectionChange)="loaimonChange($event, dataItem)">
+            </kendo-dropdownlist>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="subjectSpecies" title="Kiểu môn" [width]="120" [columnMenu]="false"
+                           headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+            <kendo-dropdownlist [disabled]="nullClassDisable" style="width: 100%; height: 100%; align-items: center;"
+                                class="drop{{rowIndex}} subject-dropdown" [value]="dataItem.subjectSpecies" textField="name" valueField="value"
+                                [valuePrimitive]="true" [data]="listSubjectType" (selectionChange)="kieumonChange($event, dataItem)">
+            </kendo-dropdownlist>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="numberLessionSemester1" title="Số tiết/tuần HK1" class="text-center" [width]="110"
+                           headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+            <input (keyup.enter)="saveOne()" [disabled]="nullClassDisable" maxlength="3" (keypress)=keyPress($event)
+                   type="text" (copy)="false" (paste)="false" class="id{{rowIndex}} subject-textbox numberLessionSemester1{{rowIndex}}"
+                   value="{{dataItem.numberLessionSemester1}}" (input)="hk1Change($event.target.value, dataItem)" (drop)="false"
+                   (drag)="false">
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="numberLessionSemester2" [width]="110" title="Số tiết/tuần HK2" class="text-center"
+                           headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+            <input (keyup.enter)="saveOne()" [disabled]="nullClassDisable" maxlength="3" (keypress)=keyPress($event)
+                   type="text" (copy)="false" (paste)="false" class="id{{rowIndex}} subject-textbox numberLessionSemester2{{rowIndex}}"
+                   value="{{dataItem.numberLessionSemester2}}" (input)="hk2Change($event.target.value, dataItem)" (drop)="false"
+                   (drag)="false">
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-checkbox-column [width]="70" [resizable]="true" [columnMenu]="false" title="Lựa chọn" field="id"
+                                    class="text-center" headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+            <input [disabled]="checkBoxStatus" class="k-checkbox" id="{{dataItem.subjectId}}" type="checkbox"
+                   (change)="changeChooseSubject(dataItem, rowIndex)" />
+          </ng-template>
+        </kendo-grid-checkbox-column>
+        <ng-template kendoGridNoRecordsTemplate>
+          {{VI_LANG.NOTIFICATION.NO_DATA}}
+        </ng-template>
+      </kendo-grid>
+      <span *ngIf="chooseSubject !== null" style="margin-left: 15px;" class="font-weight-bold">Đã chọn {{chooseSubject}}
+        /{{totalSubject}} môn học</span>
+    </div>
+    <div class="custom-loading-h">
+      <div *ngIf="loading$ | async" class="k-i-loading"></div>
+    </div>
+    <kendo-dialog class="saveAllDialog" title="Thông báo" *ngIf="opened" (close)="close('cancel')" tabindex="1">
+      <div class="question" style="display: flex; margin: 10px;">
+        <i class="far fa-question-circle" style="font-size: 100px; color: red"></i>
+        <p class="titleDialog">{{VI_LANG.NOTIFICATION.CONFIRM_ACCEPT_ALL_GRADE}}</p>
+      </div>
+      <form style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+        <button type="button" class="btn btn btn btn-secondary mr-2 buttonChoose"
+                (click)="close('no')">{{VI_LANG.BUTTON.CANCEL}}
+        </button>
+        <input style="background-color: #419197 !important;color: #ffffff !important;" type="submit"
+               class="btn buttonChoose btn-success" id="submitSaveAll" (click)="close('yes')" tabindex="0" value="{{VI_LANG.BUTTON.OK}}" />
+      </form>
+    </kendo-dialog>
+    <kendo-dialog class="saveAllDialog" title="Thông báo" *ngIf="successOpen" (close)="close('cancel')" tabindex="1">
+      <div class="question" style="display: flex; margin: 13px;">
+        <i class="fas fa-info-circle" style="font-size: 100px; color: #1BC5BD;"></i>
+        <p class="titleSuccess">{{VI_LANG.NOTIFICATION.UPDATE_SUCCESS}}</p>
+      </div>
+      <form style="text-align: center; margin-top: 10px; margin-bottom: 15px;">
+        <input style="background-color: #419197 !important; color: #ffffff !important;" type="submit"
+               class="btn  btn-success" id="closeSuccess" (click)="close('no')" tabindex="0" value="{{VI_LANG.BUTTON.OK}}" />
+      </form>
+    </kendo-dialog>
+  </kt-portlet-body>
+</kt-portlet>

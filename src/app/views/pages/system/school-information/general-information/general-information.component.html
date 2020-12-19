@@ -1,0 +1,483 @@
+<kt-portlet>
+  <kt-portlet-header [class]="'card-head-lg bgr-custom'" [icon]="'fas fa-landmark'"
+                     [title]="'Thông tin chung'">
+    <ng-container ktPortletTools>
+      <div *ngIf="!initGeneral">
+        <button (click)="clickSave()" *ktPermission="schoolInfoEdit"  [iconClass]="'far fa-save'"
+                class="btn btn-primary mr-2"
+                kendoButton type="button"></button>
+      </div>
+      <button (click)="clickSave()" *ngIf="initGeneral" class="btn-custom button-next-step mr-2 border-radius"
+              kendoButton>
+        {{VI_LANG.BUTTON.NEXT}}
+        <span class="k-icon k-i-arrow-right k-icon-32 ml-1" style="color: white"></span>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="identificationCode">Mã định danh</label>
+        </div>
+        <div class="col-md-4">
+          <input class="form-control"
+                 formControlName="maDinhDanh"
+                 id="identificationCode">
+          <p class="text-note">(Mã trường chuẩn trong danh mục CSDL ngành Giáo dục)</p>
+        </div>
+        <div class="col-md-2">
+          <label class="mt-3 ml-md-8" for="listLevelSchool">Cấp học <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4 ">
+          <kendo-multiselect [autoClose]="false"
+                             [data]="levelSchool$ | async "
+                             [textField]="'cateName'"
+                             [valueField]="'cateCode'"
+                             [value]="value"
+                             disabled="true"
+                             id="listLevelSchool"
+
+          ></kendo-multiselect>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="mt-3" for="nameSchool"> Tên trường <span style="color: red">*</span></label>
+            </div>
+            <div class="col-md-10">
+              <div class="custom-ml">
+                <kendo-formfield>
+                  <input smasTrim
+                         [formControlName]="'tenTruong'"
+                         aria-label="Tên trường"
+                         class="form-control"
+                         id="nameSchool"
+                         placeholder="Tên trường"
+                  >
+                  <kendo-formerror *ngIf="form.controls.tenTruong.errors?.required">
+                    {{VI_LANG.FIELD.NAME_SCHOOL}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                  </kendo-formerror>
+                  <kendo-formerror *ngIf="form.controls.tenTruong.errors?.maxlength">
+                    {{VI_LANG.FIELD.NAME_SCHOOL}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+                  </kendo-formerror>
+                </kendo-formfield>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label class="mt-3" for="abbreviations"> Tên viết tắt <span style="color: red">*</span></label>
+            </div>
+            <div class="col-md-10">
+              <div class="custom-ml">
+                <kendo-formfield>
+                  <input smasTrim
+                         [formControlName]="'tenVietTat'"
+                         aria-label="Tên viết tắt" class="form-control"
+                         id="abbreviations"
+                         placeholder="Tên viết tắt">
+                  <kendo-formerror *ngIf="form.controls.tenVietTat.errors?.required">
+                    {{VI_LANG.FIELD.SHORT_NAME_SCHOOL}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                  </kendo-formerror>
+                  <kendo-formerror *ngIf="form.controls.tenVietTat.errors?.maxlength">
+                    {{VI_LANG.FIELD.SHORT_NAME_SCHOOL}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+                  </kendo-formerror>
+                </kendo-formfield>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label class="mt-3" for="address"> Địa chỉ <span style="color: red">*</span></label>
+            </div>
+            <div class="col-md-10">
+              <div class="custom-ml">
+                <kendo-formfield>
+                  <input smasTrim
+                         [formControlName]="'diaChi'"
+                         aria-label="Địa chỉ nhà" class="form-control"
+                         id="address"
+                         placeholder="Địa chỉ nhà">
+                  <kendo-formerror *ngIf="form.controls.diaChi.errors?.required">
+                    {{VI_LANG.FIELD.ADDRESS}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                  </kendo-formerror>
+                  <kendo-formerror *ngIf="form.controls.diaChi.errors?.maxlength">
+                    {{VI_LANG.FIELD.ADDRESS}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+                  </kendo-formerror>
+                </kendo-formfield>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label class="mt-3" for="principal"> Hiệu trưởng <span style="color: red">*</span></label>
+            </div>
+            <div class="col-md-4">
+              <div class="custom-ml-2">
+                <kendo-formfield>
+                  <input smasTrim
+                         [formControlName]="'tenHieuTruong'"
+                         aria-label="Nhập họ tên hiệu trưởng" class="form-control"
+                         id="principal"
+                         placeholder="Nhập họ tên hiệu trưởng">
+                  <kendo-formerror *ngIf="form.controls.tenHieuTruong.errors?.required">
+                    {{VI_LANG.FIELD.PRINCIPAL_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                  </kendo-formerror>
+                  <kendo-formerror *ngIf="form.controls.tenHieuTruong.errors?.maxlength">
+                    {{VI_LANG.FIELD.PRINCIPAL_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+                  </kendo-formerror>
+                </kendo-formfield>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <label class="mt-md mt-2" for="founding">Ngày thành lập <span style="color: red">*</span></label>
+            </div>
+            <div class="col-md-4">
+              <kendo-formfield id="founding">
+                <kendo-datepicker (blur)="validateDate()"
+                                  [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                                  [format]="'dd/MM/yyyy'"
+                                  [max]="maxDate"
+                                  aria-label="Ngày thành lập trường"
+                                  formControlName="ngayThanhLap"
+                                  placeholder="Ngày thành lập trường"
+                                  style="width: 70%; border-color: rgba(0,0,0,0.08) !important;"
+                ></kendo-datepicker>
+                <kendo-formerror *ngIf="form.controls.ngayThanhLap.errors?.required">
+                  {{VI_LANG.FIELD.FOUNDING_DATE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                </kendo-formerror>
+                <kendo-formerror *ngIf="!isDateValid">
+                  {{VI_LANG.FIELD.FOUNDING_DATE}} {{VI_LANG.COMMON_ERROR.GREATER_THAN_CURRENT_DATE}}
+                </kendo-formerror>
+              </kendo-formfield>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <!--upload-file -->
+          <kt-upload-file-img [dataInitialization]="imgSchool$"></kt-upload-file-img>
+          <!--end upload-file -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="phoneNumberOfPrincipal">Số ĐT hiệu trưởng <span style="color: red">*</span></label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim
+                 [formControlName]="'sdtHieuTruong'"
+                 class="form-control"
+                 id="phoneNumberOfPrincipal"
+                 placeholder="Số ĐT hiệu trưởng"
+          >
+          <kendo-formerror>
+            <div *ngIf="form.controls.sdtHieuTruong.errors?.required">
+              {{VI_LANG.FIELD.PHONE_PRINCIPAL}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.sdtHieuTruong.hasError('pattern')&&(!form.controls.sdtHieuTruong.errors?.maxlength)">
+              {{VI_LANG.FIELD.PHONE_PRINCIPAL}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.sdtHieuTruong.errors?.maxlength">
+              {{VI_LANG.FIELD.PHONE_PRINCIPAL}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+        <div class="col-md-2">
+          <label class="mt-md" for="phoneNumber">Điện thoại <span style="color: red">*</span></label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim
+                 [formControlName]="'dienThoai'"
+                 class="form-control"
+                 id="phoneNumber"
+                 placeholder="Nhập số điện thoại"
+          >
+          <kendo-formerror>
+            <div *ngIf="form.controls.dienThoai.errors?.required">
+              {{VI_LANG.FIELD.PHONE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.dienThoai.hasError('pattern') && !form.controls.dienThoai.errors?.maxlength">
+              {{VI_LANG.FIELD.PHONE}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.dienThoai.errors?.maxlength">
+              {{VI_LANG.FIELD.PHONE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="normalCountry">Mức chuẩn quốc gia</label>
+        </div>
+        <div class="col-md-4 ">
+          <kendo-dropdownlist (focusout)="change()" [data]="listStandardCountry$ | async"
+                              [defaultItem]="defaultStandardCountry"
+                              [textField]="'cateName'"
+                              [valueField]="'cateCode'"
+                              [valuePrimitive]="true"
+                              formControlName="mucChuanQG"
+                              id="normalCountry"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+
+        </div>
+        <div class="col-md-2">
+          <label class="mt-md" for="fax">Fax </label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim
+                 [formControlName]="'fax'"
+                 class="form-control"
+                 id="fax"
+                 placeholder="Nhập fax">
+          <kendo-formerror>
+            <div *ngIf="form.controls.fax.hasError('pattern') && (!form.controls.fax.errors?.maxlength)">
+              {{VI_LANG.FIELD.FAX}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.fax.errors?.maxlength">
+              {{VI_LANG.FIELD.FAX}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="course">Khóa học <span style="color: red">*</span></label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim
+                 [formControlName]="'khoaHoc'"
+                 class="form-control"
+                 id="course"
+                 placeholder="Nhập khóa học">
+          <kendo-formerror>
+            <div *ngIf="form.controls.khoaHoc.errors?.required">
+              {{VI_LANG.FIELD.COURSE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.khoaHoc.hasError('pattern') && !form.controls.khoaHoc.errors?.maxlength">
+              {{VI_LANG.FIELD.COURSE}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.khoaHoc.errors?.maxlength">
+              {{VI_LANG.FIELD.COURSE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+        <div class="col-md-2">
+          <label class="mt-md" for="website">Website </label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim [formControlName]="'web'"
+                 class="form-control"
+                 id="website"
+                 placeholder="Nhập website">
+          <kendo-formerror>
+            <div *ngIf="form.controls.web.errors?.required">
+              {{VI_LANG.FIELD.WEBSITE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.web.errors?.maxlength">
+              {{VI_LANG.FIELD.WEBSITE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_100}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="texCode">Mã số thuế </label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim
+                 [formControlName]="'maSoThue'"
+                 class="form-control"
+                 id="texCode"
+                 placeholder="Nhập mã số thuế">
+          <kendo-formerror>
+            <div *ngIf="form.controls.maSoThue.errors?.maxlength">
+              {{VI_LANG.FIELD.TEX_CODE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+        <div class="col-md-2">
+          <label class="mt-md" for="email">Email <span style="color: red">*</span></label>
+        </div>
+        <kendo-formfield class="col-md-4">
+          <input smasTrim [formControlName]="'email'"
+                 aria-label="Nhập email"
+                 class="form-control"
+                 id="email"
+                 placeholder="user@example.com">
+          <kendo-formerror>
+            <div *ngIf="form.controls.email.errors?.required">
+              {{VI_LANG.FIELD.EMAIL}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </div>
+            <div *ngIf="form.controls.email.errors?.maxlength"><p>
+              {{VI_LANG.FIELD.EMAIL}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_100}}
+            </p></div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.email.errors?.email && (!form.controls.email.errors?.maxlength)"><p>
+              {{VI_LANG.FIELD.EMAIL}} {{VI_LANG.COMMON_ERROR.PATTERN_EMAIL}}
+            </p></div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <hr style="width: 95%">
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="codeSchool">Mã trường</label>
+        </div>
+        <div class="col-md-4">
+          <input [formControlName]="'maTruong'"
+                 aria-label="Mã trường" class="form-control"
+                 id="codeSchool" placeholder="Mã trường">
+        </div>
+        <div class="col-md-2">
+          <label class="mt-md" for="admin">Admin username</label>
+        </div>
+        <div class="col-md-4">
+          <input class="form-control"
+                 formControlName="maDinhDanh"
+                 id="admin">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="agency1">Cơ quan chủ quản </label>
+        </div>
+        <div class="col-md-4">
+          <input [formControlName]="'coQuanChuQuan'"
+                 aria-label="Cơ quan chủ quản"
+                 class="form-control"
+                 id="agency1"
+                 placeholder="Nhập cơ quan chủ quản">
+        </div>
+        <div class="col-md-2">
+          <label class="mt-md" for="typeSchool">Loại trường <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4">
+          <kendo-dropdownlist [data]="listTypeSchool$ | async"
+                              [textField]="'cateName'"
+                              [valueField]="'cateCode'"
+                              [valuePrimitive]="true"
+                              formControlName="maLoaiTruong"
+                              id="typeSchool"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="agency">Đơn vị quản lý <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4">
+          <kendo-dropdownlist [data]="listAgency$ | async"
+                              [textField]="'managementUnitName'"
+                              [valueField]="'managementUnitCode'"
+                              [valuePrimitive]="true"
+                              formControlName="maDonViQuanLy"
+                              id="agency"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+        </div>
+        <div class="col-md-2">
+          <label class="mt-md" for="typeEducations">Loại hình đào tạo <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-2">
+          <kendo-dropdownlist [data]="listTypeEdu$ | async"
+                              [textField]="'cateName'"
+                              [valueField]="'cateCode'"
+                              [valuePrimitive]="true"
+                              formControlName="maLoaiHinhDaotao"
+                              id="typeEducations"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+        </div>
+        <div class="col-md-2">
+          <kendo-dropdownlist [data]="listLoaiHinhDaoTaoHocTap"
+                              [textField]="'text'"
+                              [valueField]="'id'"
+                              [valuePrimitive]="true"
+                              formControlName="maLoaiHinhDaoTaoChiTiet"
+                              style="width: 100%;"
+          >
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="areas">Khu vực <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4">
+          <kendo-dropdownlist [data]="listAreas$ | async"
+                              [textField]="'cateName'"
+                              [valueField]="'cateCode'"
+                              [valuePrimitive]="true"
+                              formControlName="maKhuVuc"
+                              id="areas"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+        </div>
+        <div class="col-md-2">
+          <label class="mt-md" for="province">Tỉnh/TP <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4">
+          <kendo-dropdownlist [data]="province$ | async"
+                              [textField]="'provinceName'"
+                              [valueField]="'provinceCode'"
+                              [valuePrimitive]="true"
+                              formControlName="maTinh"
+                              id="province"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label class="mt-3" for="districts">Quận/Huyện <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4">
+          <kendo-dropdownlist [data]="districts$ | async"
+                              [textField]="'districtName'"
+                              [valueField]="'districtCode'"
+                              [valuePrimitive]="true"
+                              formControlName="maHuyen"
+                              id="districts"
+                              style="width: 100%">
+          </kendo-dropdownlist>
+        </div>
+        <div class="col-md-2">
+          <label class="mt-md" for="wards">Xã/Phường <span style="color: red">*</span></label>
+        </div>
+        <div class="col-md-4">
+          <kendo-dropdownlist [data]="ward$ | async"
+                              [textField]="'wardName'"
+                              [valueField]="'wardCode'"
+                              [valuePrimitive]="true"
+                              class="w-100"
+                              formControlName="maXa"
+                              id="wards">
+          </kendo-dropdownlist>
+        </div>
+      </div>
+    </form>
+  </kt-portlet-body>
+</kt-portlet>

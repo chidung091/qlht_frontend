@@ -1,0 +1,843 @@
+<div class="title-add-pf mb-5">
+    <span>Thêm hồ sơ học sinh</span>
+    <div>
+        <button class="btn btn-sm btn-primary mr-2" (click)="save()">
+            Lưu
+        </button>
+        <button class="btn btn-sm mr-2 btn-custom-h-reset" (click)="reset()">
+            Làm lại
+        </button>
+        <button class="btn btn-sm btn-dark" (click)="back()">
+            Quay lại
+        </button>
+    </div>
+</div>
+<form [formGroup]="FormAddStudent">
+    <!-- Thông tin chung -->
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-address-card'" [title]="'Thông tin chung'" [class]="'card-head-lg'"
+            (click)="isInformation = !isInformation">
+            <ng-container ktPortletTools>
+                <i [hidden]="isInformation" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isInformation" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body *ngIf="!isInformation">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="img-add-profile" style="cursor: pointer;">
+                        <img [src]="domFile.bypassSecurityTrustUrl(imgsrc)" alt="">
+                        <div class=" border text-center border-top-0 bg-light">
+                            <label class="px-2 mb-0">
+                                <i class="fas fa-camera fa-2x"></i>
+                                <input type="file" style="display: none;" (change)="fileChange($event)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Khối <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist 
+                                    formControlName="BlockCode" 
+                                    style="width: 100%" 
+                                    [data]="grade$ | async"
+                                    [textField]="'cateName'" 
+                                    [valueField]="'cateCode'"
+                                    [valuePrimitive]="true"
+                                    [defaultItem]="defaultListData"
+                                    (ngModelChange)="getClaasByGradeLevel($event)"
+                                    [loading]="!(gradeLoaded$ | async)" >
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                            <div class="pf-control">
+                                <label></label>
+                                <div class="kendo-form">
+                                    <div *ngIf="submitted && f.BlockCode.errors || (f.BlockCode.dirty || f.BlockCode.touched) && f.BlockCode.errors">
+                                        <div class="text-danger mt--10">
+                                            <div *ngIf="f.BlockCode.errors.required">
+                                                Khối không được để trống
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Lớp học <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist 
+                                    formControlName="ClassId" 
+                                    style="width: 100%" 
+                                    [data]="dsClass"
+                                    [textField]="'className'" 
+                                    [valueField]="'id'"
+                                    [defaultItem]="defaultListClass"
+                                    [valuePrimitive]="true"
+                                    [loading]="isloadingClass">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Trạng thái <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist 
+                                    formControlName="StatusCode" 
+                                    style="width: 100%" 
+                                    [data]="ListStatusCode$ | async"
+                                    [textField]="'cateName'" 
+                                    [valueField]="'cateCode'"
+                                    [valuePrimitive]="true"
+                                    [defaultItem]="defaultListData">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                            <div class="pf-control">
+                                <label></label>
+                                <div class="kendo-form">
+                                    <div *ngIf="submitted && f.StatusCode.errors || (f.StatusCode.dirty || f.StatusCode.touched) && f.StatusCode.errors">
+                                        <div class="text-danger mt--10">
+                                            <div *ngIf="f.StatusCode.errors.required">
+                                                Trạng thái không được để trống
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Mã học sinh <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <input type="text" formControlName="StudentCode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="pf-control">
+                                <label></label>
+                                <div class="kendo-form">
+                                    <div *ngIf="submitted && f.StudentCode.errors || (f.StudentCode.dirty || f.StudentCode.touched) && f.StudentCode.errors">
+                                        <div class="text-danger mt--10">
+                                            <div *ngIf="f.StudentCode.errors.required">
+                                                Mã học sinh không được để trống
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Số đăng bộ</label>
+                                <div class="kendo-form">
+                                    <input type="text" formControlName="StorageNumber" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end align-items-center mb-5">
+                                <label class="k-checkbox-label">Sinh mã tự động</label>
+                                <input type="checkbox" id="terms" kendoCheckBox />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Họ và tên <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <input type="text" formControlName="FullName" width="100%" class="form-control">
+                                </div>
+                            </div>
+                            <div class="pf-control">
+                                <label></label>
+                                <div class="kendo-form">
+                                    <div *ngIf="submitted && f.FullName.errors || (f.FullName.dirty || f.FullName.touched) && f.FullName.errors">
+                                        <div class="text-danger mt--10">
+                                            <div *ngIf="f.FullName.errors.required">
+                                                Họ và tên không được để trống
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Tên gọi khác</label>
+                                <div class="kendo-form">
+                                    <input formControlName="FullNameOther" type="text" width="100%"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Ngày sinh <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-datepicker formControlName="DateOfBirth" style="width: 100%">
+                                    </kendo-datepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Giới tính <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist 
+                                    formControlName="Gender" 
+                                    style="width: 100%" 
+                                    [data]="ListGender$ | async"
+                                    [textField]="'cateName'" 
+                                    [valueField]="'cateCode'"
+                                    [defaultItem]="defaultListData"
+                                    [valuePrimitive]="true">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                            <div class="pf-control">
+                                <label></label>
+                                <div class="kendo-form">
+                                    <div *ngIf="submitted && f.Gender.errors || (f.Gender.dirty || f.Gender.touched) && f.Gender.errors">
+                                        <div class="text-danger mt--10">
+                                            <div *ngIf="f.Gender.errors.required">
+                                                Họ và tên không được để trống
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Tỉnh/Thành <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist  
+                                        [valuePrimitive]="true" 
+                                        formControlName="ProvinceCityCode" 
+                                        style="width: 100%" 
+                                        [data]=""
+                                        [textField]="'aaaaa'" 
+                                        [valueField]="'Tỉnh Nam Định'">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Quận/Huyện</label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist  [valuePrimitive]="true" formControlName="DistrictCode" style="width: 100%" [data]=""
+                                        [textField]="''" [valueField]="''">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Xã/phường</label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist  [valuePrimitive]="true" formControlName="WardCode" style="width: 100%" [data]=""
+                                        [textField]="" [valueField]="">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Thôn/xóm</label>
+                                <div class="kendo-form">
+                                    <input type="text" formControlName="Village" width="100%" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Ngày vào trường <span class="pf-required">*</span></label>
+                                <div class="kendo-form">
+                                    <kendo-datepicker style="width: 100%" formControlName="EnrolmentDate">
+                                    </kendo-datepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Hình thức</label>
+                                <div class="kendo-form">
+                                    <kendo-dropdownlist 
+                                        formControlName="EnrolmentType" 
+                                        style="width: 100%" 
+                                        [data]="ListEnrolmentType"
+                                        [textField]="'text'" 
+                                        [valueField]="'value'"
+                                        [valuePrimitive]="true">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Nơi sinh</label>
+                                <div class="kendo-form">
+                                    <input formControlName="BirthPlace" type="text" width="100%" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Quê quán</label>
+                                <div class="kendo-form">
+                                    <input formControlName="HomeTown" type="text" width="100%" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Địa chỉ thường trú</label>
+                                <div class="kendo-form">
+                                    <input formControlName="PermanentResidentalAddress" type="text" width="100%"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pf-control">
+                                <label>Địa chỉ tạm trú</label>
+                                <div class="kendo-form">
+                                    <input formControlName="TempResidentalAddress" type="text" width="100%"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kt-portlet-body>
+    </kt-portlet>
+
+    <!-- Thông tin cá nhân -->
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-user'" [title]="'Thông tin cá nhân'" [class]="'card-head-lg'"
+            (click)="isPersonal = !isPersonal">
+            <ng-container ktPortletTools>
+                <i [hidden]="isPersonal" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isPersonal" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body *ngIf="!isPersonal">
+            <div class="pf-personal" *ngIf="!isPersonal">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Dân tộc</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist 
+                                    formControlName="EthnicCode" 
+                                    style="width: 100%" 
+                                    [data]="ListEthnicCode$ | async"
+                                    [textField]="'cateName'"
+                                    [valueField]="'cateCode'"
+                                    [defaultItem]="defaultListData"
+                                    [valuePrimitive]="true">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Dân tộc trên giấy KS</label>
+                            <div class="kendo-form">
+                                <input type="text" formControlName='EthnicInBirthDayCertificate' width="100%"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Tên gọi khác (Dân tộc)</label>
+                            <div class="kendo-form">
+                                <input 
+                                type="text" 
+                                formControlName="EthnicOtherCode" 
+                                width="100%" 
+                                class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Khu vực</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  
+                                [valuePrimitive]="true" 
+                                formControlName="AreaCode" 
+                                style="width: 100%" 
+                                [data]="ListAreaCode$ | async"
+                                [textField]="'cateName'" 
+                                [valueField]="'cateCode'"
+                                [defaultItem]="defaultListData">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Tôn giáo</label>
+                            <div class="kendo-form">
+                                <input type="text" formControlName="ReligionCode" width="100%" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Vùng khó khăn</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist 
+                                formControlName="PoorAreaCode" 
+                                style="width: 100%"
+                                [data]="ListPoorAreaCode$ | async" 
+                                [textField]="'cateName'" 
+                                [valueField]="'cateCode'"  
+                                [valuePrimitive]="true"
+                                [defaultItem]="defaultListData">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Đối tượng chính sách</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist
+                                    [valuePrimitive]="true" 
+                                    formControlName="PolicyObjectCode" 
+                                    style="width: 100%"
+                                    [data]="ListPoorAreaCode$ | async" 
+                                    [textField]="'cateName'" 
+                                    [valueField]="'cateCode'"
+                                    [defaultItem]="defaultListData">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Chế độ chính sách</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  [valuePrimitive]="true" formControlName="PolicyCode" style="width: 100%" [data]=""
+                                    [textField]="''" [valueField]="''">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Hỗ trợ chi phí học tập</label>
+                            <input type="checkbox" formControlName='HasSupportCostStudying' id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Cấp tiền hàng tháng</label>
+                            <input type="checkbox" formControlName="HasMonthlyGrant" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Hỗ trợ nhà ở</label>
+                            <input type="checkbox" formControlName="HasHousingAssistance" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Diện học sinh</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  [valuePrimitive]="true" formControlName="StudentTypeCode" style="width: 100%"
+                                    [data]="" [textField]="''" [valueField]="''">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Chỗ ở</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  [valuePrimitive]="true" formControlName="Accommodation" style="width: 100%"
+                                    [data]="" [textField]="''" [valueField]="''">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Chế độ hỗ trợ </label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  [valuePrimitive]="true" formControlName="SupportMode" style="width: 100%"
+                                    [data]="" [textField]="''" [valueField]="''">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Cấp gạo </label>
+                            <input type="checkbox" formControlName="HasSupplyRice" id="terms" kendoCheckBox />
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> HSDT có nhu cầu HT NN</label>
+                            <input type="checkbox" formControlName="HSDTCoNhuCauHTNN" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Thuộc diện tái định cư</label>
+                            <input type="checkbox" id="terms" formControlName="HasResettlement" kendoCheckBox />
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> HSDT có TL tăng cường TV</label>
+                            <input type="checkbox" id="terms" formControlName="HSDTCoTLTangCuongTV" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Đã học lớp MG 5 tuổi</label>
+                            <input type="checkbox" id="terms" formControlName="HasLearnKindergarten" kendoCheckBox />
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Học song ngữ </label>
+                            <input type="checkbox" id="terms" formControlName="HasBilingualStudy" kendoCheckBox />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mt-3">
+                            <label class="k-checkbox-label">Khuyết tật</label>
+                            <input type="checkbox" id="terms" formControlName="HasDisability" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Loại khuyết tật </label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  
+                                    [valuePrimitive]="true" 
+                                    formControlName="DisabilityTypeCode" 
+                                    style="width: 100%"
+                                    [data]="ListDisabilityTypeCode$ | async" 
+                                    [textField]="'cateName'" 
+                                    [valueField]="'cateCode'"
+                                    [defaultItem]="defaultListData">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Mức độ khuyết tật</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  [valuePrimitive]="true" formControlName='DegreeDisability' style="width: 100%"
+                                    [data]="" [textField]="''" [valueField]="''">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mt-2">
+                            <label class="k-checkbox-label">Là Đội viên </label>
+                            <input type="checkbox" formControlName="IsYoungPioneer" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Ngày vào Đội</label>
+                            <div class="kendo-form">
+                                <kendo-datepicker formControlName="YoungPioneerJoinedDate" style="width: 100%">
+                                </kendo-datepicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label">Biết bơi </label>
+                            <input formControlName="HasKnowSwim" type="checkbox" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-8 mt-3">
+                            <label class="k-checkbox-label"> Học chương trình GD của bộ </label>
+                            <input formControlName="HasStudyDepartmentEducationalProgram" type="checkbox" id="terms"
+                                kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-8 mt-3">
+                            <label class="k-checkbox-label"> Học sinh DT trợ giảng </label>
+                            <input formControlName="IsEthnicStudentTeachingAssistant" type="checkbox" id="terms"
+                                kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-8 mt-3">
+                            <label class="k-checkbox-label"> Lưu ban năm trước</label>
+                            <input formControlName="LuuBanNamTruoc" type="checkbox" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-center mb-5">
+                            <label class="k-checkbox-label"> Học tiếng dân tộc</label>
+                            <input formControlName="HasLearnEthnicLanguage" type="checkbox" id="terms" kendoCheckBox />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Số buổi học trên tuần</label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist  
+                                [valuePrimitive]="true" 
+                                formControlName="NumberLessionPerWeekCode" 
+                                style="width: 100%"
+                                [data]="NumberLessionPerWeekCode$ | async" 
+                                [textField]="'cateName'" 
+                                [valueField]="'cateCode'">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Nhóm máu </label>
+                            <div class="kendo-form">
+                                <kendo-dropdownlist
+                                    formControlName="BloodGroup" 
+                                    style="width: 100%" 
+                                    [data]="ListBloodGroup"
+                                    [textField]="'text'" 
+                                    [valueField]="'value'"
+                                    [valuePrimitive]="true">
+                                </kendo-dropdownlist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Số ĐT nhà</label>
+                            <div class="kendo-form">
+                                <input formControlName="HomePhoneNumber" type="text" width="100%" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pf-control">
+                            <label>Số ĐT di động </label>
+                            <div class="kendo-form">
+                                <input formControlName="MobilePhoneNumber" type="text" width="100%"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kt-portlet-body>
+    </kt-portlet> 
+
+    <!-- Thông tin gia đình -->
+    <kt-portlet>
+        <kt-portlet-header [icon]="'fas fa-users'" [title]="'Thông tin gia đình'" [class]="'card-head-lg'"
+            (click)="isPersonal = !isPersonal">
+            <ng-container ktPortletTools>
+                <i [hidden]="isPersonal" class="fas fa-angle-double-down"></i>
+                <i [hidden]="!isPersonal" class="fas fa-angle-double-up"></i>
+            </ng-container>
+        </kt-portlet-header>
+        <kt-portlet-body *ngIf="!isPersonal">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="pf-control">
+                        <label>Thành phần gia đình</label>
+                        <div class="kendo-form">
+                            <kendo-dropdownlist
+                            formControlName="FamilyType" 
+                            style="width: 100%" 
+                            [data]="ListFamilyType"
+                            [textField]="'text'" 
+                            [valueField]="'value'"
+                            [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pf-checkbox">
+                        <label class="k-checkbox-label">Có bố là dân tộc</label>
+                        <input type="checkbox" id="terms" formControlName="HasFatherIsEthnic" kendoCheckBox />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="pf-checkbox">
+                        <label class="k-checkbox-label">Có mẹ là dân tộc</label>
+                        <input type="checkbox" id="terms" formControlName="HasMotherIsEthnic" kendoCheckBox />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="pf-control">
+                        <label>Họ tên cha</label>
+                        <div class="kendo-form">
+                            <input type="text" width="100%" formControlName="FatherName" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" class="mbi-15" formControlName="FatherName" placeholder="Năm sinh cha"
+                                width="100%" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="mbi-15" formControlName="FatherProfession"
+                                placeholder="Nghề nghiệp cha" width="100%" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="mbi-15" formControlName="FatherPhoneNumber" placeholder="SĐT cha"
+                                width="100%" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="mbi-15" formControlName="FatherEmail" placeholder="Email cha"
+                                width="100%" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="pf-control">
+                        <label>Họ tên mẹ</label>
+                        <div class="kendo-form">
+                            <input type="text" formControlName="MotherName" width="100%" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" formControlName="MotherYearOfBirth" class="mbi-15"
+                                placeholder="Năm sinh mẹ" width="100%" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" formControlName="MotherProfession" class="mbi-15"
+                                placeholder="Nghề nghiệp mẹ" width="100%" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" formControlName="MotherPhoneNumber" class="mbi-15" placeholder="SĐT mẹ"
+                                width="100%" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" formControlName="MotherEmail" class="mbi-15" placeholder="Email mẹ"
+                                width="100%" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="pf-control">
+                        <label>Tên người bảo hộ</label>
+                        <div class="kendo-form">
+                            <input 
+                            type="text" 
+                            formControlName="GuardianName" 
+                            width="100%" 
+                            class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input 
+                            type="text" 
+                            formControlName="GuardianYearOfBirth" 
+                            class="mbi-15" 
+                            placeholder="Năm sinh NBH" 
+                            width="100%"
+                            class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input 
+                            type="text" 
+                            class="mbi-15" 
+                            formControlName="GuardianProfession" 
+                            placeholder="Nghề nghiệp NBH" 
+                            width="100%"
+                            class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input 
+                            type="text" 
+                            class="mbi-15" 
+                            formControlName="GuardianPhoneNumber" 
+                            placeholder="SĐT NBH" 
+                            width="100%" 
+                            class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input 
+                            type="text" 
+                            class="mbi-15" 
+                            formControlName="GuardianEmail" 
+                            placeholder="Email NBH" 
+                            width="100%" 
+                            class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kt-portlet-body>
+    </kt-portlet>
+
+    <div class="custom-loading-h">
+        <div *ngIf="isloading" class="k-i-loading"></div>
+    </div>
+</form>

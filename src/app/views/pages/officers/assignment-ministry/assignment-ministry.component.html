@@ -1,0 +1,99 @@
+<kt-portlet>
+  <!--Tìm kiếm-->
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+    (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="row" *ngIf="isCollapsed" >
+      <div class="col-lg-6 col-md-6 mb-15-h">
+        <div class="row">
+          <div class="col-sm-3" style="margin: auto; margin-right: 0px; text-align: end">Tổ bộ môn:</div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist class="w-100"
+                                [data]="schoolFaculty$ | async"
+                                [textField]="'facultyName'"  [valueField]="'facultyName'"
+                                [loading]="!(schoolFacultyLoaded$ | async)"
+                                [(ngModel)]="selectSchoolFaculty"
+                                [defaultItem]="defaultSchoolFaculty"
+                                (ngModelChange)="changeSchoolFaculty()">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 ">
+        <div class="row ">
+          <div class="col-sm-3 text-view-mmb" style="margin: auto; text-align: end">Giáo viên:</div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist class="w-100"
+                                [data]="employees | async" #employee
+                                [textField]="'fullName'" [valueField]="'id'"
+                                [disabled]="isDisableDropdown"
+                                [loading]="!(employeesLoaded | async)"
+                                [(ngModel)]="selectEmployee"
+                                (valueChange)="getDataAssignmentMinistry()"
+                                [defaultItem]="defaultEmployee">
+            </kendo-dropdownlist>
+          </div>
+          <div class="col-md-1 "></div>
+        </div>
+      </div>
+    </div>
+  </kt-portlet-body>
+
+  <!--Table-->
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách phân công giáo vụ'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button title="Lưu" type="button" class="btn btn-primary btn-sm"  (click)="submit()">
+        <i class="far fa-save"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="row">
+      <div class="col-2" style="padding: 5px 0px 0px 0px !important;cursor: pointer;">
+        <ul *ngFor="let item of grade$ | async, let i = index" class="pl-0" style="list-style-type:none;font-weight: bolder;">
+          <li style="text-align: center; border-bottom: 1px solid #eee;"
+              (click)="changeGrade(item, i)"
+              [ngClass]="{'active': gradePickNumber === i}">{{item.cateName}}</li>
+        </ul>
+      </div>
+      <div class="col-10">
+        <kendo-grid [data]="classRoom$ | async"
+                    [selectable]="{enabled: false, checkboxOnly: true , isCollapsed: true}">
+          <kendo-grid-column  title="TT" [width]="50" field="id"
+                              class="text-center" headerClass="text-center font-weight-bold">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column class="custom-center" field="className"
+                             headerClass="text-center font-weight-bold" title="Lớp"
+                             [columnMenu]="false">
+          </kendo-grid-column>
+          <kendo-grid-checkbox-column
+            *ngFor="let column of supervisorRole| async, let i = index"
+            class="text-center"
+            headerClass="text-center font-weight-bold"
+          >
+            <ng-template kendoGridHeaderTemplate let-dataItem>
+              {{ column.remark }}<br />
+              <input type="checkbox" kendoCheckBox (change)="changeCheckbox($event, dataItem, column, true)" [ngModel]="changeCheckAll(column)"/>
+            </ng-template>
+
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <input type="checkbox" kendoCheckBox (change)="changeCheckbox($event, dataItem, column)" [ngModel]="checkChecked(dataItem.id, column.id)"/>
+            </ng-template>
+          </kendo-grid-checkbox-column>
+          <ng-template kendoGridNoRecordsTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+        </kendo-grid>
+        <div class="custom-loading-h">
+          <div *ngIf="!(isLoaded | async)" class="k-i-loading"></div>
+        </div>
+      </div>
+    </div>
+
+  </kt-portlet-body>
+</kt-portlet>

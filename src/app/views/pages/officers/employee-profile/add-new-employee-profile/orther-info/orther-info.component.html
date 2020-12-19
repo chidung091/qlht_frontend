@@ -1,0 +1,273 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Môn dạy kiêm nhiệm</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0"
+                          formControlName="concurrentSubjectCode"
+                          [data]="concurrentSubject$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5  align-self-center">
+      <label class="label-custom">Thành phần gia đình</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0"
+                          formControlName="familyTypeCode"
+                          [data]="maritalStatus$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Ghi chú khác</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="otherNote" maxLength=250 smasTrim>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Tình trạng hôn nhân</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0"
+                          formControlName="mariageStatusCode"
+                          [data]="maritalStatus$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isYouthLeageMember" formControlName="isYouthLeageMember"
+               style="margin-top: 2px"
+               (change)="changeCheckbox('isYouthLeageMember')">
+      </div>
+      <label for="isYouthLeageMember" class="label-custom ml-2">Là đoàn viên</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-datepicker [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                        [format]="'dd/MM/yyyy'"
+                        [max]="maxDate"
+                        formControlName="youthLeageJoinDate"
+                        placeholder="Ngày kết nạp đoàn"
+                        style="width: 75%"
+      ></kendo-datepicker>
+      <div class="text-danger m-auto" *ngIf="form.controls.youthLeageJoinDate.value>nowDate">
+        Ngày không hợp lệ
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Nơi kết nạp đoàn</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="youthLeageJoinPlace" smasTrim>
+    </div>
+    <div class="col-md-2 mb-5 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isCommunistPartyMember" formControlName="isCommunistPartyMember"
+               style="margin-top: 2px"
+               (change)="changeCheckbox('isCommunistPartyMember')">
+      </div>
+      <label for="isCommunistPartyMember" class="label-custom ml-2 ">Là đảng viên</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-datepicker [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                        [format]="'dd/MM/yyyy'"
+                        [max]="maxDate"
+                        formControlName="partyJoinedDate"
+                        placeholder="Ngày kết nạp đảng"
+                        style="width: 75%"
+      ></kendo-datepicker>
+      <div class="text-danger m-auto" *ngIf="form.controls.partyJoinedDate.value>nowDate">
+        Ngày không hợp lệ
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Nơi kết nạp đảng</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="partyJoinedPlace" smasTrim>
+    </div>
+    <div class="col-md-2 mb-5 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isTradeUnion" formControlName="isTradeUnion"
+               style="margin-top: 2px"
+               (change)="changeCheckbox('isTradeUnion')">
+      </div>
+      <label for="isTradeUnion" class="label-custom ml-2 ">Là công đoàn viên</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-datepicker [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                        [format]="'dd/MM/yyyy'"
+                        [max]="maxDate"
+                        formControlName="tradeUnionJoinedDate"
+                        placeholder="Ngày kết công đoàn"
+                        style="width: 75%"
+      ></kendo-datepicker>
+      <div class="text-danger m-auto" *ngIf="form.controls.tradeUnionJoinedDate.value>nowDate">
+        Ngày không hợp lệ
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Số sổ BHXH</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="insuranceNumber" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.insuranceNumber.errors?.pattern ">
+          Trường này chỉ cho nhập số hoặc chữ
+        </div>
+        <div *ngIf="form.controls.insuranceNumber.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Họ tên bố</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="fatherFullName" smasTrim>
+    </div>
+
+    <div class="col-md-2 mb-5">
+      <input placeholder="Năm sinh" type="text"
+             class="form-control" formControlName="fatherBirthDate" maxlength="4">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.fatherBirthDate.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.fatherBirthDate.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 4 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5">
+      <input placeholder="Nghề nghiệp"
+             class="form-control " formControlName="fatherJob" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.fatherJob.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 250 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5">
+      <input placeholder="Nơi làm việc"
+             class="form-control " formControlName="fatherWorkingPlace" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.fatherWorkingPlace.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 250 kí tự
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Họ tên mẹ</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="motherFullName" smasTrim>
+    </div>
+
+    <div class="col-md-2 mb-5">
+      <input placeholder="Năm sinh" type="text"
+             class="form-control" formControlName="motherBirthDate" maxlength="4">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.motherBirthDate.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.motherBirthDate.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 4 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5">
+      <input placeholder="Nghề nghiệp"
+             class="form-control " formControlName="motherJob" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.motherJob.errors?.maxLength " >
+          Trường này chỉ cho nhập tối đa 250 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5">
+      <input placeholder="Nơi làm việc"
+             class="form-control " formControlName="motherWorkingPlace" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.motherWorkingPlace.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 250 kí tự
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2 mb-5 align-self-center">
+      <label class="label-custom">Họ tên vợ / chồng</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="spouseFullName" smasTrim>
+    </div>
+
+    <div class="col-md-2 mb-5">
+      <input placeholder="Năm sinh" type="text"
+             class="form-control" formControlName="spouseBirthDate" maxlength="4">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.spouseBirthDate.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.spouseBirthDate.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 4 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5">
+      <input placeholder="Nghề nghiệp"
+             class="form-control " formControlName="spouseJob" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.spouseJob.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 250 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5">
+      <input placeholder="Nơi làm việc"
+             class="form-control " formControlName="spouseWorkingPlace" smasTrim>
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.motherWorkingPlace.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 250 kí tự
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isRegularRefresher" style="margin-top: 2px" formControlName="isRegularRefresher">
+      </div>
+      <label for="isRegularRefresher" class="label-custom ml-2">Bồi dưỡng thường xuyên</label>
+    </div>
+    <div class="col-md-3 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isMotelRoomOutsite" style="margin-top: 2px" formControlName="isMotelRoomOutsite">
+      </div>
+      <label for="isMotelRoomOutsite" class="label-custom ml-2">Thuê trọ ngoài</label>
+    </div>
+    <div class="col-md-3 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isTeacherDuties" style="margin-top: 2px" formControlName="isTeacherDuties">
+      </div>
+      <label for="isTeacherDuties" class="label-custom ml-2">Đang ở nhà công vụ</label>
+    </div>
+    <div class="col-md-3 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isNeedTeacherDuties" style="margin-top: 2px" formControlName="isNeedTeacherDuties">
+      </div>
+      <label for="isNeedTeacherDuties" class="label-custom ml-2">Có nhu cầu ở nhà công vụ</label>
+    </div>
+  </div>
+</form>

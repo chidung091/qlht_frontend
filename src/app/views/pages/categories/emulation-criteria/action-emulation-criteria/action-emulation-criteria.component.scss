@@ -1,0 +1,53 @@
+.content {
+  position: relative;
+  z-index: 1000;
+}
+
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+  z-index: 10000;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 2.25rem;
+  margin-bottom: -10px;
+}
+
+button {
+  border: none !important;
+  outline: none !important;
+  &:hover {
+    border: none !important;
+    outline: none !important;
+  }
+}
+.k-form-hint{
+  margin-top: 5px !important;
+  color: white !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -o-user-select: none !important;
+  user-select: none !important;
+}
+
+.k-form-error, .k-text-error, .k-form-field-error .k-label{
+  margin-top: 5px !important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

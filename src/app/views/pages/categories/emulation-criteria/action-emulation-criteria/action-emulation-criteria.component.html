@@ -1,0 +1,53 @@
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="pt-5 row">
+      <div class="col-sm-4">
+        <label for="nameEmu">{{VI_LANG.FIELD.EMULATION_CRITERIA_NAME}}<span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-8">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" id="nameEmu" class="form-control" placeholder="Nhập tên"
+                 [formControlName]="'competitionMarkType'" #tenLoaiDiemThiDua (change)="actionEC()"
+                 smasTrim>
+          <kendo-formhint>{{VI_LANG.FIELD.EMULATION_CRITERIA_NAME}}</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.competitionMarkType.errors?.pattern">
+            {{VI_LANG.FIELD.EMULATION_CRITERIA_NAME}} {{VI_LANG.COMMON_ERROR.PATTERN_INVALID_CHAR}}</kendo-formerror>
+          <kendo-formerror *ngIf="form.controls.competitionMarkType.errors?.required">
+            {{VI_LANG.FIELD.EMULATION_CRITERIA_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror *ngIf="form.controls.competitionMarkType.errors?.maxlength">
+            {{VI_LANG.FIELD.EMULATION_CRITERIA_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+    <div class="pt-5 row">
+      <div class="col-sm-4">
+        <label for="pointSub">{{VI_LANG.FIELD.STANDARD_POINT}}<span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-8">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="number" id="pointSub" class="form-control" placeholder="Nhập điểm chuẩn"
+                 [formControlName]="'benchmark'" (change)="actionEC()" #diemChuan>
+          <kendo-formhint>{{VI_LANG.FIELD.STANDARD_POINT}}</kendo-formhint>
+          <kendo-formerror class=error *ngIf="form.controls.benchmark.errors?.required">
+            {{VI_LANG.FIELD.STANDARD_POINT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.benchmark.errors?.pattern">
+              {{VI_LANG.FIELD.STANDARD_POINT}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+            </div>
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.benchmark.errors?.max">
+              {{VI_LANG.FIELD.STANDARD_POINT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_4}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <!--      <div class="content-input w-100">-->
+      <!--        -->
+      <!--      </div>-->
+    </div>
+  </form>
+</div>

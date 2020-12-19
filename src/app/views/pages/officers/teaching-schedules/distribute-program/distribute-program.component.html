@@ -1,0 +1,69 @@
+<kt-search-box-distribute-program></kt-search-box-distribute-program>
+
+<div class="">
+  <!--  Start Button Add  -->
+  <div class="buttonAdd">
+    <button kendoButton class="btn btn-custom btn-round" (click)="openModalApplyMultiple()">Áp dụng nhiều lớp</button>
+    <kendo-dropdownbutton [(ngModel)]="listInOutput">Nhập/xuất</kendo-dropdownbutton>
+    <button kendoButton (click)="openModalAdd()"><i class="fas fa-plus-square"></i>Thêm mới</button>
+    <button kendoButton (click)="openModalDelete()">Xóa</button>
+  </div>
+  <!--  End Button Add  -->
+  <!--  Start Kendo Grid  -->
+  <div class="table">
+    <kendo-grid [pageSize]="" [pageable]="true" [selectedKeys]="" kendoGridSelectBy="id" [skip]="" [kendoGridBinding]=""
+      [data]="" [sortable]="false" [reorderable]="false" [resizable]="false" [height]="500">
+      <kendo-grid-column title="STT" [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="180" editor="text" title="Tuần"></kendo-grid-column>
+      <kendo-grid-column [width]="150" editor="text" title="Tiết PCCT"></kendo-grid-column>
+      <kendo-grid-column [width]="80" editor="text" title="Tên bài học"></kendo-grid-column>
+      <kendo-grid-column [width]="80" editor="text" title="Ghi chú"></kendo-grid-column>
+      <kendo-grid-command-column title="Hành động" [width]="100" [resizable]="false" [columnMenu]="false">
+        <ng-template kendoGridCellTemplate let-dataItem let-isNew>
+          <div class="d-flex">
+            <button class="btn btn-primary btn-sm mr-2" kendoButton [iconClass]="'fas fa-pencil-alt'"></button>
+            <button class="btn btn-danger btn-sm" kendoButton [iconClass]="'fas fa-trash-alt'"></button>
+          </div>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+  </div>
+  <!--  End Kendo Grid  -->
+</div>
+
+<!--Start Modal Add-->
+<kendo-dialog title="Thêm mới phân môn" *ngIf="statusModalAdd" (close)="closeModalAdd()">
+  <kt-modal-add-edit-distribute-program></kt-modal-add-edit-distribute-program>
+</kendo-dialog>
+<!--End Modal Add-->
+
+<!--Start Modal Edit-->
+<kendo-dialog title="Cập nhật phân môn" *ngIf="statusModalEdit" (close)="closeModalEdit()">
+  <kt-modal-add-edit-distribute-program></kt-modal-add-edit-distribute-program>
+</kendo-dialog>
+<!--End Modal Edit-->
+
+<!--Start Modal Delete-->
+<kendo-dialog title="Thông báo" *ngIf="statusModalDelete" (close)="closeModalDelete()">
+  <div class="question" style="display: flex">
+    <i class="far fa-question-circle"></i>
+    <p>Bạn có chắc chắn muốn xóa không?</p>
+  </div>
+  <div class="col-sm-12 pb-3 buttonGroup">
+    <div class="col-sm-6 text-center">
+      <button kendoButton>Đồng ý</button>
+    </div>
+    <div class="col-sm-6 text-center">
+      <button kendoButton (click)="closeModalDelete()">Hủy bỏ</button>
+    </div>
+  </div>
+</kendo-dialog>
+<!--End Modal Delete-->
+
+<!--Start Modal Apply Multiple-->
+<kendo-dialog title="Áp dụng nhiều lớp" *ngIf="statusModalApplyMultiple" (close)="closeModalApplyMultiple()">
+  <kt-modal-apply-multiple-layers></kt-modal-apply-multiple-layers>
+</kendo-dialog>
+<!--End Modal Apply Multiple-->

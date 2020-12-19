@@ -1,0 +1,140 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Ngạch/Hạng </label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="ngachHang$ | async"
+                          [loading]="loadingNgachHang$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'rankCode'"
+                          formControlName="employeeScale"
+                          [valuePrimitive]="true"
+                          (selectionChange)="setName($event,'employeeScaleName')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Bậc lương</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="_2$ | async"
+                          [loading]="_2Loaded$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="salaryLevel"
+                          [valuePrimitive]="true"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Mã ngạch</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="employeeScaleCode">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center"></div>
+    <div class="col-md-4 mb-5 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isRegularRefresher" style="margin-top: 2px" formControlName="isFostering">
+      </div>
+      <label for="isRegularRefresher" class="label-custom ml-2">Có CC bồi dưỡng TCCD</label>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Hệ số lương</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="coefficient">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.coefficient.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.coefficient.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Mức phụ cấp thâm niên (%)</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="seniorityAllowances">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.seniorityAllowances.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.seniorityAllowances.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Vượt khung (%)</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="salaryAmount">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.salaryAmount.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.salaryAmount.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Mức phụ cấp thu hút nghề (%)</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="vocationalAllowance">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.vocationalAllowance.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.vocationalAllowance.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Mức phụ cấp ưu đãi nghề (%)</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="preferentialAllowance">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.preferentialAllowance.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.preferentialAllowance.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Mức phụ cấp chức vụ lãnh đạo (%)</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="prefrentialAllowLeadership">
+      <div class="text-danger m-auto">
+        <div *ngIf="form.controls.prefrentialAllowLeadership.errors?.pattern ">
+          Trường này chỉ cho nhập số
+        </div>
+        <div *ngIf="form.controls.prefrentialAllowLeadership.errors?.maxLength ">
+          Trường này chỉ cho nhập tối đa 50 kí tự
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Ngày hưởng<span style="color:red">*</span> </label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-datepicker [formatPlaceholder]="{year: 'YYYY', month: 'MM', day: 'DD'}"
+                        [format]="'dd/MM/yyyy'"
+                        formControlName="appliedDate"
+                        placeholder="Ngày hưởng lương"
+                        style="width: 75%"
+      >
+      </kendo-datepicker>
+    </div>
+  </div>
+</form>

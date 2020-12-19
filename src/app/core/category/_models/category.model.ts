@@ -1,0 +1,66 @@
+export interface Category {
+  id?: string;
+  cateCodeType?: string;
+  cateCode: string;
+  cateName: string;
+  parentCateCode?: string;
+  parentCateName?: string;
+  isHoatDong?: number;
+  ref1?: string;
+  ref2?: string;
+  ref3?: string;
+  isActive?: boolean
+}
+
+export const ListCateCode = {
+  dmTTHonNhan: 'DM_TINH_TRANG_HON_NHAN',
+  dmCapHoc: 'DM_CAP_HOC',
+  dmLoaiTruong: 'DM_LOAI_TRUONG',
+  dmLoaiHinh: 'DM_LOAI_HINH',
+  dmMucChuanQG: 'DM_MUC_DAT_CHUAN_QG_CLGD',
+  dmKhuVuc: 'DM_KHU_VUC',
+  dmMonHoc: 'DM_MON_HOC',
+  dmKhoi: 'DM_KHOI',
+  dmNgoaiNgu: 'DM_NGOAI_NGU',
+  dmLopGhep: 'DM_LOP_GHEP',
+  dmKieuLop: 'DM_KIEU_LOP',
+  dmSoBuoiHocTrenTuan: 'DM_SO_BUOI_HOC_TREN_TUAN',
+  dmHuongNghiepDayNghe: 'DM_HUONG_NGHIEP_DAY_NGHE',
+  dmHinhThucDaoTao: 'DM_HINH_THUC_DAO_TAO_HOC_TAP',
+  dmLopDaoTaoBoiDuong: 'DM_LOP_DAO_TAO_BOI_DUONG',
+  dmTietHocNgoaiNgu: 'DM_TIET_HOC_NGOAI_NGU',
+  dmBoSachGiaoKhoa: 'DM_BO_SACH_GIAO_KHOA',
+  dmTinhChatKhac: 'DM_TINH_CHAT_KHAC',
+  dmDanToc: 'DM_DAN_TOC',
+  dmTonGiao: 'DM_TON_GIAO',
+  dmMonDay: 'DM_MON',
+  dmViTriLamViec: 'DM_NHOM_CAN_BO',
+  dmHinhThucHopDong: 'DM_HINH_THUC_HOP_DONG',
+  dmNhiemVuKiemNhiem: 'DM_NHIEM_VU_KIEM_NHIEM',
+  dmNgach: 'DM_NGACH_CC',
+  dmBacLuong: 'DM_BAC_LUONG',
+  dmDanhHieu: 'DM_DANH_HIEU',
+  dmTrinhDoLyLuanCT: 'DM_TRINH_DO_LLCT',
+  dmChuyenNganhDaoTao: 'DM_CHUYEN_MON',
+  dmTrinhDoQLGD: 'DM_TRINH_DO_QLGD',
+  dmTrinhDoNgoaiNgu: 'DM_TRINH_DO_NGOAI_NGU',
+  dmTrinhDo: 'DM_TRINH_DO',
+  dmNhomChungChiNgoaiNgu: 'DM_NHOM_CCHI_NNGU',
+  dmTrinhDoQlNN: 'DM_TRINH_DO_QLNN',
+  dmKhungNangLucNN: 'DM_KHUNG_NLUC_NNGU',
+  dmNhomChucVu: 'DM_NHOM_CAN_BO',
+  dmLoaiCanBo: 'DM_LOAI_CAN_BO',
+  dmTrangThaiCanBo: 'DM_TRANG_THAI_CAN_BO',
+  dmTrinhDoChuyenMon: 'DM_TRINH_DO_CHUYEN_MON',
+  dmGioiTinh: 'DM_GIOI_TINH',
+  dmTrinhDoTinHoc: 'DM_TRINH_DO_TIN_HOC',
+  dmHinhThuc: 'DM_HINH_THUC',
+  dmChungChiTiengDtocTso: 'DM_CHUNG_CHI_TIENG_DTOC_TSO',
+  dmBoiDuongCBQLCotCan: 'DM_BOI_DUONG_CBQL_COT_CAN',
+  dmNganhDaoTao: 'DM_NGANH_DAO_TAO',
+  dmLoaiCchiNngu: 'DM_LOAI_CCHI_NNGU',
+  dmBoiDuongNghiepVu: 'DM_BOI_DUONG_NVU',
+  dmBoiDuongThaySach: 'DM_BOI_DUONG_THAY_SACH',
+  dmKhenThuongGv: 'DM_KHEN_THUONG_GV',
+  dmHinhThucKlGv: 'DM_HINH_THUC_KY_LUAT',
+}

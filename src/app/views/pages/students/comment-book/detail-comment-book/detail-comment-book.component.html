@@ -1,0 +1,26 @@
+<kt-portlet>
+    <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách học sinh'" [class]="'card-head-lg'">
+    </kt-portlet-header>
+  
+    <kt-portlet-body style="background-color: #FFFF; margin: 0; padding: 0%; "
+      class=" example-col col-lg-12 d-flex flex-row">
+      <kendo-grid [data]="gridView" kendoGridSelectBy="id" [pageSize]="_pageSize" [pageable]="true"
+        scrollable="scrollable" [sortable]="true" [reorderable]="true" [resizable]="false" [height]="500"
+        [selectable]="{mode: 'multiple',enable: true, checkboxOnly: true}" [style]="{'border-radius': '25px'}"
+        (pageChange)="pageChange($event)" [skip]="skip" (selectedKeysChange)="onChange($event)"
+        [selectedKeys]="mySelection" [style.maxHeight.px]="600">
+        <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false" showSelectAll="true">
+        </kendo-grid-checkbox-column>
+        <kendo-grid-column field="ProductID" title="STT" [width]="60" headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="ProductName" title="Họ và tên" [width]="350" headerClass="text-center font-weight-bold">
+        </kendo-grid-column>
+        <kendo-grid-column field="Category.CategoryName" [width]="700" title="Nội dung nhận xét"
+          headerClass="text-center font-weight-bold">
+        </kendo-grid-column>
+  
+      </kendo-grid>
+    </kt-portlet-body>
+</kt-portlet>

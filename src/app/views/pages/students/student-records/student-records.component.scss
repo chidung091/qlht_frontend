@@ -1,0 +1,11 @@
+.nav-std{
+    padding: 0;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+@media(max-width: 767px){
+    .av-std-li a{
+        display: inline-block;
+    }
+}

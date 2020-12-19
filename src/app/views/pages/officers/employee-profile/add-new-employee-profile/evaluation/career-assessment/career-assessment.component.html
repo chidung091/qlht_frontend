@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    Đánh giá chuẩn nghề nghiệp
+  </h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <kendo-grid
+    *ngIf="isLoading$ | async"
+    [kendoGridBinding]="data.length!=0?data:ProfessionalStandard"
+    [style]="{'border-radius': '25px'}"
+    [sortable]="true" [reorderable]="true"
+    [resizable]="false"
+    [height]="500">
+    <kendo-grid-column title="STT" headerClass="text-center font-weight-bold" class="text-center" [width]="40" [resizable]="false">
+      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column editor="text" title="Tên tiêu chí đánh giá " [width]="150" field="criteriaCode"
+                       [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+    </kendo-grid-column>
+    <kendo-grid-column [width]="150" editor="text" title="Nội dung" field="criteriaContent"
+                       [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+    </kendo-grid-column>
+    <kendo-grid-column-group  editor="text" title="Mức đánh giá"
+                       [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+      <kendo-grid-column [width]="140" editor="text" title="Tự đánh giá"
+                          headerClass="text-center " >
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          <kendo-dropdownlist [data]="dataItem.criteriaValue.split(',')"
+                              [valuePrimitive]="true"
+                              [(ngModel)]="dataItem.employeeEvaluationValue"
+                              (selectionChange)="changeSelfAssessment($event,dataItem)"
+                               style="width: 100%;"
+                             >
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="140" editor="text" title="Cấp trên đánh giá"
+                         headerClass="text-center " >
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          <kendo-dropdownlist  [data]="dataItem.criteriaValue.split(',')"
+                               [valuePrimitive]="true"
+                               [(ngModel)]="dataItem.superiorEvaluationValue"
+                               (selectionChange)="changeSuperiorAssessment($event,dataItem)"
+                               style="width: 100%;"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid-column-group>
+  </kendo-grid>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">{{VI_LANG.BUTTON.CLOSE}}</button>
+    <button type="button" class="btn btn-primary"  (click)="save()">{{VI_LANG.BUTTON.SAVE}}</button>
+  </div>
+</div>
+<div class="custom-loading-h">
+  <div *ngIf="loading" class="k-i-loading"></div>
+</div>
+

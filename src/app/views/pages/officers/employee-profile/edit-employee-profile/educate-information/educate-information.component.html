@@ -1,0 +1,166 @@
+<kt-portlet>
+  <kt-portlet-header [title]="'Cán bộ : ' + nameEmp" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <!-- <button ngbTooltip="Lưu" style="margin-right: 5px;" class="btn btn-sm btn-primary" (click)="save()"><i
+          class="far fa-save"></i>
+      </button> -->
+      <button ngbTooltip="Thêm" style="margin-right: 5px" class="btn btn-sm btn-primary" (click)="addNewItem()">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button ngbTooltip="Xoá" style="margin-right: 5px;" [disabled]="disableBtn" class="btn btn-sm btn-danger"
+        (click)="openModalDelete(mymodal) "><i class="fas fa-trash-alt"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <kendo-grid [data]="gridData" [skip]="stateGrid.skip" [sortable]="true" [scrollable]="true" kendoGridSelectBy="id"
+      [selectable]="{ checkboxOnly: true }" (selectedKeysChange)="onChange($event)" [pageSize]="_pageSize"
+      [pageable]="true" [reorderable]="false" [resizable]="false" (pageChange)="pageChange($event)"
+      (edit)="editHandler($event)" (cancel)="cancelHandler($event)" (save)="saveHandler($event)"
+      (add)="addHandler($event)" [navigable]="true" [resizable]="true">
+      <kendo-grid-checkbox-column class="text-center" headerClass="text-center font-weight-bold" [width]="45"
+        [resizable]="false" [columnMenu]="false" showSelectAll="true">
+        <ng-template kendoGridFooterTemplate>
+          <button hidden kendoGridAddCommand class="addBtn" id="addBtn"><i class="fas fa-plus"></i>
+          </button>
+        </ng-template>
+      </kendo-grid-checkbox-column>
+      <kendo-grid-column [width]="40" title="TT" class="text-center" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+          {{rowIndex +1}}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="trainingPlace" title="Tên cơ sở"
+        headerClass="text-center font-weight-bold">
+        <ng-template kendoGridEditTemplate let-column="column" let-formGroup="formGroup" let-isNew="isNew">
+          <textarea #trainingPlace class="k-textarea" smasTrim #input [formControl]="formGroup.get(column.field)">
+          </textarea>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="trainingFormName" title="Chuyên ngành"
+        headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.trainingFormName}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+          <kendo-dropdownlist [data]="listChuyenNganh" [defaultItem]="{cateCode: '', cateName: 'Lựa chọn'}"
+            [formControl]="formGroup.get('trainingFormCode')" textField="cateName"
+            valueField="cateCode" [valuePrimitive]="true">
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="specializedName" title="Hình thức"
+        headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.specializedName}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+          <kendo-dropdownlist [data]="listHinhThuc" [defaultItem]="{cateCode: '', cateName: 'Lựa chọn'}"
+            [formControl]="formGroup.get('specializedCode')" textField="cateName"
+            valueField="cateCode" [valuePrimitive]="true">
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="diplomaName" title="Văn bằng, chứng chỉ"
+        headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.diplomaName}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+          <kendo-dropdownlist [data]="listChungChi" [defaultItem]="{cateCode: '', cateName: 'Lựa chọn'}"
+            [formControl]="formGroup.get('diplomaCode')" textField="cateName"
+            valueField="cateCode" [valuePrimitive]="true">
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="150" field="fromDate" editor="date" title="Ngày bắt đầu" format="dd/MM/yyyy"
+        class="text-center" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          {{dataItem.fromDate | date: 'dd/MM/yyyy'}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+          let-formGroup="formGroup">
+          <kendo-formfield class="w-100">
+            <kendo-datepicker [formControl]="formGroup.get('fromDate')" [format]="'dd/MM/yyyy'" [max]="maxDate"
+              class="w-100">
+            </kendo-datepicker> 
+          </kendo-formfield>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="150" field="toDate" editor="date" title="Ngày kết thúc" format="dd/MM/yyyy"
+        class="text-center" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.toDate | date: 'dd/MM/yyyy'}}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" field="description" title="Ghi chú"
+        headerClass="text-center font-weight-bold">
+        <ng-template kendoGridEditTemplate let-column="column" let-formGroup="formGroup" let-isNew="isNew">
+          <textarea #description class="k-textarea" smasTrim #input [formControl]="formGroup.get(column.field)">
+          </textarea>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="Thao tác" headerClass="text-center font-weight-bold"
+        [style]="{'text-align': 'center'}" width="120">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+          <button kendoGridEditCommand ngbTooltip="Sửa" placement="left" container="body"
+            class="border-radius btn btn-add btn-primary"><i class="far fa-edit"></i></button>
+          <button class="btn btn-primary" kendoGridSaveCommand ngbTooltip="Lưu" placement="left" container="body"><i
+              class="far fa-save"></i></button>
+          <button class="btn btn-warning" kendoGridCancelCommand ngbTooltip="Huỷ" placement="left" container="body"><i
+              class="far fa-window-close"></i></button>
+        </ng-template>
+      </kendo-grid-command-column>
+      <ng-template kendoGridNoRecordsTemplate>
+        {{VI_LANG.NOTIFICATION.NO_DATA}}
+      </ng-template>
+      <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+        let-skip="skip" let-pageSize="pageSize">
+        <div class="d-lg-flex d-md-block justify-content-between w-100">
+          <div class="p-1 d-flex d-sm-flex justify-content-between">
+            <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [defaultItem]="5" [(ngModel)]="_pageSize"
+              (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex justify-content-center custom-mt-15">
+            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template kendoGridNoRecordsTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+    </kendo-grid>
+    <div class="custom-loading-h">
+      <div *ngIf="loadData | async" class="k-i-loading"></div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<!--modal-confirm-->
+<ng-template #mymodal let-c="close" let-d="dismiss">
+  <div class="modal-header" style="padding: 10px !important;">
+    <h4 class="modal-title" id="modal-basic-title">Xóa thông tin đào tạo?</h4>
+    <button kendoButton type="button" (click)="d('Cross click')" [iconClass]="'fas fa-times'">
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 30px;">
+    <div class="question" style="display: flex">
+      <i class="far fa-question-circle" style="font-size: 100px; color: red"></i>
+      <p style="text-align: center; margin-top: 35px; margin-left: 30px; margin-right: 30px">
+        {{VI_LANG.NOTIFICATION.CONFIRM_DELETE}} </p>
+    </div>
+  </div>
+  <div class="modal-footer" style="padding: 10px !important;">
+    <form action="">
+      <button type="button" class="btn btn-secondary mr-3" (click)="d('cancel click')">Hủy</button>
+      <button type="button" class="btn  btn-primary " #buttonDelete (click)="d('Save click')" [disabled]=""
+        (click)="delete()" id="focusDelete">Đồng ý</button>
+    </form>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingDelete | async" class="k-i-loading"></div>
+  </div>
+</ng-template>

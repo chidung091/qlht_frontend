@@ -1,0 +1,9 @@
+.mb-mt-20{
+    margin-top: 25px;
+}
+
+@media(max-width: 767px){
+    .mb-mt-20{
+        margin-top: 0px;
+    }
+}

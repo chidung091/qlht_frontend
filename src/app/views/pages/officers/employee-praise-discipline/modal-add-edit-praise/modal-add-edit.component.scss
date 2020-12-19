@@ -1,0 +1,59 @@
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+  z-index: 9999;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: center;
+}
+.text-error{
+  font-size: 12px;
+  color: red;
+  margin-top: 4px;
+}
+//scrollbar
+.action-container{
+  position: relative;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 350px;
+  padding-right: 10px;
+  margin-right: -10px;
+}
+.action-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+.action-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.action-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.action-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+//scrollbar-end//
+.kendo-dropdown{
+  width:100%
+}
+.kendo-date{
+  width: 100%;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+.red{
+  color: red
+}

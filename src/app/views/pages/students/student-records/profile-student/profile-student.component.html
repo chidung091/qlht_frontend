@@ -1,0 +1,180 @@
+<div class="nav-std mb-5">
+    <div class="link-router-l">
+        <a routerLinkActive="active" routerLink="../profile-student">
+            Hồ sơ
+        </a>
+        <a routerLinkActive="active" routerLink="../exemptions-students">Miễn giảm</a>
+        <a routerLinkActive="active" routerLink="../individual-students">Cá biệt</a>
+        <a routerLinkActive="active" routerLink="../transfer-school">Tiếp nhập chuyển trường</a>
+        <a routerLinkActive="active" routerLink="../reward-students">Khen thưởng</a>
+        <a routerLinkActive="active" routerLink="../discipline-students">Kỷ luật</a>
+        <a routerLinkActive="active" routerLink="../recordkeeping-students">Bảo lưu</a>
+    </div>
+</div>
+<kt-portlet>
+    <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg'"
+        (click)="isCollapsed = !isCollapsed">
+        <ng-container ktPortletTools>
+            <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+            <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+        </ng-container>
+    </kt-portlet-header>
+
+    <kt-portlet-body *ngIf="!isCollapsed">
+        <div class="form-search">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Khối</label>
+                        <div class="kendo-form">
+                            <kendo-dropdownlist style="width: 100%; background: #fff" [data]="ListBlockCode$ | async"
+                                [textField]="'cateName'" [valueField]="'id'" [defaultItem]="defaultListData"
+                                [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Lớp học</label>
+                        <div class="kendo-form">
+                            <kendo-dropdownlist style="width: 100%" [data]="" [textField]="''" [valueField]="''">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <div class="kendo-form">
+                            <kendo-dropdownlist style="width: 100%" [data]="ListGender$ | async"
+                                [textField]="'cateName'" [valueField]="'id'" [defaultItem]="defaultListData"
+                                [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Mã học sinh</label>
+                        <div class="kendo-form">
+                            <input type="text" width="100%" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <div class="kendo-form">
+                            <input type="text" width="100%" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <div class="kendo-form">
+                            <kendo-dropdownlist style="width: 100%" [data]="ListStatusCode$ | async"
+                                [textField]="'cateName'" [valueField]="'id'" [defaultItem]="defaultListData"
+                                [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Dân tộc</label>
+                        <div class="kendo-form">
+                            <kendo-dropdownlist style="width: 100%" [data]="ListEthnicCode$ | async"
+                                [textField]="'cateName'" [valueField]="'id'" [defaultItem]="defaultListData"
+                                [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary mb-mt-20"> Tìm kiếm</button>
+                </div>
+            </div>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+    <kt-portlet-header>
+        <ng-container ktPortletTools>
+            <kendo-dropdownbutton [data]="listBtn" class="mr-2 rounded-border-secondary">
+                Nhập/Xuất <i class="fas fa-angle-down ml-2"></i>
+            </kendo-dropdownbutton>
+            <button routerLink="add-students" class="btn btn-primary btn-sm mr-2">
+                <i class="fas fa-plus-square"></i>
+            </button>
+            <button class="btn btn-danger btn-sm">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="table_tt">
+            <kendo-grid [data]="gridView" kendoGridSelectBy="id" [pageSize]="_pageSize" [pageable]="true"
+                scrollable="scrollable" [sortable]="true" [reorderable]="true" [resizable]="false" [height]="500"
+                [selectable]="{mode: 'multiple',enable: true, checkboxOnly: true}" [style]="{'border-radius': '25px'}"
+                (pageChange)="pageChange($event)" [skip]="skip" (selectedKeysChange)="onChange($event)"
+                [selectedKeys]="mySelection" [style]="{'border-radius': '25px'}" [style.maxHeight.px]="600">
+
+                <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false" showSelectAll="true">
+                </kendo-grid-checkbox-column>
+
+                <kendo-grid-column title="TT" [width]="60" headerClass="text-center font-weight-bold"
+                    class="text-center">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{rowIndex + 1}}
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column headerClass="text-center font-weight-bold" field="fullName" title="Họ và tên">
+                </kendo-grid-column>
+                <kendo-grid-column headerClass="text-center font-weight-bold" field="studentCode" title="Mã học sinh">
+                </kendo-grid-column>
+                <kendo-grid-column [width]="200" editor="text" title="Ngày sinh" field="dateOfBirth" filter="date"
+                    [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold"
+                    class="text-center">
+                    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.dateOfBirth | date: 'dd/MM/yyyy'}}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column headerClass="text-center font-weight-bold" field="gender" title="Giới tính">
+                </kendo-grid-column>
+                <kendo-grid-column headerClass="text-center font-weight-bold" field="ethnicCode" title="Dân tộc">
+                </kendo-grid-column>
+                <kendo-grid-column headerClass="text-center font-weight-bold" field="classId" title="Tên lớp">
+                </kendo-grid-column>
+                <kendo-grid-column headerClass="text-center font-weight-bold" field="statusCode" title="Trạng thái">
+                </kendo-grid-column>
+                <kendo-grid-command-column title="Thao tác" [width]="105" [resizable]="false" sortable="false"
+                    [columnMenu]="false" headerClass="text-center font-weight-bold">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
+                        <button class="btn btn-primary" type="button"
+                            [routerLink]="'../detail-profile-student/' + dataItem.id">
+                            Chi tiết
+                        </button>
+                    </ng-template>
+                </kendo-grid-command-column>
+                <kendo-grid-command-column [columnMenu]="false" [resizable]="false"
+                    headerClass="text-center font-weight-bold" class="text-center" [width]="60" title="Sửa">
+                    <ng-template kendoGridCellTemplate let-dataGridItem let-isNew class="text-center">
+                        <kendo-dropdownbutton [data]="dataButtonFix" [primary]="true" [iconClass]="'fas fa-cogs'"
+                            ngbTooltip="Hành động" placement="left" container="body">
+                            <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                                <button type="button" kendoButton
+                                    (click)="DetailStudent(dataItem, dataGridItem)">{{dataItem.text}}</button>
+                            </ng-template>
+                        </kendo-dropdownbutton>
+                    </ng-template>
+                </kendo-grid-command-column>
+            </kendo-grid>
+        </div>
+    </kt-portlet-body>
+
+</kt-portlet>

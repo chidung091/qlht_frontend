@@ -1,0 +1,199 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <p class="modal-title" id="staticBackdropLabel" style="font-size: large; font-weight: bold">{{title}}</p>
+    <button (click)="activeModal.close()" aria-label="Close" class="close" type="button">
+      <i class="fas fa-times" style="font-size: large"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formGroup">
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="maDiemTruong">Mã điểm trường <span style="color: red; margin-left: 3px">*</span></label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield>
+            <input class="form-control" formControlName="maDiemTruong" id="maDiemTruong"
+                   (focusout)="trimSpace('maDiemTruong')"
+                   placeholder="Nhập mã điểm trường">
+            <kendo-formerror *ngIf ="formGroup.controls.maDiemTruong.errors?.required">
+              {{VI_LANG.FIELD.SCHOOL_PLACE_ID}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </kendo-formerror>
+            <kendo-formerror *ngIf="formGroup.controls.maDiemTruong.errors?.maxlength">
+              {{VI_LANG.FIELD.SCHOOL_PLACE_ID}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="tenDiemTruong">Tên điểm trường <span style="color: red; margin-left: 3px">*</span></label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield>
+            <input class="form-control" formControlName="tenDiemTruong" id="tenDiemTruong"
+                   (focusout)="trimSpace('tenDiemTruong')"
+                   placeholder="Nhập tên điểm trường">
+            <kendo-formerror *ngIf ="formGroup.controls.tenDiemTruong.errors?.required">
+              {{VI_LANG.FIELD.SCHOOL_PLACE_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </kendo-formerror>
+            <kendo-formerror *ngIf="formGroup.controls.tenDiemTruong.errors?.maxlength">
+              {{VI_LANG.FIELD.SCHOOL_PLACE_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_200}}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="diaChi">Địa chỉ </label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+            <input class="form-control" formControlName="diaChi" id="diaChi"
+                   (focusout)="trimSpace('diaChi')"
+                   placeholder="Nhập địa chỉ">
+            <kendo-formerror *ngIf="formGroup.controls.diaChi.errors?.maxlength">
+              {{VI_LANG.FIELD.ADDRESS}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_200}}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="khoangCach">Khoảng cách đến điểm chính (Km) </label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+            <input class="form-control" formControlName="khoangCach" id="khoangCach"
+                   onkeypress="return event.charCode !== 32"
+                   (focusout)="trimSpace('khoangCach')"
+                   placeholder="Nhập khoảng cách">
+            <kendo-formerror>
+              <div *ngIf="formGroup.controls.khoangCach.errors?.maxlength">
+                {{VI_LANG.FIELD.RANGE_TO_MAIN_PLACE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+              </div>
+              <div
+                *ngIf="formGroup.controls.khoangCach.hasError('pattern')&& (!formGroup.controls.khoangCach.errors?.maxlength)">
+                {{VI_LANG.FIELD.RANGE_TO_MAIN_PLACE}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="soDienThoai">Điện thoại </label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+            <input class="form-control" formControlName="soDienThoai" id="soDienThoai"
+                   (focusout)="trimSpace('soDienThoai')" onkeypress="return event.charCode !== 32"
+                   placeholder="Nhập số điện thoại">
+            <kendo-formerror>
+              <div *ngIf="formGroup.controls.soDienThoai.errors?.maxlength">
+                {{VI_LANG.FIELD.PHONE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+              </div>
+              <div *ngIf="formGroup.controls.soDienThoai.hasError('pattern')&& (!formGroup.controls.soDienThoai.errors?.maxlength)">
+                {{VI_LANG.FIELD.PHONE}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="mota">Mô tả</label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield>
+            <input class="form-control" formControlName="mota" id="mota"
+                   (focusout)="trimSpace('mota')"
+                   placeholder="Nhập mô tả">
+            <kendo-formerror *ngIf="formGroup.controls.mota.errors?.maxlength">
+              {{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_200}}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <label for="dienTich">Diện tích (m2) </label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield>
+            <input class="form-control" formControlName="dienTich" id="dienTich"
+                   (focusout)="trimSpace('dienTich')" onkeypress="return event.charCode !== 32"
+                   placeholder="Nhập diện tích">
+            <kendo-formerror>
+              <div *ngIf="formGroup.controls.dienTich.errors?.maxlength">
+                {{VI_LANG.FIELD.ACREAGE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+              </div>
+              <div
+                *ngIf="formGroup.controls.dienTich.hasError('pattern')&& (!formGroup.controls.dienTich.errors?.maxlength)">
+                {{VI_LANG.FIELD.ACREAGE}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <p>Thuộc tỉnh/Tp <span style="color: red; margin-left: 3px">*</span></p>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield [showErrors]="'initial'">
+            <kendo-dropdownlist formControlName="maTinh"
+                                [valuePrimitive]="true"
+                                [data]="listProvinceSearch"
+                                textField="provinceName"
+                                valueField="provinceCode"
+                                [defaultItem]="defaultItemProvince"
+                                (valueChange)="changeProvince()"
+                                [filterable]="true"
+                                class="w-100"
+                                (filterChange)="handleFilter($event, 'maTinh')">
+            </kendo-dropdownlist>
+            <kendo-formerror>
+              <div *ngIf="formGroup.controls.maTinh.errors?.required">
+                {{VI_LANG.FIELD.PROVINCE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-4">
+          <p>Quận/huyện <span style="color: red; margin-left: 3px">*</span></p>
+        </div>
+        <div class="col-sm-8">
+          <kendo-formfield [showErrors]="'initial'">
+            <kendo-dropdownlist #quanhuyen formControlName="maHuyen"
+                                [valuePrimitive]="true"
+                                [data]="listDistrictSearch"
+                                textField="districtName"
+                                valueField="districtCode"
+                                [defaultItem]="defaultItemDistrict"
+                                [filterable]="true"
+                                class="w-100"
+                                (filterChange)="handleFilter($event, 'maHuyen')">
+            </kendo-dropdownlist>
+            <kendo-formerror>
+              <div *ngIf="formGroup.controls.maHuyen.errors?.required">
+                {{VI_LANG.FIELD.DISTRICT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="this.activeModal.close()" class="btn btn-secondary mr-3" type="button">{{VI_LANG.BUTTON.CLOSE}}</button>
+    <button (click)="submit()" [disabled]="isDisable" class="btn btn-primary"
+            type="button">{{VI_LANG.BUTTON.SAVE}}
+    </button>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="isLoading" class="k-i-loading"></div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<kendo-dialog title="Cấu hình tiêu chí đánh giá" [width]="500" (close)="close()">
+  <div>
+    <label>
+      <span>Năm học</span>
+      <span style="color: red"> *</span>
+    </label>
+  </div>
+  <div>
+    <kendo-dropdownlist
+      class="w-100"
+      [defaultItem]=""
+      [valuePrimitive]="true"
+      textField="tenDanhMuc"
+      valueField="id"
+    ></kendo-dropdownlist>
+  </div>
+  <div>
+    <label>
+      <span>Danh sách tiêu chí</span>
+    </label>
+  </div>
+  <div>
+    <button (click)="add()">Add</button>
+  </div>
+  <div>
+    <kendo-grid
+      [data]="listData"
+      [kendoGridSelectBy]="'id'"
+      [selectable]="{checkboxOnly : true}"
+      scrollable="none"
+    >
+      <kendo-grid-checkbox-column
+        [width]="45"
+        [resizable]="false"
+        [columnMenu]="false">
+      </kendo-grid-checkbox-column>
+      <kendo-grid-column field="tenDanhMuc" editor="text" title="Tên tiêu chí đánh giá">
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+          <input class="form-control" kendoTextBox >
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column editor="text" title="Nội dung">
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+          <input class="form-control" kendoTextBox >
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column editor="text" title="Mức đánh giá" >
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+          <input class="form-control" kendoTextBox >
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </div>
+  <div class="modal-footer text-center">
+    <div class="w-100">
+      <button type="button"
+              class="btn btn btn-outline-dark buttonChoose"
+              (click)="close()">Đóng
+      </button>
+      <button type="submit" class="btn btn-save buttonChoose"
+              (click)="close()">Lưu
+      </button>
+    </div>
+  </div>
+</kendo-dialog>

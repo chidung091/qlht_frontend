@@ -1,0 +1,142 @@
+//scrollbar
+.action-container{
+  position: relative;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 450px;
+  padding-right: 10px;
+  margin-right: -10px;
+}
+.action-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+.action-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.action-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.action-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+//scrollbar-end//
+
+.colorred {
+  color: red;
+}
+//ẩn form
+.k-form-hint{
+  margin-top: 0px !important;
+  color: white !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -o-user-select: none !important;
+  user-select: none !important;
+}
+
+.k-form-error, .k-text-error, .k-form-field-error .k-label{
+  margin-top: 0px !important;
+}
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+}
+//button
+.buttonChoose{
+  margin-right: 25px; padding: 9px 13px; width: 120px; height: 40px
+}
+.btn-save{
+  background-color: #087D8C;
+  color: white;
+}
+.btn-save:hover, .btn-save:focus{
+  background-color: #2a7e84;
+}
+.modal-footer{
+  display: flex;
+  justify-content: center !important; ;
+  align-items: center;
+}
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: center;
+}
+
+.class-room-h-title{
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  label{
+    font-weight: bold;
+    font-size: 16px;
+    width: 15%;
+  }
+  .class-room-h-title-line{
+    width: 85%;
+    position: relative;
+  }
+  .class-room-h-title-line::before{
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0px;
+    background: #656565;
+    height: 1px;
+    z-index: 1;
+    width: 100%;
+  }
+}
+
+@media(max-width: 1025px){
+  .class-room-h-title{
+    label{
+      width: 30%;
+    }
+    .class-room-h-title-line{
+      width: 70%;
+    }
+  }
+
+}
+
+@media(max-width: 767px){
+  .class-room-h-title{
+    label{
+      width: 40%;
+    }
+    .class-room-h-title-line{
+      width: 60%;
+    }
+  }
+  .mb-t {
+    margin-bottom: 15px;
+  }
+
+}

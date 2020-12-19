@@ -1,0 +1,134 @@
+<div>
+  <div class="row">
+    <div class="content-lef col-md-5 d-flex">
+      <kendo-dropdownbutton [data]="settings" [icon]="'grid-layout'"
+        [buttonClass]="{ 'custom-border': false, 'custom-bg': true }">
+        Chọn lớp
+      </kendo-dropdownbutton>
+      <div class="btn-group list-btn pl-5 flex-grow-0">
+        <button class="mr-2 btn-primary" type="button">Học kỳ 1</button>
+        <button class="mr-2 btn-primary" type="button">Học kỳ 2</button>
+      </div>
+    </div>
+    <div class="content-right col-md-7 d-flex justify-content-end">
+      <p class="mr-5" style="margin-top: 12px">Mặt đánh giá</p>
+      <div class="btn-group">
+        <button class="mr-2 btn-primary" type="button">Môn học & HĐGD</button>
+        <button class="mr-2 btn-primary" type="button">Năng lực cốt lõi</button>
+        <button class="btn-primary" type="button">Phẩm chất chủ yếu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row">
+  <div class="link-router-l">
+    <a routerLinkActive="active" *ngFor="let data of listClass" [routerLink]="'detail-subjects/' + data.id">
+      {{data.text}}
+    </a>
+    <a routerLinkActive="active" style="cursor:pointer">
+      <i class="fas fa-angle-double-right"></i>
+    </a>
+  </div>
+</div> -->
+
+<kt-portlet-body style="background-color: #FFFF; padding: 0%; margin: 0;">
+  <div class="row mt-5 m-0 destop">
+    <div class="col-md-12 col-sm-12 col-12 p-0 m-0 row">
+
+      <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+        <div class=" display-5 link-router-l">
+          <button class="btn btn-outline-primary  m-0 backbtn link-router-l" kendoButton 
+          (click)="pageListMonhocBack()" [icon]="'arrow-double-60-left'"></button>
+        </div>
+      </div>
+
+      <div class="col-md-10 col-sm-10 col-10 p-0  justify-content-center row">
+        <div *ngFor="let item of listMonhoc let i = index" class=" display-5 link-router-l">
+            <a  routerLinkActive="active" 
+                *ngIf="i<(show2+9)&&i>=show2" 
+                [routerLink]="'detail-comment-book/' + item.stt"
+                class="monhoc" kendoButton > 
+              {{item.Mon }}
+            </a>
+        </div>
+      </div>
+
+      <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+        <div class=" display-5 link-router-l">
+          <button class="btn btn-outline-primary nextbtn  m-0" kendoButton 
+          (click)="pageListMonhocNext()" [icon]="'arrow-double-60-right'"></button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- <div class="row mt-5 m-0 iphone">
+    <div class="col-md-12 col-sm-12 col-12 p-0 m-0 row">
+
+      <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+        <div class=" display-5 link-router-l">
+          <button class="btn btn-outline-primary  m-0 backbtn link-router-l" kendoButton 
+          (click)="pageListMonhocBack()" [icon]="'arrow-double-60-left'"></button>
+        </div>
+      </div>
+
+      <div class="col-md-10 col-sm-10 col-10 p-0  justify-content-center row">
+        <div *ngFor="let item of listMonhoc let i = index" class=" display-5 link-router-l">
+            <a  routerLinkActive="active" 
+                *ngIf="i<(show2+3)&&i>=show2" 
+                [routerLink]="'detail-subjects/' + item.stt"
+                class="monhoc" kendoButton > 
+              {{item.Mon }}
+            </a>
+        </div>
+      </div>
+
+      <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+        <div class=" display-5 link-router-l">
+          <button class="btn btn-outline-primary nextbtn  m-0" kendoButton 
+          (click)="pageListMonhocNext()" [icon]="'arrow-double-60-right'"></button>
+        </div>
+      </div>
+    </div>
+
+
+  </div> -->
+
+</kt-portlet-body>
+<br>
+<div class="row">
+  <p class="col-md-8" style="font-style: italic">
+    <span style="color: red">Lưu ý:</span>
+    <strong> Hoàn thành tốt</strong>- Nhập
+    <strong>T</strong> hoặc
+    <strong>1</strong>; Hoàn thành nhập
+    <strong>H</strong> hoặc
+    <strong>2</strong>;
+    <strong>Chưa hoàn thành</strong> nhập C hoặc
+    <strong>3</strong>
+  </p>
+  <div class="col-md-4 d-flex justify-content-end">
+    <ng-container ktPortletTools>
+      <button kendoButton type="button" title="Nhận xét nhanh" class="btn btn-shadow col-md-5 mr-3"
+        style="border: solid 1px">Nhận xét nhanh</button>
+      <button kendoButton class="btn btn-light mr-2 btn-custom btn-excel" ngbTooltip="Xuất dữ liệu từ excel">
+        <i class="far fa-file-excel"></i>
+        <i class="fas fa-download"></i>
+      </button>
+      <!--      <button kendoButton type="button" title="Xuất dữ liệu từ excel" class="btn-sm mr-3"-->
+      <!--              [icon]="'file-excel'"-->
+      <!--      ></button>-->
+      <!--      <button kendoButton type="button" title="Nhập dữ liệu từ excel" class="btn-sm mr-3"-->
+      <!--              icon="file-excel"></button>-->
+      <button kendoButton class="btn btn-light mr-2 btn-custom btn-excel" ngbTooltip="Nhập dữ liệu từ excel">
+        <i class="far fa-file-excel"></i>
+        <i class="fas fa-upload"></i>
+      </button>
+      <button kendoButton type="button" title="Lưu" class="btn btn-primary btn-sm mr-3"
+        [iconClass]="'far fa-save'"></button>
+    </ng-container>
+  </div>
+</div>
+<router-outlet></router-outlet>

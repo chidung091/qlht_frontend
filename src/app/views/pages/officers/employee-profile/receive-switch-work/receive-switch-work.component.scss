@@ -1,0 +1,101 @@
+.panel-title{
+  height: initial;
+  padding: 8px;
+  background: #51aab2 !important;
+  text-align: left;
+  position: relative;
+
+  .title {
+    text-decoration: none;
+    color: #fff;
+    height: 20px;
+    vertical-align: middle;
+    //padding: 6px 4px 1px 8px;
+    font-weight: bold;
+    padding: 0 8px;
+  }
+}
+
+.label-custom{
+  margin: 7px 0;
+}
+.f-group{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .col-form-label{
+      width: 16%;
+  }
+  .f-group-dropdownlist{
+      width: 80%;
+      height: 40px;
+      border-radius: 3px;
+  }
+  .kendo-form{
+      width: 82%;
+  }
+  input{
+      width: 100%;
+      height: 40px;
+      border-radius: 3px;
+      border: 1px solid #eee;
+      padding: 0 10px;
+  }
+}
+
+.btn-header-all{
+  width: 50%;
+  text-align: right;
+  cursor: pointer;
+}
+
+.justify-content-between{
+  align-items: center;
+}
+
+.btn-custom{
+  height: 40px;
+  border-radius: 3px;
+  background: #fff;
+  padding: 0 15px;
+  border: .5px solid #b5b5c3;
+
+}
+
+.color-icon{
+  color: #686868;
+}
+
+.btn-add{
+  background: #419197;
+  color: white;
+  margin-right: 10px
+}
+
+.btn-dele{
+  background: red;
+  color: white;
+  font-size: medium;
+}
+
+@media(max-width: 1200px){
+  .f-group{
+      display: block;
+      .col-form-label{
+          display: block;
+          width: 100%;
+      }
+      .f-group-dropdownlist{
+          width: 100%;
+      }
+  }
+  .btn-custom{
+      margin-top: 38px !important;
+  }
+}
+@media(max-width: 767px){
+  .mb-15-h{
+    margin-bottom: 15px;
+  }
+
+}

@@ -1,0 +1,117 @@
+<kt-portlet>
+  <form (ngSubmit)="onSave()" [formGroup]="infoForm">
+    <!--  part 1-->
+    <kt-portlet>
+      <kt-portlet-header [title]="'Thông tin chung'" [class]="'card-head-lg bgr-custom'">
+        <ng-container ktPortletTools>
+          <button type="submit"
+                  placement="top" [ngbTooltip]="'Lưu'"
+                  class="btn btn-hover" style="background-color: #419197;color: #ffffff;padding: 5px">
+            <i class="far fa-save" style="color: #eeeeee;padding-right: 0;font-size: 1.8rem"></i>
+          </button>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <kt-general-info *ngIf="router.url.includes('edit')&& editData?.id" [dataForm]="infoForm" [editData]="editData"
+                         [submitStatus]="submitStatus"></kt-general-info>
+        <kt-general-info *ngIf="!router.url.includes('edit')" [dataForm]="infoForm" [editData]="editData"
+                         [submitStatus]="submitStatus"></kt-general-info>
+      </kt-portlet-body>
+    </kt-portlet>
+    <!--  end part 1-->
+    <!--  part 2-->
+    <kt-portlet>
+      <kt-portlet-header [title]="'Vị trí làm việc, Tiêu chuẩn chức danh'"
+                         [class]="'card-head-lg bgr-custom'"
+                         (click)="isCollapsed2 = !isCollapsed2"
+      >
+        <ng-container ktPortletTools>
+          <i [hidden]="isCollapsed2" class="fas fa-angle-double-down"></i>
+          <i [hidden]="!isCollapsed2" class="fas fa-angle-double-up"></i>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <div class="{{!isCollapsed2 ? 'd-block' :'d-none'}}">
+          <kt-working-potition [submitStatus]="submitStatus" [form]="infoForm"></kt-working-potition>
+        </div>
+      </kt-portlet-body>
+    </kt-portlet>
+    <!--  end part 2-->
+    <!--  part 3-->
+    <kt-portlet>
+      <kt-portlet-header [title]="'Lương và phụ cấp'"
+                         [class]="'card-head-lg bgr-custom'"
+                         (click)="isCollapsed3 = !isCollapsed3"
+      >
+        <ng-container ktPortletTools>
+          <i [hidden]="isCollapsed3" class="fas fa-angle-double-down"></i>
+          <i [hidden]="!isCollapsed3" class="fas fa-angle-double-up"></i>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <div class="{{!isCollapsed3 ? 'd-block' :'d-none'}}">
+          <kt-salary [submitStatus]="submitStatus" [form]="salaryForm"></kt-salary>
+        </div>
+      </kt-portlet-body>
+    </kt-portlet>
+    <!--  end part 3-->
+    <!--  part 4-->
+    <kt-portlet>
+      <kt-portlet-header [title]="'Đào tạo, bồi dưỡng'"
+                         [class]="'card-head-lg bgr-custom'"
+                         (click)="isCollapsed4 = !isCollapsed4"
+      >
+        <ng-container ktPortletTools>
+          <i [hidden]="isCollapsed4" class="fas fa-angle-double-down"></i>
+          <i [hidden]="!isCollapsed4" class="fas fa-angle-double-up"></i>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <div class="{{!isCollapsed4 ? 'd-block' :'d-none'}}">
+          <kt-educate [form]="qualificationForm"></kt-educate>
+        </div>
+      </kt-portlet-body>
+    </kt-portlet>
+    <!--  end part 4-->
+    <!--  part 5-->
+    <kt-portlet>
+      <kt-portlet-header [title]="'Đánh giá, phân loại'"
+                         [class]="'card-head-lg bgr-custom'"
+                         (click)="isCollapsed5 = !isCollapsed5"
+      >
+        <ng-container ktPortletTools>
+          <i [hidden]="isCollapsed5" class="fas fa-angle-double-down"></i>
+          <i [hidden]="!isCollapsed5" class="fas fa-angle-double-up"></i>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <div class="{{!isCollapsed5 ? 'd-block' :'d-none'}}">
+          <kt-evaluation [editID]="editID"  [form]="infoForm"></kt-evaluation>
+        </div>
+      </kt-portlet-body>
+    </kt-portlet>
+    <!--  end part 5-->
+    <!--part 6-->
+    <kt-portlet>
+      <kt-portlet-header [title]="'Thông tin khác'"
+                         [class]="'card-head-lg bgr-custom'"
+                         (click)="isCollapsed6 = !isCollapsed6"
+      >
+        <ng-container ktPortletTools>
+          <i [hidden]="isCollapsed6" class="fas fa-angle-double-down"></i>
+          <i [hidden]="!isCollapsed6" class="fas fa-angle-double-up"></i>
+        </ng-container>
+      </kt-portlet-header>
+      <kt-portlet-body>
+        <div class="{{!isCollapsed6 ? 'd-block' :'d-none'}}">
+          <kt-orther-info [form]="infoForm"></kt-orther-info>
+        </div>
+      </kt-portlet-body>
+    </kt-portlet>
+    <!--  end part 6-->
+  </form>
+  <div class="custom-loading-h">
+    <div *ngIf="loading" class="k-i-loading"></div>
+  </div>
+</kt-portlet>
+

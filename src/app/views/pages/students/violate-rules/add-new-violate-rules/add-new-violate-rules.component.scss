@@ -1,0 +1,64 @@
+.k-dropdown{
+  width: 100%;
+}
+.btn-success{
+  color: #ffffff !important;
+  background-color: #1BC5BD !important;
+  border-color: #1BC5BD !important;
+
+}
+
+.col-md-8{
+  .k-datepicker{
+    width: 12.4em !important;
+  }
+}
+.table-violation{
+  .k-header{
+    vertical-align: middle;
+  }
+  th{
+    white-space: normal;
+  }
+}
+
+//@media all and (max-width: 576px){
+//  .class-name{
+//    margin-top: 1.25rem;
+//  }
+//  .field-edit{
+//    padding-left: 6.5px !important;
+//  }
+//  .label-txt{
+//    padding-right: 12.5px !important;
+//  }
+//}
+
+@media all and (max-width: 768px) {
+  .class-name{
+    margin-top: 1.25rem;
+  }
+  .field-edit{
+    padding-left: 6.5px !important;
+  }
+  .label-txt{
+    padding-right: 12.5px !important;
+  }
+  .content-violation{
+    .col-sm-8{
+      justify-content: flex-start !important;
+    }
+  }
+}
+
+@media all and (max-width: 992px){
+  .content-violation{
+    margin-top: 1.25rem;
+  }
+
+  .content-violation{
+    .col-sm-8{
+      justify-content: flex-start !important;
+    }
+  }
+}

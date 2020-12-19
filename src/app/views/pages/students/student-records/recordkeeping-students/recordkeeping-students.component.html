@@ -1,0 +1,125 @@
+<div class="nav-std mb-5">
+  <div class="link-router-l">
+      <a routerLinkActive="active" routerLink="../profile-student">
+          Hồ sơ
+      </a>
+      <a routerLinkActive="active" routerLink="../exemptions-students">Miễn giảm</a>
+      <a routerLinkActive="active" routerLink="../individual-students">Cá biệt</a>
+      <a routerLinkActive="active" routerLink="../transfer-school">Tiếp nhập chuyển trường</a>
+      <a routerLinkActive="active" routerLink="../reward-students">Khen thưởng</a>
+      <a routerLinkActive="active" routerLink="../discipline-students">Kỷ luật</a>
+      <a routerLinkActive="active" routerLink="../recordkeeping-students">Bảo lưu</a>
+  </div>
+</div>
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body *ngIf="isCollapsed">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-search-control">
+          <label>Mã sinh viên</label>
+          <div class="kendo-form">
+            <input type="text" width="100%" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-search-control">
+          <label>Họ và tên</label>
+          <div class="kendo-form">
+            <input type="text" width="100%" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-primary mt-8">
+          <i class="fas fa-filter"></i> Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách bảo lưu'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <!--      <button class="btn btn-primary btn-sm mr-2" type="button" (click)="openModalAdd()" ngbTooltip="Thêm"-->
+      <!--              placement="bottom" [disabled]="checkDisableYear">-->
+      <!--        <i class="fas fa-plus"></i>-->
+      <!--      </button>-->
+      <!--      <button class="btn btn-danger btn-sm" type="button" (click)="openModalDeleteList()" ngbTooltip="Xóa"-->
+      <!--              placement="bottom" [disabled]="checkDeleteAll">-->
+      <!--        <i class="far fa-trash-alt"></i>-->
+      <!--      </button>-->
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="col-lg-12">
+      <kendo-grid>
+        <kendo-grid-checkbox-column class="text-center" [width]="45" [resizable]="false" [columnMenu]="false"
+                                    showSelectAll="true">
+        </kendo-grid-checkbox-column>
+        <kendo-grid-column title="TT" [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Họ và tên" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Mã học sinh" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Ngày sinh" field="">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.decisionDate | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Giới tính" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" title="Lớp cũ" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Ngày thôi học" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Lý do thôi học" field="">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" editor="text" title="Lớp tiếp nhận" field="">
+        </kendo-grid-column>
+
+        <!--        <kendo-grid-command-column title="Sửa" [width]="70" [resizable]="false" [columnMenu]="false">-->
+        <!--          <ng-template kendoGridCellTemplate let-dataItem="dataItem">-->
+        <!--            <div class="d-flex justify-content-around align-items-center">-->
+        <!--              <button class="btn btn-primary btn-sm mr-2" kendoButton-->
+        <!--                      iconClass="fas fa-pencil-alt" ngbTooltip="Sửa" placement="left" (click)="openModalEdit(dataItem)"-->
+        <!--                      [disabled]="checkEdit" container="body"></button>-->
+        <!--            </div>-->
+        <!--          </ng-template>-->
+        <!--        </kendo-grid-command-column>-->
+        <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                     let-skip="skip" let-pageSize="pageSize">
+          <div class="d-flex justify-content-between w-100">
+            <div class="p-1 d-flex">
+              <kendo-dropdownlist class="w-60px" [data]="pageSizes" [(ngModel)]="_pageSize"
+                                  (ngModelChange)="pageSizeChange()">
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex">
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+              </kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid>
+      <!--      <div class="custom-loading-h">-->
+      <!--        <div *ngIf="loading" class="k-i-loading"></div>-->
+      <!--      </div>-->
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

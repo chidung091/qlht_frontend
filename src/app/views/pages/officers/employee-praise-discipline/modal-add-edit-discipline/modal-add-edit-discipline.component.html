@@ -1,0 +1,157 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{title}}
+  </h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="action-container">
+    <form [formGroup]="form">
+      <div>
+        <div class="form-group">
+          <label class="col-form-label">Tổ bộ môn <span class="red">*</span></label>
+          <div class="">
+            <kendo-dropdownlist #schoolFaculty class="kendo-dropdown" formControlName="facultyId"
+                                [valuePrimitive]="true"
+                                [data]="schoolFaculty$ | async" [textField]="'facultyName'" [valueField]="'id'"
+                                [defaultItem]="defaultItemSchoolFaculty" (selectionChange)="changeSchoolFaculty($event)"
+                                [loading]="!(schoolFacultyLoaded$ | async)">
+            </kendo-dropdownlist>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10"
+                 *ngIf="submitted &&  f.facultyId.errors || f.facultyId.errors && (f.facultyId.dirty || f.facultyId.touched)">
+              <div class="text-error">
+                <div *ngIf="f.facultyId.errors?.required">
+                  {{VI_LANG.FIELD.SCHOOL_FACULTY_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Cán bộ <span class="red">*</span></label>
+          <div class="">
+            <kendo-dropdownlist #employeeName class="kendo-dropdown" formControlName="employeeId"
+                                [valuePrimitive]="true"
+                                [data]="listEmployee" [textField]="'fullName'" [valueField]="'id'"
+                                [defaultItem]="defaultItemEmployee"
+                                [loading]="loadEmployee" (selectionChange)="getEmployeeName($event)">
+            </kendo-dropdownlist>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10"
+                 *ngIf="submitted && f.employeeId.errors || f.employeeId.errors && (f.employeeId.dirty || f.employeeId.touched)">
+              <div class="text-error">
+                <div *ngIf="f.employeeId.errors.required">
+                  {{VI_LANG.FIELD.EMPLOYEE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Lý do kỷ luật<span class="red">*</span></label>
+          <div class="">
+            <input #disciplineDetailContent (focusout)="trimSpace('disciplineDetailContent')" type="text"
+                   class="form-control" formControlName="disciplineDetailContent" name="disciplineDetailContent"/>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.disciplineDetailContent.errors || f.disciplineDetailContent.errors && (f.disciplineDetailContent.dirty || f.disciplineDetailContent.touched)">
+            <div class="text-error">
+              <div *ngIf="f.disciplineDetailContent.errors.required">
+                {{VI_LANG.FIELD.DISCIPLINE_DETAIL_CONTENT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+              </div>
+              <div *ngIf="f.disciplineDetailContent.errors.maxlength">
+                {{VI_LANG.FIELD.DISCIPLINE_DETAIL_CONTENT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Cấp ký kỷ luật</label>
+          <div class="">
+            <input (focusout)="trimSpace('disciplineLevelName')" type="text" class="form-control"
+                   formControlName="disciplineLevelName" name="disciplineLevelName"/>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.disciplineLevelName.errors || f.disciplineLevelName.errors && (f.disciplineLevelName.dirty || f.disciplineLevelName.touched)">
+            <div class="text-error">
+              <div *ngIf="f.disciplineLevelName.errors.maxlength">
+                {{VI_LANG.FIELD.DISCIPLINE_LEVEL_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Hình thức kỷ luật</label>
+          <div class="">
+            <kendo-dropdownlist class="kendo-dropdown" formControlName="disciplineFormCode" [valuePrimitive]="true"
+                                [data]="listDanhMucKyLuatGV$ | async" [textField]="'cateName'" [valueField]="'id'"
+                                [defaultItem]="defaultItemDMKLGV"
+                                (selectionChange)="getTenHinhThuc($event)" [loading]="!(loadingLyLuat$ | async)">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">QĐ kỷ luật</label>
+          <div class="">
+            <input (focusout)="trimSpace('decisionNumber')" type="text" class="form-control"
+                   formControlName="decisionNumber"
+                   name="decisionNumber"/>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.decisionNumber.errors || f.decisionNumber.errors && (f.decisionNumber.dirty || f.decisionNumber.touched)">
+            <div class="text-error">
+              <div *ngIf="f.decisionNumber.errors.maxlength">
+                {{VI_LANG.FIELD.DECISION_NUMBER_DISCIPLINE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Ngày kỷ luật</label>
+          <div class="">
+            <kendo-datepicker [incompleteDateValidation]="true" class="kendo-date" [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                              [format]="'dd/MM/yyyy'" aria-label="Ngày kỷ luật" formControlName="decisionDate">
+            </kendo-datepicker>
+            <div class="col-sm-10"
+                 *ngIf="submitted && f.decisionDate.errors || f.decisionDate.errors && (f.decisionDate.dirty || f.decisionDate.touched)">
+              <div class="text-error">
+                <div *ngIf="f.decisionDate.errors">
+                  {{VI_LANG.FIELD.DECISION_DATE_DISCIPLINE}} {{VI_LANG.COMMON_ERROR.PATTERN_DATE}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Ghi chú</label>
+          <div class="">
+            <input (focusout)="trimSpace('description')" type="text" class="form-control" formControlName="description"
+                   name="description"/>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">
+            <div class="text-error">
+              <div *ngIf="f.description.errors.maxlength">
+                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="custom-loading-h">
+          <div *ngIf="loading | async" class="k-i-loading"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="cancel()">Đóng</button>
+    <button type="submit" class="btn  btn-primary" (click)="onSubmit()">Lưu</button>
+  </div>
+</div>

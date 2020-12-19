@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">Thay đổi mật khẩu</h4>
+  <button class="btn-close-h" aria-label="Close" (click)="activeModal.close('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body form-delete-h">
+  <img class="d-block m-auto" src="/assets/media/bg/normal_u546.svg">
+  <p class="form-check-label mt-5 text-center" style="text-align: center;"> 
+    Quý thầy cô đồng ý thay đổi mật khẩu!</p>
+</div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Hủy</button>
+    <button type="submit" class="btn btn-primary" (click)="save()">Đồng ý</button>
+  </div>
+
+<div class="custom-loading-h">
+  <div *ngIf="isloading" class="k-i-loading"></div>
+</div>

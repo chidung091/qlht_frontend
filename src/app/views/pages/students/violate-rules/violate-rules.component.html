@@ -1,0 +1,131 @@
+<kt-search-box-violate (submitted)="submit($event)"></kt-search-box-violate>
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách vi phạm'"
+                     [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button kendoButton class="btn btn-light mr-2 btn-custom btn-excel"
+              ngbTooltip="Nhập dữ liệu từ excel">
+        <i class="far fa-file-excel"></i>
+        <i class="fas fa-upload"></i>
+      </button>
+      <button kendoButton [icon]="'plus'"
+              type="button"
+              class="btn btn-primary btn-sm mr-2 btn-custom"
+              placement="bottom"
+              ngbTooltip="Thêm mới"
+              routerLink="/students/violate-rules/add-new-violate-rules">
+      </button>
+      <button kendoButton [icon]="'delete'"
+              type="button"
+              class="btn btn-danger btn-sm btn-custom"
+              (click)="okDeleteList(delete)"
+              [disabled]="_mySelection.length===0"
+              #trash
+              ngbTooltip="Xóa">
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <kendo-grid [pageable]="true"
+                [style]="{'border-radius': '25px'}">
+      <kendo-grid-checkbox-column [width]="40"
+                                  [resizable]="false"
+                                  [columnMenu]="false"
+                                  showSelectAll="true"
+                                  class="text-center"
+                                  headerClass="text-center">
+      </kendo-grid-checkbox-column>
+
+      <kendo-grid-column field="id" title="TT"
+                         [width]="40"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Lớp"
+                         [width]="50"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Mã học sinh"
+                         [width]="100"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Tên học sinh"
+                         [width]="100"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Ngày vi phạm"
+                         [width]="100"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Lỗi vi phạm"
+                         [width]="200"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Tổng số điểm trừ"
+                         [width]="100"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center text-capitalize"
+                         headerClass="text-center
+                           font-weight-bold">
+      </kendo-grid-column>
+      <kendo-grid-column field="id" title="Sửa"
+                         [width]="40"
+                         [resizable]="false"
+                         [columnMenu]="false"
+                         editable="false"
+                         class="text-center"
+                         headerClass="text-center font-weight-bold">
+      </kendo-grid-column>
+    </kendo-grid>
+  </kt-portlet-body>
+</kt-portlet>
+
+<ng-template #myModal let-modal class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-header">
+    <!--    <h4 class="modal-title">{{textEC}}</h4>-->
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <i class="fas fa-times" style="font-size: large"></i>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary btn-custom" (click)="modal.close('Close click')">{{VI_LANG.BUTTON.CLOSE}}</button>
+    <button class="btn btn-primary" (click)="actionConfirm()">{{VI_LANG.BUTTON.SAVE}}</button>
+  </div>
+</ng-template>
+
+<ng-template #delete let-modal class="modal-dialog modal-dialog-centered modal-dialog-scrollable" let-c="close"
+             let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Thông báo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <i class="fas fa-times" style="font-size: large"></i>
+    </button>
+  </div>
+
+</ng-template>
+

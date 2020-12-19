@@ -1,0 +1,102 @@
+<div class="modal-body">
+  <form [formGroup]="form">
+      <div class="pt-5 row">
+        <div class="col-sm-5">
+          <p>Đối tượng</p>
+        </div>
+        <div class="col-sm-3">
+          <input type="radio" id="candidates" name="violationExamRegulationUserType" [value]="model.thiSinh"
+                 [formControlName]="'violationExamRegulationUserType'" (change)="changeRadio()"
+                 (ngModelChange)="actionEV() "
+                 kendoRadioButton/>
+          <label class="k-radio-label pl-5" for="candidates">{{VI_LANG.FIELD.CANDIDATES}}</label>
+        </div>
+        <div class="col-sm-4">
+          <input type="radio" id="supervisor" name="violationExamRegulationUserType" [value]="model.giamThi"
+                 [formControlName]="'violationExamRegulationUserType'" (change)="changeRadio()"
+                 (ngModelChange)="actionEV()" kendoRadioButton/>
+          <label class="k-radio-label pl-5" for="supervisor">{{VI_LANG.FIELD.SUPERVISOR}}</label>
+        </div>
+      </div>
+    <div class="pt-5"></div>
+
+    <div class="pt-5 row">
+      <div class="col-sm-5"><label for="nameError">{{VI_LANG.FIELD.EXAM_VIOLATION_TYPE_NAME}}<span
+        style="color: red">*</span></label></div>
+      <div class="col-sm-7">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" id="nameError" class="form-control" placeholder="Nhập tên lỗi vi phạm"
+                 [formControlName]="'name'" #tenLoiViPham
+                 smasTrim (change)="actionEV()">
+          <kendo-formhint>{{VI_LANG.FIELD.EXAM_VIOLATION_TYPE_NAME}}</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.name.errors?.required" style="font-size: smaller">
+            {{VI_LANG.FIELD.EXAM_VIOLATION_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror *ngIf="form.controls.name.hasError('pattern')">
+            {{VI_LANG.FIELD.EXAM_VIOLATION_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.PATTERN_INVALID_CHAR}}
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.name.errors?.maxlength">
+              {{VI_LANG.FIELD.EXAM_VIOLATION_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+
+
+      <div class="pt-5 row">
+        <div class="col-sm-5">
+          <label for="pointSub">{{VI_LANG.FIELD.MINUS_POINT}}(%)<span *ngIf="form.value.violationExamRegulationUserType === 0"
+                                                            style="color: red">*</span><span
+            *ngIf="form.value.violationExamRegulationUserType === 1">:</span></label>
+        </div>
+        <div class="col-sm-7">
+          <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+            <input type="number" id="pointSub" class="form-control" placeholder="Nhập điểm trừ"
+                   [formControlName]="'minusMark'"
+                   (change)="actionEV()" #diemTru11>
+            <kendo-formhint>{{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}</kendo-formhint>
+            <kendo-formerror *ngIf="checkDiemTru">
+                    {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+                  </kendo-formerror>
+            <kendo-formerror>
+              <div *ngIf="form.controls.minusMark.hasError('pattern')">
+                {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+              </div>
+            </kendo-formerror>
+            <kendo-formerror>
+              <div *ngIf="form.controls.minusMark.errors?.maxlength">
+                {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_3}}
+              </div>
+            </kendo-formerror>
+            <kendo-formerror>
+              <div *ngIf="form.controls.minusMark.hasError('max')">
+                {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.MAX_NUMBER_100}}
+              </div>
+            </kendo-formerror>
+
+          </kendo-formfield>
+        </div>
+      </div>
+
+
+      <div class="pt-5 row">
+        <div class="col-sm-5">
+          <label for="descError">{{VI_LANG.FIELD.DESCRIPTION}}</label>
+        </div>
+        <div class="col-sm-7">
+          <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+            <input type="text" id="descError" class="form-control" placeholder="Nhập mô tả"
+                   smasTrim [formControlName]="'description'" (change)="actionEV()">
+            <kendo-formhint>{{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}</kendo-formhint>
+            <kendo-formerror>
+              <div *ngIf="form.controls.description.errors?.maxlength">
+                {{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+  </form>
+</div>

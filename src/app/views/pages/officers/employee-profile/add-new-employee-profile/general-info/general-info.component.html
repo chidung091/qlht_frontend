@@ -1,0 +1,445 @@
+<form [formGroup]="dataForm">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row col-md-11 d-flex justify-content-around">
+        <div class="col-sm-5 col-md-6 text-center" style="cursor: pointer;">
+          <img
+            [src]="domFile.bypassSecurityTrustUrl(imgAvatar)"
+            height="220" width="100%" [style.object-fit]="imgAvatar ?  'cover':''"/>
+          <div class=" border m-auto border-top-0 bg-light">
+            <label class="px-2 mb-0">
+              <i class="fas fa-camera fa-2x"></i>
+              <input type="file" style="display: none;" (change)="fileChange($event,'avatar')"
+                     accept="image/png, image/jpeg,image/gif,image/jpg,image/bmp,image/jfif,image/pjpeg,image/pjp"
+              >
+            </label>
+          </div>
+          <div class="m-auto mt-2">Ảnh cán bộ</div>
+        </div>
+        <div class="col-sm-5 col-md-6 mt-xs text-center" style="cursor: pointer;">
+          <img
+            [src]="domFile.bypassSecurityTrustUrl(imgSignature)"
+            height="220" width="100%" [style.object-fit]="imgSignature ?  'cover':''"/>
+          <div class=" border m-auto border-top-0 bg-light">
+            <label class="px-2 mb-0 ">
+              <i class="fas fa-camera fa-2x"></i>
+              <input type="file" style="display: none;" (change)="fileChange($event,'signature')">
+            </label>
+          </div>
+          <div class="m-auto mt-2">Ảnh chữ ký</div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Giới tính <span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <kendo-dropdownlist
+            class="w-100"
+            [data]="listGioiTinh$ | async"
+            [loading]="listGioiTinhLoad$ | async"
+            valueField="cateCode"
+            textField="cateName"
+            valuePrimitive="true"
+            formControlName="genderCode"
+            (selectionChange)="cateSelected($event,'genderName')"
+            [defaultItem]="defaultDropdownItem"
+            [ngClass]="{ 'ng-invalid ng-touched':submitStatus && dataForm.controls.genderCode.errors }"
+          >
+          </kendo-dropdownlist>
+          <div class="text-danger "
+               *ngIf="dataForm.controls.genderCode.errors?.required && ( submitStatus ||dataForm.controls.genderCode.touched)">
+            Trường này không được để trống
+          </div>
+        </kendo-formfield>
+
+      </div>
+
+
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Số CMND/TCC </label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input type="text" class="form-control w-100" formControlName="identityNumber" maxlength="50">
+          <div class="text-danger m-auto">
+            <div *ngIf="dataForm.controls.identityNumber.errors?.pattern ">
+              Trường này chỉ cho nhập số
+            </div>
+            <div *ngIf="dataForm.controls.identityNumber.errors?.maxLength ">
+              Trường này chỉ cho nhập tối đa 50 kí tự
+            </div>
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Dân tộc<span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <kendo-dropdownlist class=" w-100  " [data]="listDanToc$ | async"
+                              valuePrimitive="true" [loading]="listDanTocLoad$ | async"
+                              textField="cateName"
+                              valueField="cateCode"
+                              [defaultItem]="defaultDropdownItem"
+                              formControlName="nation"
+                              [ngClass]="{ 'ng-invalid ng-touched':submitStatus && dataForm.controls.nation.errors }"
+          >
+          </kendo-dropdownlist>
+          <div class="text-danger m-auto">
+            <div
+              *ngIf="dataForm.controls.nation.errors?.required && ( submitStatus ||dataForm.controls.nation.touched)">
+              Trường này không được để trống
+            </div>
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Tôn giáo</label>
+        <kendo-dropdownlist class="col-md-8  w-100  p-0" [data]="listTonGiao$ | async"
+                            valuePrimitive="true" [loading]="listTonGiaoLoad$ | async"
+                            textField="cateName"
+                            valueField="cateCode"
+                            [defaultItem]="defaultDropdownItem"
+                            formControlName="religion"
+        >
+        </kendo-dropdownlist>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Số ĐTDD</label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input type="tel" class="form-control w-100" formControlName="phone" smasTrim
+                 maxlength="50">
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.phone.errors?.maxlength ">
+            Số điện thoại chỉ nhập tối đa 50 kí tự
+          </div>
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.phone.errors?.pattern ">
+            Trường này chỉ có thể nhập số
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Quê quán </label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input class="form-control w-100" formControlName="homeTown" smasTrim maxlength="50">
+
+          <div class="text-danger m-auto"
+               *ngIf="dataForm.controls.homeTown.errors?.maxlength">
+            Quê quán chỉ nhập tối đa 50 kí tự
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Cấp dạy chính <span style="color: red;margin-left: 5px">*</span>
+        </label>
+        <kendo-formfield class="col-md-8 p-0">
+          <kendo-dropdownlist class="w-100" [data]="levels$ | async"
+                              valuePrimitive="true"
+                              textField="schoolLevelName"
+                              valueField="schoolLevelCode"
+                              [defaultItem]="defaultLevel"
+                              formControlName="mainLevelTeachingCode"
+                              [ngClass]="{ 'ng-invalid ng-touched':submitStatus && dataForm.controls.mainLevelTeachingCode.errors }"
+                              (selectionChange)="cateSchoolLevel($event,'mainLevelTeachingName')"
+          >
+
+          </kendo-dropdownlist>
+
+          <div class="text-danger m-auto">
+            <div
+              *ngIf="dataForm.controls.mainLevelTeachingCode.errors?.required && ( submitStatus ||dataForm.controls.mainLevelTeachingCode.touched)">
+              Trường này lầ trường bắt buộc
+            </div>
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Vị trí làm việc <span style="color: red;margin-left: 5px">*</span>
+        </label>
+        <kendo-formfield class="p-0 col-md-8 ">
+          <kendo-dropdownlist class="w-100" [data]="listViTriLamViec$ | async"
+                              valuePrimitive="true" [loading]="listViTriLamViecLoad$ |async"
+                              textField="cateName"
+                              valueField="cateCode"
+                              [defaultItem]="defaultDropdownItem"
+                              formControlName="positionStaffCode"
+                              (selectionChange)="cateSelected($event,'positionStaffName')"
+                              [ngClass]="{ 'ng-invalid ng-touched':submitStatus && dataForm.controls.positionStaffCode.errors }"
+          >
+          </kendo-dropdownlist>
+
+          <div class="text-danger m-auto">
+            <div
+              *ngIf="dataForm.controls.positionStaffCode.errors?.required && ( submitStatus || dataForm.controls.positionStaffCode.touched)">
+              Trường này lầ trường bắt buộc
+            </div>
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Nhóm chức vụ <span style="color: red;margin-left: 5px">*</span>
+        </label>
+        <kendo-formfield class="w-100 col-md-8 p-0">
+          <kendo-dropdownlist class="w-100" [data]="listJob"
+                              valuePrimitive="true" [loading]="listJobLoading "
+                              textField="cateName"
+                              valueField="cateCode"
+                              [defaultItem]="defaultDropdownItem"
+                              formControlName="positionGroupCode"
+                              (selectionChange)="cateSelected($event,'positionGroupName')"
+                              [ngClass]="{ 'ng-invalid ng-touched':submitStatus && dataForm.controls.positionGroupCode.errors }"
+          >
+          </kendo-dropdownlist>
+
+          <div class="text-danger m-auto">
+            <div
+              *ngIf="dataForm.controls.positionGroupCode.errors?.required && ( submitStatus ||dataForm.controls.positionGroupCode.touched)">
+              Trường này lầ trường bắt buộc
+            </div>
+          </div>
+
+        </kendo-formfield>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Mã cán bộ<span style="color:red">*</span></label>
+        <input type="text" class="form-control col-md-8" formControlName="code" smasTrim>
+        <div class="text-danger m-auto" *ngIf="dataForm.controls.code.errors?.required ">
+          Mã cán bộ không được để trống
+        </div>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Mã định danh<span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input type="text" class="form-control " formControlName="identificationCode"
+                 smasTrim maxlength="50">
+
+          <div class="text-danger m-auto"
+               *ngIf="dataForm.controls.identificationCode.errors?.maxlength">
+            Mã định danh chỉ nhập tối đa 50 kí tự
+          </div>
+          <div class="text-danger m-auto"
+               *ngIf="(dataForm.controls.identificationCode.errors?.required && ( submitStatus ||dataForm.controls.identificationCode.touched))">
+            Mã định danh không được để trống
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3 "></div>
+        <div class="col-md-4  ">
+          <input type="checkbox" id="isLeader" formControlName="isLeader">
+          <label for="isLeader" class="label-custom ml-1 ">Là tổ trưởng</label>
+        </div>
+        <div class="col-md-4">
+          <input type="checkbox" id="isNew" formControlName="isNew">
+          <label class="label-custom ml-1" for="isNew">Là tuyển mới</label>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <label class="label-custom col-md-3">Tổ bộ môn <span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <kendo-dropdownlist class="form-control "
+                              [data]="schoolFaculty$ | async"
+                              [loading]="!(schoolFacultyLoaded$ | async)"
+                              textField="facultyName"
+                              valueField="id"
+                              valuePrimitive="true"
+                              formControlName="facultyId"
+                              [defaultItem]="defaultToBoMon"
+                              (selectionChange)="selectSchoolFaculty($event)"
+                              [ngClass]="{ 'ng-invalid ng-touched':submitStatus && dataForm.controls.facultyId.errors }"
+          >
+          </kendo-dropdownlist>
+
+          <div class="text-danger m-auto"
+               *ngIf="dataForm.controls.facultyId.errors?.required && ( submitStatus ||dataForm.controls.facultyId.touched)">
+            Tổ bộ môn không được để trống
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Họ và tên <span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input type="text" class="form-control " formControlName="fullName" smasTrim
+                 maxlength="100">
+
+          <div class="text-danger m-auto ">
+            <div *ngIf="dataForm.controls.fullName.errors?.required && submitStatus ">
+              Họ và tên không được để trống
+            </div>
+            <div *ngIf="dataForm.controls.fullName.errors?.maxlength">
+              Họ và tên chỉ nhập tối đa 100 kí tự
+            </div>
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Bí danh</label>
+        <kendo-formfield class=" col-md-8 p-0">
+          <input class="form-control" formControlName="alias" smasTrim maxlength="100">
+
+          <div class="text-error m-auto">
+            <div *ngIf="dataForm.controls.alias.errors?.maxlength">
+              Bí danh chỉ nhập tối đa 100 kí tự
+            </div>
+          </div>
+
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-3 mr-1"></div>
+        <div class="col-md-8  d-flex p-0 justify-content-between ">
+          <kendo-datepicker placeholder="Ngày cấp số CMND/TCC" class="rounded "
+                            formControlName="identityIssuedDate"
+                            [disabledDates]="disabledDates"
+                            [formatPlaceholder]="{year: 'YYYY', month: 'MM', day: 'DD'}"
+                            format="dd/MM/yyyy"
+                            placeholder="Vui lòng chọn ngày cấp"
+                            style="width:49%"></kendo-datepicker>
+          <kendo-formfield style="width:49%">
+            <input placeholder="Nơi cấp số CMND/TCC" class="form-control rounded "
+                   formControlName="identityIssuedPlace" maxlength="50"
+                   smasTrim>
+            <div class="text-danger m-auto" *ngIf="dataForm.controls.name.errors?.maxlength && submitStatus">
+              Trường này chỉ nhận tối đa 50 kí tư
+            </div>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom ml-1 col-md-3"> Ngày sinh <span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8  p-0 ">
+          <kendo-datepicker class="rounded w-100" formControlName="birthDate"
+                            [disabledDates]="disabledDates"
+                            [formatPlaceholder]="{year: 'YYYY', month: 'MM', day: 'DD'}"
+                            format="dd/MM/yyyy"
+                            placeholder="Vui lòng chọn ngày sinh">
+          </kendo-datepicker>
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.birthDate.errors?.required && submitStatus">
+            Ngày sinh không được để trống
+          </div>
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.birthDate.value>nowDate">
+            Ngày không hợp lệ
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom ml-1 col-md-3"> Ngày vào trường <span style="color:red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <kendo-datepicker class="rounded w-100" formControlName="joinedDate"
+                            [disabledDates]="disabledDates"
+                            [formatPlaceholder]="{year: 'YYYY', month: 'MM', day: 'DD'}"
+                            format="dd/MM/yyyy"
+                            placeholder="Vui lòng chọn ngày vào trường">
+          </kendo-datepicker>
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.joinedDate.errors?.joinedDate && submitStatus">
+            Ngày vào trường không được để trống
+          </div>
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.joinedDate.value>nowDate">
+            Ngày không hợp lệ
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Địa chỉ thường trú</label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input class="form-control w-100 " formControlName="permanentAddress" smasTrim
+                 maxlength="200">
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.permanentAddress.errors?.maxLength ">
+            Trường này chỉ nhập tối đa 200 kí tự.
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Sức khỏe</label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input class="form-control w-100" formControlName="healthStatus" smasTrim
+                 maxlength="100">
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.healthStatus.errors?.maxLength ">
+            Trường này chỉ nhập tối đa 100 kí tự.
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Địa chỉ Email <span style="margin-left: 5px;color: red">*</span></label>
+        <kendo-formfield class="col-md-8 p-0">
+          <input type="email" class="form-control w-100" formControlName="email" smasTrim
+                 maxlength="100">
+          <div class="text-danger m-auto"
+               *ngIf="dataForm.controls.email.errors?.required && ( submitStatus || dataForm.controls.email.touched)">
+            Địa chỉ email không được để trống
+          </div>
+          <div class="text-danger m-auto" *ngIf="dataForm.controls.email.errors?.pattern">
+            Vui lòng nhập email theo định dạng 'ABC@abc.abc
+          </div>
+        </kendo-formfield>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-3"></div>
+        <div class="col-md-8  d-flex p-0 justify-content-between ">
+          <div class="row ml-0 mr-0 w-100">
+            <kendo-dropdownlist class="col-md-4 p-0 pr-1"
+                                [data]="provinces$ | async"
+                                [loading]="!(provincesLoaded$ | async)"
+                                [textField]="'provinceName'"
+                                [valueField]="'provinceCode'"
+                                [valuePrimitive]="true"
+                                [defaultItem]="defaultProvince"
+                                (selectionChange)="selectMatinh($event)"
+                                formControlName="provinceCode"
+            >
+            </kendo-dropdownlist>
+            <kendo-dropdownlist class="col-md-4 p-0 pr-1"
+                                [data]="districts$ | async"
+                                [loading]="!(districtsLoaded$ | async)"
+                                [textField]="'districtName'"
+                                [valueField]="'districtCode'"
+                                [valuePrimitive]="true"
+                                [defaultItem]="defaultDistrict"
+                                (selectionChange)="selectMaQuan($event)"
+                                formControlName="districtCode"
+            >
+            </kendo-dropdownlist>
+            <kendo-dropdownlist class="col-md-4 p-0"
+                                [data]="wards$ | async"
+                                [loading]="!(wardsLoaded$ | async)"
+                                [textField]="'wardName'"
+                                [valueField]="'wardCode'"
+                                [defaultItem]="defaultWard" (selectionChange)="selectMaXa($event)"
+                                [valuePrimitive]="true" formControlName="communeCode">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Môn dạy</label>
+        <kendo-dropdownlist class="col-md-8  w-100  p-0" [data]="listMonDay$ | async"
+                            valuePrimitive="true" [loading]="listMonDayLoad$ | async"
+                            textField="cateName"
+                            valueField="id"
+                            [defaultItem]="defaultDropdownItem"
+                            formControlName="subjectTaught"
+        >
+        </kendo-dropdownlist>
+      </div>
+      <div class="row mt-3">
+        <label class="label-custom col-md-3">Hình thức hợp đồng <span style="margin-left: 5px;color: red">*</span>
+        </label>
+        <kendo-formfield class="p-0 col-md-8">
+          <kendo-dropdownlist class="w-100" [data]="listHinhThucHopDong$ | async"
+                              valuePrimitive="true" [loading]="listHinhThucHopDongLoad$ | async"
+                              textField="cateName"
+                              valueField="cateCode"
+                              [defaultItem]="defaultDropdownItem"
+                              formControlName="contractType">
+          </kendo-dropdownlist>
+          <div class="text-danger m-auto"
+               *ngIf="dataForm.controls.contractType.errors?.required && ( submitStatus ||dataForm.controls.contractType.touched)">
+            Hình thức hợp đồng không được để trống
+          </div>
+        </kendo-formfield>
+      </div>
+    </div>
+  </div>
+</form>

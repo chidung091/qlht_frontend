@@ -1,0 +1,40 @@
+<kt-portlet>
+  <kt-portlet-body>
+    <div class="all-tab-custom-h">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Quản lý hồ sơ cán bộ</a>
+          <ng-template ngbNavContent>
+            <kt-add-new-employee-profile></kt-add-new-employee-profile>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Quản lý quá trình công tác của cán bộ</a>
+          <ng-template ngbNavContent>
+            <kt-management-work-process></kt-management-work-process>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Thông tin đào tạo</a>
+          <ng-template ngbNavContent>
+            <kt-educate-information></kt-educate-information>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="4">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Thông tin lương</a>
+          <ng-template ngbNavContent>
+            <kt-salary-information></kt-salary-information>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="5">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Thông tin ngoại ngữ</a>
+          <ng-template ngbNavContent>
+            <kt-foreign-language-information></kt-foreign-language-information>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+

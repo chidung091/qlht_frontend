@@ -1,0 +1,25 @@
+
+<ng-container *ngIf="action === 'edit'">
+  <kendo-dialog title="Sửa thông tin công việc kiêm nhiệm" (close)="close.emit()" [width]="500">
+    <div class="card-body">
+      <div class="pb-5 d-flex">
+        <label for="nameExp1" class="w-100">Tên công việc kiêm nhiệm<span style="color: red">*</span></label>
+        <input  kendoTextBox  type="text" id="nameExp1" class="w-100 p-2 border bd-radius-5" placeholder="Nhập tên" value="{{data.nameWork}}" disabled>
+      </div>
+      <div class="pb-5 d-flex">
+        <label for="period" class="w-100">Số tiết/tuần<span style="color: red">*</span></label>
+        <input  kendoTextBox  type="text" id="period" class="w-100 p-2 border bd-radius-5" placeholder="Nhập tên" value="{{data.lessonWeek}}"/>
+      </div>
+
+      <div class="pb-5 d-flex">
+        <label for="descExp1" class="w-100">Mô tả</label>
+        <input kendoTextBox type="text" id="descExp1" class="w-100 p-2 border bd-radius-5" placeholder="Nhập mô tả" value="{{data.descWork}}">
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="btn btn-outline-primary m-3 w-100px" (click)="close.emit()">Đóng</div>
+        <div class="btn btn-success m-3 w-100px" (click)="save()">Lưu</div>
+      </div>
+    </div>
+  </kendo-dialog>
+</ng-container>

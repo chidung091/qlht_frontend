@@ -1,0 +1,123 @@
+
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{title}}
+  </h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" >
+    <div class="row">
+      <div class="col-sm-6 row d-flex align-items-center" style="margin-left: 15px">
+        <label class="col-md-3 mb-0" for="school-year">Năm học: <span class="text-danger">*</span></label>
+        <div class="col-sm-9 d-flex align-items-center flex-row ">
+          <div style="margin-right:23px">
+            <kendo-formfield>
+              <input  id="school-year"  [formControlName]="'startYear'"  class="form-control" maxlength="4">
+              <div  class="formError" *ngIf="form.controls.startYear.errors?.required || form.controls.endYear.errors?.required ">
+                {{VI_LANG.FIELD.SCHOOL_YEAR}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+              </div>
+              <div  class="formError" *ngIf="form.controls.startYear.errors?.pattern || form.controls.endYear.errors?.pattern ">
+                {{VI_LANG.FIELD.SCHOOL_YEAR}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+              </div>
+            </kendo-formfield>
+          </div>
+          <div style="margin-right:23px">
+            <kendo-formfield>
+              <input [formControlName]="'endYear'" class="form-control"  maxlength="4">
+            </kendo-formfield>
+          </div>
+        </div>
+      </div>
+      <div class=" col-sm-6 row d-flex align-items-center">
+        <label class="col-sm-4 mb-0" for="principal">Hiệu trưởng: <span style="color: red">*</span></label>
+        <div class="col-sm-8">
+          <kendo-formfield>
+            <input id="principal" [formControlName]="'principalName'"
+                   class="form-control "
+                   aria-label="Nhập họ tên hiệu trưởng"
+                   (focusout)="trimSpace('principalName')">
+            <kendo-formerror class="formError" *ngIf="form.controls.principalName.errors?.required ">
+              {{VI_LANG.FIELD.PRINCIPAL_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+    </div>
+
+    <div class="row  mb-4">
+      <div class="class-room-h-title">
+        <label>Thông tin chi tiết</label>
+        <div class='class-room-h-title-line'></div>
+      </div>
+    </div>
+
+    <div class="row">
+     <div class="col-sm-3 padding ">
+       <label > Ngày bắt đầu học kì I <span style="color: red">*</span></label>
+     </div>
+     <div class="col-sm-3 padding ">
+       <kendo-datepicker [formControlName]="'firstSemesterStartDate'"
+                         format="dd/MM/yyyy"
+                         (valueChange)="firstSemesterStartDateChange($event)"
+                         placeholder="Ngày bắt đầu HK I"
+                          aria-label="Ngày bắt đầu HK I">
+       </kendo-datepicker>
+       <kendo-formerror  *ngIf="form.controls.firstSemesterStartDate.errors?.required">
+         Ngày không được để trống
+       </kendo-formerror>
+     </div>
+
+      <div class="col-sm-3 padding ">
+        <label > Ngày kết thúc học kì I <span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-3 padding">
+        <kendo-datepicker [formControlName]="'firstSemesterEndDate'"
+                          [format]="'dd/MM/yyyy'"
+                          (valueChange)="firstSemesterEndDateChange($event)"
+                          [min]="firstSemesterStartDate"
+          placeholder="Ngày kết thúc HK I">
+        </kendo-datepicker>
+      </div>
+    </div>
+
+
+    <div class="row mt-3 mb-3 ">
+      <div class="col-sm-3 padding ">
+        <label > Ngày bắt đầu học kì II <span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-3 padding">
+        <kendo-datepicker [formControlName]="'secondSemesterStartDate'"
+                          [format]="'dd/MM/yyyy'"
+                          (valueChange)="secondSemesterStartDateChange($event)"
+                          [min]="firstSemesterEndDate"
+                          placeholder="Ngày bắt đầu HK II">
+        </kendo-datepicker>
+      </div>
+
+      <div class="col-sm-3 padding ">
+        <label > Ngày kết thúc học kì II <span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-3 padding">
+        <kendo-datepicker
+          [formControlName]="'secondSemesterEndDate'"
+          [format]="'dd/MM/yyyy'"
+          [min]="secondSemesterStartDate"
+          placeholder="Ngày kết thúc HK II">
+        </kendo-datepicker>
+      </div>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">{{VI_LANG.BUTTON.CLOSE}}</button>
+    <button type="button" class="btn btn-primary"  (click)="save()">{{VI_LANG.BUTTON.SAVE}}</button>
+  </div>
+</div>
+<div class="custom-loading-h">
+  <div *ngIf="addloading" class="k-i-loading"></div>
+</div>
+
+

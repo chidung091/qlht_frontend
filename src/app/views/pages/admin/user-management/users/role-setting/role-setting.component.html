@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    Phân quyền {{UserName}}
+  </h4>
+</div>
+
+<div class="modal-body">
+  <div class="form-check form-check-inline" *ngFor="let data of dsRoleView | orderBy: order:true:'case-insensitive'">
+    <input class="form-check-input" type="checkbox" [checked]="data.value" (change)="onCheckboxChange(data)">
+    <label class="form-check-label">{{data.remark}}</label>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Đóng</button>
+    <button type="submit" (click)="save()" class="btn  btn-primary">Lưu</button>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="isloading" class="k-i-loading"></div>
+  </div>
+</div>

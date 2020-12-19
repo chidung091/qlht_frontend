@@ -1,0 +1,95 @@
+
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="pt-5 row">
+      <div class="col-sm-4">
+        <label for="violation2">{{VI_LANG.FIELD.FAULT_CRITERIA}} <span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-8">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" class="form-control" id="violation2" placeholder="Nhập lỗi vi phạm"
+                 [formControlName]="'name'" #tenLoiViPham
+                 smasTrim (change)="actionFC()">
+          <kendo-formhint>{{VI_LANG.FIELD.FAULT_CRITERIA}} {{VI_LANG.COMMON_ERROR.REQUIRED}}</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.name.errors?.required">
+            {{VI_LANG.FIELD.FAULT_CRITERIA}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror *ngIf="form.controls.name.errors?.maxlength">
+            {{VI_LANG.FIELD.FAULT_CRITERIA}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+    <!--            <kendo-formfield>-->
+    <!--              <div class="pb-5">-->
+    <!--                <label>Nhóm lỗi vi phạm<span style="color: red">*</span></label>-->
+    <!--                <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"-->
+    <!--                                    [data]="listGroupFaultCriteria"-->
+    <!--                                    [textField]="'tenNhomLoiViPham'" [valueField]="'id'" [valuePrimitive]="true"-->
+    <!--                                    [formControlName]="'nhomLoiViPhamId'"-->
+    <!--                                    [defaultItem]="defaultFF" [loading]="boolFault">-->
+    <!--                </kendo-dropdownlist>-->
+    <!--              </div>-->
+    <!--              <kendo-formerror *ngIf="form.controls.nhomLoiViPhamId.errors?.required">-->
+    <!--                Tên nhóm lỗi vi phạm không được để trống-->
+    <!--              </kendo-formerror>-->
+    <!--            </kendo-formfield>-->
+    <div class="pt-5 row">
+     <div class="col-sm-4">
+       <label for="pointSub2">{{VI_LANG.FIELD.MINUS_POINT}} <span style="color: red">*</span></label>
+     </div>
+       <div class="col-sm-8">
+         <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+           <input type="number" class="form-control"
+                  id="pointSub2" placeholder="Nhập điểm trừ"
+                  [formControlName]="'minusMark'" (change)="actionFC()"
+                  #diemTru>
+           <kendo-formhint> {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}</kendo-formhint>
+           <kendo-formerror *ngIf="form.controls.minusMark.errors?.required">
+             {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+           </kendo-formerror>
+           <kendo-formerror>
+             <div *ngIf="form.controls.minusMark.hasError('pattern')">
+               {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_DOT_1}}
+             </div>
+           </kendo-formerror>
+           <kendo-formerror>
+             <div *ngIf="form.controls.minusMark.errors?.max">
+               {{VI_LANG.FIELD.MINUS_POINT}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_4}}
+             </div>
+           </kendo-formerror>
+         </kendo-formfield>
+       </div>
+    </div>
+    <div class="pt-5 row">
+      <div class="col-sm-4">
+        <label>{{VI_LANG.FIELD.ATTENDANCE_FAULT}}</label>
+      </div>
+      <div class="col-sm-8">
+        <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center" [data]="listDiemDanh"
+                            [textField]="'tenLoiDiemDanh'" [valueField]="'id'" [formControlName]="'absenceFault'"
+                            [valuePrimitive]="true"
+                            [defaultItem]="defaultF" (change)="actionFC()">
+        </kendo-dropdownlist>
+      </div>
+    </div>
+    <div class="pt-5 row"></div>
+    <div class="pt-5 row">
+  <div class="col-sm-4">
+    <label for="desc4">{{VI_LANG.FIELD.DESCRIPTION}}</label>
+  </div>
+      <div class="col-sm-8">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" class="form-control" placeholder="Nhập mô tả" id="desc4" [formControlName]="'description'"
+                 (change)="actionFC()" smasTrim>
+          <kendo-formhint>{{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}</kendo-formhint>
+          <kendo-formerror>
+            <div *ngIf="form.controls.description.errors?.maxlength">
+              {{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+  </form>
+</div>

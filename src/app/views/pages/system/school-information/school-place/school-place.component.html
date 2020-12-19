@@ -1,0 +1,103 @@
+<kt-portlet>
+  <kt-portlet-header [class]="'card-head-lg bgr-custom'" [icon]="'fas fa-filter'"
+                     [title]="'Thông tin điểm trường phụ'">
+    <ng-container ktPortletTools>
+      <div *ngIf="collapse">
+        <button (click)="openModalAdd()"  [iconClass]="'fas fa-plus'" *ktPermission="roleCreateSubSchool"
+                class="btn btn-primary btn-sm mr-2" ngbTooltip="Thêm mới" kendoButton type="button"></button>
+        <button (click)="openModalDelete()"  [disabled]="checkDeleteAll" *ktPermission="roleDeleteSubSchool"
+                [iconClass]="'far fa-trash-alt'" ngbTooltip="Xoá bỏ" class="btn btn-danger btn-sm mr-2" kendoButton
+                type="button"></button>
+      </div>
+      <i (click)="collapse = !collapse" [hidden]="collapse" class="fas fa-angle-double-down cursor-pointer"></i>
+      <i (click)="collapse = !collapse" [hidden]="!collapse" class="fas fa-angle-double-up cursor-pointer"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div *ngIf="collapse" style="overflow-x: auto">
+      <div class="table" style="overflow-x: auto">
+
+        <kendo-grid
+          [data]="schoolPlacesView"
+          [pageSize]="pageSize"
+          [skip]="skip"
+          [pageable]="true"
+          style="max-height: 500px"
+          (pageChange)="pageChange($event)"
+          [selectable]="{checkboxOnly: true}"
+          [selectedKeys]="mySelection"
+          (selectedKeysChange)="onChange($event)"
+          kendoGridSelectBy="id"
+        >
+          <kendo-grid-checkbox-column [columnMenu]="false" [resizable]="false" [width]="45"
+                                      class="text-center" headerClass="text-center"
+                                      showSelectAll="true"></kendo-grid-checkbox-column>
+          <kendo-grid-column [resizable]="false" [width]="50"
+                             class="text-center" headerClass="text-center font-weight-bold"
+                             field="id" title="TT">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column [width]="180" editor="text"
+                             headerClass="text-center font-weight-bold"
+                             field="schoolPlaceCode" title="Mã điểm trường">
+          </kendo-grid-column>
+          <kendo-grid-column [width]="180" editor="text" field="schoolPlaceName"
+                             headerClass="text-center font-weight-bold"
+                             title="Tên điểm trường"></kendo-grid-column>
+          <kendo-grid-column [width]="80" class="text-center" editor="text" field="distance"
+                             headerClass="text-center font-weight-bold"
+                             title="Khoảng cách (Km)"></kendo-grid-column>
+          <kendo-grid-column [width]="200" editor="text"
+                             headerClass="text-center font-weight-bold"
+                             field="address" title="Địa chỉ"></kendo-grid-column>
+          <kendo-grid-column [width]="100" class="text-center" editor="text" field="acreage"
+                             headerClass="text-center font-weight-bold"
+                             title="Diện tích (m2)"></kendo-grid-column>
+          <kendo-grid-column [width]="120" class="text-center" editor="text" field="phoneNumber"
+                             headerClass="text-center font-weight-bold"
+                             title="Điện thoại"></kendo-grid-column>
+          <kendo-grid-column [width]="120" editor="text" field="description"
+                             headerClass="text-center font-weight-bold"
+                             title="Mô tả"></kendo-grid-column>
+          <kendo-grid-command-column [columnMenu]="false" [resizable]="false"
+                                     headerClass="text-center font-weight-bold"
+                                     class="text-center"
+                                     [width]="70" title="Thao tác">
+            <ng-template kendoGridCellTemplate let-dataItem let-isNew>
+              <div class="d-flex">
+                <button (click)="openModalEdit(dataItem)"
+                        [iconClass]="'fas fa-pencil-alt'" class="border-radius btn btn-add" kendoButton
+                        *ktPermission="roleEditSubSchool"
+                        ngbTooltip="Chỉnh sửa"></button>
+              </div>
+            </ng-template>
+          </kendo-grid-command-column>
+          <ng-template kendoPagerTemplate let-currentPage="currentPage" let-pageSize="pageSize" let-skip="skip"
+                       let-total="total" let-totalPages="totalPages">
+            <div class="d-flex justify-content-between w-100">
+              <div class="p-1 d-flex">
+                <kendo-dropdownlist (ngModelChange)="pageChange($event)" [(ngModel)]="pageSize"
+                                    [defaultItem]="5" style="width: 60px;">
+                </kendo-dropdownlist>
+                <p class="m-0 pl-3 pt-2 show-total">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+                  - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+              </div>
+              <div class="d-flex manipulation">
+                <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+                <kendo-pager-next-buttons></kendo-pager-next-buttons>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template kendoGridNoRecordsTemplate>
+            {{VI_LANG.NOTIFICATION.NO_DATA}}
+          </ng-template>
+        </kendo-grid>
+        <div class="custom-loading-h">
+          <div *ngIf="showLoading" class="k-i-loading"></div>
+        </div>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

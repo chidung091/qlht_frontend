@@ -1,0 +1,208 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{title}}
+  </h4>
+  <button (click)="close()" aria-label="Close" class="btn-close-h">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="action-container">
+  <form [formGroup]="form">
+    <div class="modal-body">
+      <div>
+        <label>
+          <span>Công việc kiêm nhiệm</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-formfield>
+          <kendo-dropdownlist
+            #workR
+            class="w-100"
+            [data]="listConcurentType"
+            [loading]="loadCVKN"
+            [defaultItem]="defalCatalog"
+            [valuePrimitive]="true"
+            textField="name"
+            valueField="id"
+            formControlName="workCode"
+            (valueChange)="loadEmployeeConcurrent()"
+            (selectionChange)="resetEC()"
+            [disabled]="disableCVBM"
+          >
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+          <kendo-formerror *ngIf="form.controls.workCode.errors?.required">
+            {{VI_LANG.FIELD.CONCURRENT_WORK_TYPE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Cán bộ kiêm nhiệm</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-formfield>
+          <kendo-dropdownlist
+            #employeeC
+            class="w-100"
+            [data]="listEmployeeConcurrent"
+            [defaultItem]="defalEmployee"
+            [valuePrimitive]="true"
+            (valueChange)="resetWorkR()"
+            textField="fullName"
+            valueField="id"
+            formControlName="employeeConcurrentId"
+            [loading]="loadEplyoeeC"
+            [disabled]="disableCVBM"
+          >
+            <ng-template kendoDropDownListItemTemplate let-dataItem>
+              <span>{{dataItem.fullName}} - {{dataItem.code}}</span>
+            </ng-template>
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+          <kendo-formerror *ngIf="form.controls.employeeConcurrentId.errors?.required">
+            {{VI_LANG.FIELD.MANAGER_CONCURRENT}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Tổ bộ môn</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-formfield>
+          <kendo-dropdownlist
+            #faculity
+            class="w-100"
+            [data]="schoolFaculty$ | async"
+            [defaultItem]="defalFaculty"
+            [loading]="!(schoolFacultyLoaded$ | async)"
+            [valuePrimitive]="true"
+            textField="facultyName"
+            valueField="id"
+            formControlName="facultyId"
+            (selectionChange)="selectEmploye()"
+            (valueChange)="loadEmployeeWR()"
+          >
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+          <kendo-formerror *ngIf="form.controls.facultyId.errors?.required">
+            {{VI_LANG.FIELD.SCHOOL_FACULTY}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Cán bộ làm thay</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-formfield>
+          <kendo-dropdownlist
+            #employeeI
+            class="w-100"
+            [data]="listEmployeeWorkR"
+            [loading]="loadEployeeWR"
+            [defaultItem]="defalEmployee"
+            [valuePrimitive]="true"
+            textField="fullName"
+            valueField="id"
+            formControlName="employeeReplaceId"
+          >
+            <ng-template kendoDropDownListItemTemplate let-dataItem>
+              <span>{{dataItem.fullName}} - {{dataItem.code}}</span>
+            </ng-template>
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+          <kendo-formerror *ngIf="form.controls.employeeReplaceId.errors?.required">
+            {{VI_LANG.FIELD.MANAGER_INSTEAD}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Thời gian bắt đầu làm</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <div class="example-wrapper">
+          <kendo-formfield>
+            <kendo-datepicker class="w-100"
+                              #dateFrom
+                              id ='dateFrom'
+                              formControlName="dateFrom"
+                              [navigation]="false"
+                              [format]="'dd/MM/yyyy'"
+            ></kendo-datepicker>
+            <kendo-formerror *ngIf="form.controls.dateFrom.errors?.required">
+              {{VI_LANG.FIELD.DATE_FROM}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Thời gian kết thúc làm</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <div class="example-wrapper">
+          <kendo-formfield>
+            <kendo-datepicker class="w-100"
+                              [navigation]="false"
+                              #dateTo
+                              id='dateTo'
+                              [disabledDates]="disabledDates"
+                              formControlName="dateTo"
+                              [format]="'dd/MM/yyyy'"
+            >
+            </kendo-datepicker>
+            <kendo-formerror>
+              <span *ngIf="form.controls.dateTo.value < form.controls.dateFrom.value && form.controls.dateTo.value && form.controls.dateFrom.value">
+                Ngày kết thúc không thể nhỏ hơn ngày bắt đầu
+              </span>
+              <span *ngIf="form.controls.dateTo.errors?.required">
+                {{VI_LANG.FIELD.DATE_TO}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+              </span>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Ghi chú</span>
+        </label>
+      </div>
+      <div>
+        <input formControlName="note" class="w-100 form-control" kendoTextBox placeholder="Nhập mô tả">
+      </div>
+
+    </div>
+    <div class="modal-footer text-right">
+      <div class="w-100">
+        <button type="button" class="btn btn-secondary mr-2" (click)="activeModal.dismiss('click-close')">{{VI_LANG.BUTTON.CLOSE}}
+        </button>
+        <button type="submit" class="btn  btn-primary" id="subitautofocus" [disabled]="boolSubmit"
+                (click)="submit()">{{VI_LANG.BUTTON.SAVE}}</button>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="boolLoading" class="k-i-loading"></div>
+</div>

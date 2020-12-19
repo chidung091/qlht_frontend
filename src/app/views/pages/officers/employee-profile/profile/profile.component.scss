@@ -1,0 +1,36 @@
+.f-group{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  .col-form-label{
+    width: 35%;
+  }
+  .dropdown-css{
+    width: 65%;
+    height: 35px;
+    border-radius: 3px;
+    margin: auto !important;
+  }
+  .kendo-form{
+    width: 80%;
+  }
+  input{
+    width: 100%;
+    height: 35px;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    padding: 0 10px;
+  }
+  .k-dateinput, .k-datepicker, .k-datetimepicker, .k-timepicker {
+    width: 100%;
+    height: 35px;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    padding: 0;
+  }
+}
+
+.button ngb-tooltip-window {
+  display: flex;
+}

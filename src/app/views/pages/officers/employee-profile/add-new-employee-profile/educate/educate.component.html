@@ -1,0 +1,272 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>KQ b.dưỡng t.xuyên</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="form-control" formControlName="DM_KQ_BOI_DUONG_TX">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Trình độ CMNV cao nhất</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100  p-0" [data]="qualification$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_CHUYEN_MON"
+                          [valuePrimitive]="true"
+                          [defaultItem]="defaultDropdown"
+                          (selectionChange)="setCateName($event,'DM_CHUYEN_MON')"
+      >
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Trình độ lý luận CT</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100  p-0" [data]="politicalTheoryLevel$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_LLCT"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_LLCT')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Trình độ tin học</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="computerSkill$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_TIN_HOC"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_TIN_HOC')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Chuyên ngành đào tạo chính</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="majorTrainingMajor$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_NGANH_DAO_TAO_CHINH"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_NGANH_DAO_TAO_CHINH')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5"></div>
+    <div class="col-md-2 mb-5">
+      <kendo-dropdownlist style="width: 100%" [data]="levelMajor$  | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_CHINH"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_CHINH')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5">
+      <kendo-dropdownlist style="width: 100%" [data]="specializedFormMajor$  | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_HINH_THUC_DAO_TAO_CHINH"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_HINH_THUC_DAO_TAO_CHINH')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Chuyên ngành đào tạo khác</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="otherTrainingMajor$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_NGANH_DAO_TAO_KHAC"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_NGANH_DAO_TAO_KHAC')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5"></div>
+    <div class="col-md-2 mb-5">
+      <kendo-dropdownlist style="width: 100%" [data]="levelOther$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_KHAC"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_KHAC')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5">
+      <kendo-dropdownlist style="width: 100%" [data]="specializedFormOther$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_HINH_THUC_DAO_TAO_KHAC"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_HINH_THUC_DAO_TAO_KHAC')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Trình độ QL giáo dục</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="eduManagementQualification$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_QLGD"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_QLGD')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>G.viên có c.chỉ tiếng d.tộc t.số</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="certInEthnicMinorityLang$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_CHUNG_CHI_TIENG_DTOC_TSO"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_CHUNG_CHI_TIENG_DTOC_TSO')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Tham gia BD nghiệp vụ QLGD</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="eduManagementTraining$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_BOI_DUONG_NVU')"
+                          formControlName="DM_BOI_DUONG_NVU"
+                          [defaultItem]="defaultDropdown"
+      ></kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Th.gia BD CBQL/GV cốt cán</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="bookTraining"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_BOI_DUONG_CBQL_COT_CAN')"
+                          formControlName="DM_BOI_DUONG_CBQL_COT_CAN"
+                          [defaultItem]="defaultDropdown"
+      ></kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Th.gia BD thay sách</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100  p-0" [data]="bookTraining$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_BOI_DUONG_THAY_SACH')"
+                          formControlName="DM_BOI_DUONG_THAY_SACH"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+<!--    <div class="col-md-2 mb-5 align-self-center">-->
+<!--      <label>Trình độ văn hóa</label>-->
+<!--    </div>-->
+<!--    <div class="col-md-4 mb-5">-->
+<!--      <kendo-dropdownlist class=" w-100 p-0" [data]="educationLevel$ | async"-->
+<!--                          [textField]="'cateName'"-->
+<!--                          [valueField]="'cateCode'"-->
+<!--                          formControlName="16"-->
+
+<!--                          [defaultItem]="defaultDropdown">-->
+<!--      </kendo-dropdownlist>-->
+<!--    </div>-->
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Ngoại ngữ chính</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="primaryLang$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_NGOAI_NGU" (selectionChange)="setCateName($event,'DM_NGOAI_NGU')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Trình độ NN chính</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="primaryLangProficiency$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_NGOAI_NGU')"
+                          formControlName="DM_TRINH_DO_NGOAI_NGU"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>T.độ Đ.tạo N.Ngữ</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="primaryLangTrainingLevel$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_NN"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_NN')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Loại C.Chỉ N.Ngữ</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="certLangType$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_LOAI_CCHI_NNGU"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_LOAI_CCHI_NNGU')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Điểm N.Ngữ</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <input class="w-100 p-0 form-control" formControlName="DM_DIEM_NN" maxlength="10">
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Nhóm C.Chỉ N.Ngữ</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="groupCertLang$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_NHOM_CCHI_NNGU"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_NHOM_CCHI_NNGU')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Khung N.Lực N.Ngữ</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="proficiencyLangFrameWork$ | async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_KHUNG_NLUC_NNGU"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_KHUNG_NLUC_NNGU')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Trình độ QL nhà nước</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0" [data]="stateManagementQualification$ |async"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          formControlName="DM_TRINH_DO_QLNN"
+                          [valuePrimitive]="true" (selectionChange)="setCateName($event,'DM_TRINH_DO_QLNN')"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+  </div>
+</form>
+

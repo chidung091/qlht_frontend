@@ -1,0 +1,136 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách đánh giá'"
+                     [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button kendoButton type="button" title="Download" class="btn btn-primary btn-sm mr-2"
+              (click)="exportToExcel(grid)"
+              [iconClass]="'fas fa-file-upload'"></button>
+<!--      <button kendoButton type="button" (click)="okSave()"-->
+<!--              [disabled]="boolEdit || mySelection.length === 0 || boolOK" title="Lưu"-->
+<!--              class="btn btn-primary btn-sm mr-2"-->
+<!--              [iconClass]="'far fa-save'"></button>-->
+<!--      <button kendoButton type="button" class="btn btn-danger btn-sm"-->
+<!--              [disabled]="boolEdit || mySelection.length === 0 || boolOK" title="Xóa"-->
+<!--              [iconClass]="'far fa-trash-alt'" (click)="openModalDelete(modalConfirm)"></button>-->
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <kendo-grid *ngIf="isLoading$ | async" [data]="gridView" [pageSize]="_pageSize" [pageable]="true" [skip]="skip"
+                [kendoGridSelectBy]="'employeeCode'" [selectable]="{checkboxOnly : true}" [selectedKeys]="mySelection"
+                (pageChange)="pageChange($event)" (selectionChange)="checkOruncheck($event)" (edit)="editHandler($event)"
+                (save)="saveHandler($event)" (cancel)="cancelHandler($event)">
+      <kendo-grid-column field="id" class="text-center" title="TT" [width]="45" editable="false" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column width="200" field="employeeCode" editor="text" title="Mã cán bộ" headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column width="200" field="employeeName" editor="text" title="Họ và tên" headerClass="text-center font-weight-bold"></kendo-grid-column>
+      <kendo-grid-column field ="evaluation" *ngFor="let a of listColumns ; let i = index" title="{{a.name}}" headerClass="text-center font-weight-bold" width="200">
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+          {{dataItem.employeeEvaluationHistory[i].criteriaValue}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex" let-formGroup="formGroup">
+          <kendo-dropdownlist [disabled]="boolEdit"
+                              [data]="list[i]"
+                              [valuePrimitive]="true"
+                              (selectionChange)="check()"
+                              [defaultItem]="defau"
+                              [(ngModel)]="dataItem.employeeEvaluationHistory[i].criteriaValue">
+          </kendo-dropdownlist>
+        </ng-template>
+
+      </kendo-grid-column>
+      <kendo-grid-command-column title="Thao tác" [width]="100" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-isNew="isNew" class="text-center">
+          <button kendoGridEditCommand ngbTooltip="Sửa" placement="left"
+                  class="btn btn-primary btn-sm"
+                  style="margin-left: 25px"
+                  [iconClass]="'fas fa-pencil-alt'"></button>
+          <button kendoGridSaveCommand ngbTooltip="Lưu" placement="left"
+                  class="btn btn-primary btn-sm h-35px mt-2 mb-2"
+                  [iconClass]="'fas fa-check'"
+                  [disabled]="boolSave"
+          ></button>
+          <button kendoGridCancelCommand ngbTooltip="Đóng" placement="left"
+                  class="btn btn-danger btn-sm h-35px mt-2 mb-2"
+                  [iconClass]="'fas fa-times'"></button>
+        </ng-template>
+      </kendo-grid-command-column>
+      <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                   let-skip="skip" let-pageSize="pageSize">
+        <div class="d-flex justify-content-between w-100">
+          <div class="p-1 d-flex">
+            <kendo-dropdownlist class="w-60px" [data]="pageSizes" [defaultItem]="_pageSize" [(ngModel)]="_pageSize"
+                                (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex">
+            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+            </kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template kendoGridNoRecordsTemplate>
+        {{VI_LANG.NOTIFICATION.NO_DATA}}
+      </ng-template>
+    </kendo-grid>
+<!--    excecl -->
+    <kendo-grid #grid="kendoGrid" [data]="gridView" [pageSize]="_pageSize" [pageable]="true" [skip]="skip"
+                style="display: none"
+                [kendoGridSelectBy]="'employeeCode'" [selectable]="{checkboxOnly : true}" [selectedKeys]="mySelection"
+                (pageChange)="pageChange($event)" (selectionChange)="checkOruncheck($event)">
+      <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false" showSelectAll="true">
+      </kendo-grid-checkbox-column>
+      <kendo-grid-column field="id" title="TT" [width]="45" editable="false">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="employeeCode" editor="text" title="Mã cán bộ"></kendo-grid-column>
+      <kendo-grid-column field="employeeName" editor="text" title="Họ và tên"></kendo-grid-column>
+      <kendo-grid-column *ngFor="let a of listColumns ; let i = index" title="{{a.code}}">
+        <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          <kendo-dropdownlist [disabled]="boolEdit" [data]="a.value.split(',')"
+                              [valuePrimitive]="true"
+                              [defaultItem]="defau"
+                              [(ngModel)]="dataItem.employeeEvaluationHistory[i].criteriaValueSelected">
+          </kendo-dropdownlist>
+        </ng-template>
+
+      </kendo-grid-column>
+      <kendo-grid-excel fileName="TeacherGrading.xlsx"></kendo-grid-excel>
+    </kendo-grid>
+    <div class="custom-loading-h">
+      <div *ngIf="boolLoading" class="k-i-loading"></div>
+      <div *ngIf="boolLoadingEdit | async" class="k-i-loading"></div>
+    </div>
+  </kt-portlet-body>
+
+</kt-portlet>
+<!--modal-confirm-->
+<ng-template #modalConfirm let-c="close" let-d="dismiss">
+  <div class="modal-header" style="padding: 10px !important;">
+    <h4 class="modal-title" id="modal-basic-title">Xóa phân công</h4>
+    <button kendoButton type="button" (click)="d('Cross click')" [iconClass]="'fas fa-times'">
+    </button>
+  </div>
+  <div class="form-delete-h">
+    <img class="d-block m-auto" src="/assets/media/bg/normal_u546.svg">
+    <p class="text-center mt-5">{{VI_LANG.NOTIFICATION.CONFIRM_DELETE}}</p>
+  </div>
+  <div class="modal-footer" style="padding: 10px !important;">
+    <form action="">
+      <button type="button" class="btn btn-secondary mr-3"
+              (click)="d('cancel click')">{{VI_LANG.BUTTON.CANCEL}}</button>
+      <button type="button" class="btn  btn-primary " #buttonDelete [disabled]=""
+              (click)="deleteTeacherGrading()" id="focusDelete">{{VI_LANG.BUTTON.OK}}</button>
+    </form>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingDelete | async" class="k-i-loading"></div>
+  </div>
+</ng-template>
+
+

@@ -1,0 +1,167 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    Thêm mới công việc kiêm nhiệm
+  </h4>
+  <button (click)="close()" aria-label="Close" class="btn-close-h">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="form">
+  <div class="action-container">
+    <div class="modal-body">
+      <div>
+        <label>
+          <span>Công việc kiêm nhiệm</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-formfield>
+          <kendo-dropdownlist
+            #concurent
+            id="catalogCVKN"
+            class="w-100"
+            [data]="listConcurentType"
+            [defaultItem]="defal"
+            [loading]="loadCVKN"
+            [valuePrimitive]="true"
+            textField="name"
+            valueField="id"
+            formControlName="cateCode"
+            (valueChange)="loadData()"
+          ></kendo-dropdownlist>
+          <kendo-formerror *ngIf="form.controls.cateCode.errors?.required">
+            {{VI_LANG.FIELD.CONCURRENT_WORK_TYPE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <ng-template kendoDropDownListNoDataTemplate>
+            {{VI_LANG.NOTIFICATION.NO_DATA}}
+          </ng-template>
+        </kendo-formfield>
+      </div>
+      <div class="mt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="semester" class="label-custom ml-1 ">Áp dụng học kỳ <span style="color: red"> *</span></label>
+            <kendo-formfield>
+            <kendo-dropdownlist
+              id='semester'
+              class="w-100"
+              [data]="semesterList"
+              [defaultItem]="defauSemes"
+              [valuePrimitive]="true"
+              formControlName="semester"
+              textField="text"
+              valueField="value"
+            ></kendo-dropdownlist>
+              <kendo-formerror *ngIf="form.controls.semester.errors?.required">
+                Học kì không được để trống
+              </kendo-formerror>
+            </kendo-formfield>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Tổ bộ môn</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-formfield>
+          <kendo-dropdownlist
+            #faculity
+            class="w-100"
+            [data]="schoolFaculty$ | async"
+            [defaultItem]="defaulSchooFaculty"
+            [loading]="!(schoolFacultyLoaded$ | async)"
+            [valuePrimitive]="true"
+            (valueChange)="loadData()"
+            formControlName="idFaculty"
+            textField="facultyName"
+            valueField="id"
+          ></kendo-dropdownlist>
+          <kendo-formerror *ngIf="form.controls.idFaculty.errors?.required">
+            {{VI_LANG.FIELD.SCHOOL_FACULTY}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <ng-template kendoDropDownListNoDataTemplate>
+            {{VI_LANG.NOTIFICATION.NO_DATA}}
+          </ng-template>
+        </kendo-formfield>
+      </div>
+      <div class="mt-5">
+        <label>
+          <span>Giáo viên</span>
+          <span style="color: red"> *</span>
+        </label>
+      </div>
+      <div>
+        <kendo-grid
+          [data]="gridView"
+          kendoGridSelectBy="id"
+          [selectable]="{checkboxOnly : true}"
+          [selectedKeys]="mySelection"
+          [pageSize]="_pageSize"
+          [pageable]="true"
+          [skip]="skip"
+          (pageChange)="pageChange($event)"
+          [style]="{'border-radius': '25px'}"
+        >
+          <kendo-grid-checkbox-column
+            [columnMenu]="false"
+            [resizable]="false"
+            [width]="45"
+          >
+            <ng-template let-dataItem="dataItem">
+              <input type="checkbox" kendoCheckBox (change)="checkList()">
+            </ng-template>
+          </kendo-grid-checkbox-column>
+          <kendo-grid-column field="code" headerClass="text-center font-weight-bold" editor="text" title="Mã cán bộ"></kendo-grid-column>
+          <kendo-grid-column field="fullName" headerClass="text-center font-weight-bold" editor="text" class="text-center" title="Họ tên"></kendo-grid-column>
+          <ng-template kendoPagerTemplate
+                       let-totalPages="totalPages"
+                       let-currentPage="currentPage"
+                       let-total="total"
+                       let-skip="skip"
+                       let-pageSize="pageSize">
+            <div class="d-flex justify-content-between w-100">
+              <div class="p-1 d-flex">
+                <!--              <kendo-dropdownlist class="w-60px"-->
+                <!--                                  [data]="pageSizes"-->
+                <!--                                  [defaultItem]="_pageSize"-->
+                <!--                                  [(ngModel)]="_pageSize"-->
+                <!--                                  (ngModelChange)="pageSizeChange()"-->
+                <!--              >-->
+                <!--              </kendo-dropdownlist>-->
+                <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                  - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+              </div>
+              <div class="d-flex">
+                <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+                </kendo-pager-numeric-buttons>
+                <kendo-pager-next-buttons></kendo-pager-next-buttons>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template kendoGridNoRecordsTemplate>
+            {{VI_LANG.NOTIFICATION.NO_DATA}}
+          </ng-template>
+        </kendo-grid>
+        <kendo-formerror *ngIf="this.boolList">
+          Chưa lựa chọn giáo viên nào
+        </kendo-formerror>
+      </div>
+      <div *ngIf="boolPage" class="k-i-loading"></div>
+    </div>
+  </div>
+  <div class="modal-footer text-right">
+    <div class="w-100">
+      <button type="button" class="btn btn-secondary mr-2"
+              (click)="activeModal.dismiss('click-close')">{{VI_LANG.BUTTON.CLOSE}}
+      </button>
+      <button type="submit" class="btn  btn-primary"
+              (click)="okAdd('yes')">{{VI_LANG.BUTTON.SAVE}}</button>
+    </div>
+  </div>
+  <div *ngIf="bool" class="k-i-loading"></div>
+</form>

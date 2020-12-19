@@ -1,0 +1,21 @@
+.grid-wrapper {
+    position: relative;
+}
+//custom css
+.form-control.form-control-solid{
+  background: white !important
+}
+.col-form-label{
+  font-weight: bold;
+}
+
+.card-header.bg-dark-o-20.d-flex.justify-content-between{
+  height: 50px;
+}
+.modal-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  min-height: calc(100vh - 60px);
+}

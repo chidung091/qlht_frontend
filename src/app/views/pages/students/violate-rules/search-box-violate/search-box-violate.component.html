@@ -1,0 +1,95 @@
+<ng-container>
+  <kt-portlet>
+    <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                       (click)="_isCollapsed = !_isCollapsed">
+      <ng-container ktPortletTools>
+        <i [hidden]="_isCollapsed" class="fas fa-angle-double-down"></i>
+        <i [hidden]="!_isCollapsed" class="fas fa-angle-double-up"></i>
+      </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body *ngIf="_isCollapsed" class="search-box">
+      <form [formGroup]="_formSearch">
+        <div class="row">
+          <div class="col-md-4 mt-5 d-flex class-violation align-items-center flex-row">
+            <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0 pr-5">Nhóm lỗi vi phạm:</p>
+            <div class="col-md-9 col-sm-9 col-9">
+              <kendo-dropdownlist formControlName="groupOfViolations"
+                                  [data]="_data"
+                                  [defaultItem]="_valueDefault">
+              </kendo-dropdownlist>
+            </div>
+          </div>
+          <div class="col-md-4 mt-5 d-flex align-items-center flex-row">
+            <p class="col-md-3 col-sm-3 col-3 mb-0 pr-0 pl-0">Theo học kỳ:</p>
+            <div class="col-md-9 col-sm-9 col-9">
+              <kendo-buttongroup selection="single">
+                <button kendoButton (click)="setValueSemester($event)" value="Học kỳ 1" [togglable]="true">Học kỳ 1</button>
+                <button kendoButton (click)="setValueSemester($event)" value="Học kỳ 2" [togglable]="true">Học kỳ 2</button>
+                <button kendoButton (click)="setValueSemester($event)" value="Cả năm" [togglable]="true">Cả năm</button>
+              </kendo-buttongroup>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6 d-flex flex-row align-items-center">
+                <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Khối:</p>
+                <div class="col-md-9 col-sm-9 col-9">
+                  <kendo-dropdownlist formControlName="gradeLevel" [data]="_data"
+                                      [defaultItem]="_valueDefault">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+              <div class="col-md-6 class-name d-flex flex-row align-items-center">
+                <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Lớp học:</p>
+                <div class="col-md-9 col-sm-9 col-9">
+                  <kendo-dropdownlist formControlName="className" [data]="_data"
+                                      [defaultItem]="_valueDefault">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <ng-container formGroupName="codeStudents">
+                <div class="col-md-6 d-flex flex-row align-items-center">
+                  <p class="col-md-3 col-sm-3 col-3 mb-0 pr-0 pl-0">Mã học sinh:</p>
+                  <div class="col-md-9 col-sm-9 col-9">
+                    <kendo-formfield>
+                      <input type="text" class="form-control" formControlName="toCodeStudent">
+                    </kendo-formfield>
+                  </div>
+                </div>
+                <div class="col-md-6 class-student d-flex flex-row align-items-center">
+                  <p class="col-md-3 col-sm-3 col-3 mb-0 pr-0 pl-0">Mã học sinh:</p>
+                  <div class="col-md-9 col-sm-9 col-9">
+                    <kendo-formfield>
+                      <input type="text" class="form-control" formControlName="formCodeStudent">
+                    </kendo-formfield>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-md-4" formGroupName="dateOfViolation">
+            <div class="d-flex flex-row class-date">
+              <p class="col-md-3 col-sm-3 col-3 pl-0 pr-5 mb-0">Từ ngày vi phạm:</p>
+              <div class="col-md-9 col-sm-9 col-9">
+                <kendo-datepicker formControlName="formDateOfViolation"></kendo-datepicker>
+              </div>
+            </div>
+            <div class="d-flex flex-row mt-5 class-date">
+              <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Đến ngày vi phạm:</p>
+              <div class="col-md-9 col-sm-9 col-9">
+                <kendo-datepicker formControlName="toDateOfViolation"></kendo-datepicker>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+          <button kendoButton [icon]="'filter'" class="btn btn-success font-weight-bold text-white" (click)="submit()" >Tìm kiếm</button>
+        </div>
+      </form>
+    </kt-portlet-body>
+  </kt-portlet>
+</ng-container>

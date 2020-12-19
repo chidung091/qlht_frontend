@@ -1,0 +1,228 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body *ngIf="isCollapsed">
+      <form class="row justify-content-between mt-2" [formGroup]="formSearch">
+        <div class="col-md-5 row md-pac-15">
+          <div class="col-lg-5  mt-2">
+            <label >Tổ bộ môn:</label>
+          </div>
+          <div class="col-lg-7 ">
+            <kendo-dropdownlist #tenToBoMon class="w-100"
+                                formControlName="FacultyId"
+                                [valuePrimitive]="true"
+                                [data]="schoolFaculty$ | async"
+                                [textField]="'facultyName'"
+                                [valueField]="'id'"
+                                [defaultItem]="defaultItemSchoolFaculty"
+                                (selectionChange)="nameDepar($event)"
+                                [(ngModel)]="formSearch.value.FacultyId"
+                                [loading]="!(schoolFacultyLoaded$ | async)"
+            >
+              <ng-template kendoDropDownListNoDataTemplate>
+                <p>{{VI_LANG.NOTIFICATION.NO_DATA}}</p>
+              </ng-template>
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-5 row md-pac-15">
+          <div class="col-lg-4 mt-2">
+            <label>Giáo viên:</label>
+          </div>
+          <div class="col-lg-8">
+            <kendo-dropdownlist #tencanbo class="w-100"
+                                formControlName="EmployeeId"
+                                [valuePrimitive]="true"
+                                [data]="listEmployee"
+                                [textField]="'fullName'"
+                                [valueField]="'id'"
+                                [disabled]="disableDefaultDistrict"
+                                [defaultItem]="defaultItemEmployee"
+                                [loading]="loadEmployee"
+            >
+              <ng-template kendoDropDownListNoDataTemplate>
+                <p>{{VI_LANG.NOTIFICATION.NO_DATA}}</p>
+              </ng-template>
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-2 d-flex justify-content-md-end md-pac-15">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-filter"></i> {{VI_LANG.BUTTON.SEARCH}}
+          </button>
+        </div>
+      </form>
+  </kt-portlet-body>
+
+  <div class="link-router-l">
+    <a class="active" routerLink="../assignment">Phân công chủ nhiệm</a>
+    <a routerLink="../substitute">Làm thay giáo viên</a>
+  </div>
+
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách phân công'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+<!--      <button kendoButton type="button" class="mr-2 btn btn-primary btn-sm" placement="bottom" ngbTooltip="Lưu"-->
+<!--              [iconClass]="'far fa-save'" (click)="save()"></button>-->
+<!--      <button kendoButton type="button" class="btn btn-danger btn-sm" placement="bottom"-->
+<!--              ngbTooltip="Xóa phân công" [iconClass]="'far fa-trash-alt'" (click)="delete()"></button>-->
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class=" row">
+      <div class="col-2" style="padding: 5px 0px 0px 0px !important;cursor: pointer;">
+        <ul *ngFor="let item of grade$ | async, let i = index" style="list-style-type:none;font-weight: bolder;">
+          <li style="text-align: center; border-bottom: 1px solid #eee;"
+              (click)="changeGrade(item,i)"
+              [ngClass]="{'activeKHOI': gradePickNumber === i}">{{item.cateName}}</li>
+        </ul>
+      </div>
+      <div class="col-10">
+<!--        <kendo-grid-->
+<!--                    [data]="newModel"-->
+<!--                    [pageable]="true"-->
+<!--                    [selectable]="{checkboxOnly : true}"-->
+<!--                    kendoGridSelectBy="id"-->
+<!--                    (add)="addHandler($event)"-->
+<!--                    (edit)="editHandler($event)"-->
+<!--                    (save)="saveHandler($event)"-->
+<!--                    (cancel)="cancelHandler($event)"-->
+<!--        >-->
+<!--          <kendo-grid-column [width]="50" class="text-center"-->
+<!--                             headerClass="text-center font-weight-bold" title="TT">-->
+<!--            <ng-template kendoGridCellTemplate let-dataItem-->
+<!--                         let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>-->
+<!--          </kendo-grid-column>-->
+<!--          <kendo-grid-column [width]="100" class="text-center"-->
+<!--                             headerClass="text-center font-weight-bold"-->
+<!--                             field="classRoomName" title="Lớp">-->
+<!--            <ng-template kendoGridCellTemplate let-dataItem>-->
+<!--              {{dataItem.classRoomName}}-->
+<!--            </ng-template>-->
+<!--            <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"-->
+<!--                         let-formGroup="formAddEdit">-->
+<!--              <input smasTrim type="text"  [formControl]="formAddEdit.get('classRoomName')"-->
+<!--                    class="w-100" kendoTextBox>-->
+<!--            </ng-template>-->
+<!--          </kendo-grid-column>-->
+
+<!--          <kendo-grid-column [width]="250" field="employeeScale"-->
+<!--                             title="Tổ bộ môn" headerClass="text-center font-weight-bold">-->
+<!--            <ng-template kendoGridCellTemplate let-dataItem>-->
+<!--              {{dataItem.employeeScaleName}}-->
+<!--            </ng-template>-->
+<!--            <ng-template kendoGridEditTemplate class="mt-5" let-dataItem="dataItem"-->
+<!--                         let-column="column" let-rowIndex="rowIndex"-->
+<!--                         let-formGroup="formAddEdit">-->
+<!--              <kendo-dropdownlist-->
+<!--                [data]="schoolFaculty$ | async" [defaultItem]="defaultItemSchoolFaculty"-->
+<!--                [formControl]="formAddEdit.get('facultyName')"-->
+<!--                textField="facultyName" valueField="id"-->
+<!--                [valuePrimitive]="true">-->
+<!--              </kendo-dropdownlist>-->
+<!--            </ng-template>-->
+<!--          </kendo-grid-column>-->
+<!--          -->
+<!--          <kendo-grid-column [width]="250" type="text"-->
+<!--                             headerClass="text-center font-weight-bold"-->
+<!--                             field="employeeName" title="Giáo viên chủ nhiệm">-->
+<!--            <ng-template kendoGridCellTemplate let-dataItem>-->
+<!--              {{dataItem.description}}-->
+<!--            </ng-template>-->
+<!--            <ng-template kendoGridEditTemplate let-dataItem="dataItem"-->
+<!--                         let-column="column" let-rowIndex="rowIndex"-->
+<!--                         let-formGroup="formAddEdit">-->
+<!--              <input smasTrim type="text" [formControl]="formAddEdit.get('employeeName')"-->
+<!--                     placeholder="Tên giáo viên chủ nhiệm" class="w-100" kendoTextBox>-->
+<!--            </ng-template>-->
+<!--          </kendo-grid-column>-->
+<!--          <kendo-grid-command-column title="Thao tác" headerClass="text-center font-weight-bold"-->
+<!--                                     [style]="{'text-align': 'center'}" [width]="110">-->
+<!--            &lt;!&ndash;        [locked]="true"&ndash;&gt;-->
+<!--            <ng-template kendoGridCellTemplate let-isNew="isNew"  ktPortletTools>-->
+<!--              <button kendoGridEditCommand ngbTooltip="Edit" placement="bottom" class="border-radius btn btn-add btn-primary"><i-->
+<!--                class="far fa-edit"></i></button>-->
+<!--              <button class="btn btn-primary" ngbTooltip="Save" placement="bottom" kendoGridSaveCommand><i-->
+<!--                class="far fa-save"></i></button>-->
+<!--              <button class="btn btn-warning" ngbTooltip="Thoát" placement="bottom" kendoGridCancelCommand>-->
+<!--                <i class="far fa-window-close"></i></button>-->
+<!--            </ng-template>-->
+<!--          </kendo-grid-command-column>-->
+<!--        </kendo-grid>-->
+        <kendo-grid [data]="newModel"
+                    [pageable]="true"
+                    [selectable]="{checkboxOnly : true}"
+                    kendoGridSelectBy="id"
+                    (edit)="editHandler($event)"
+                    (save)="saveHandler($event)"
+                    (cancel)="cancelHandler($event)"
+                    >
+          <kendo-grid-column  title="TT" [width]="50" field="id"
+                              class="text-center" headerClass="text-center font-weight-bold">
+            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column class="custom-center" field="classRoomName"
+                             headerClass="text-center font-weight-bold" title="Lớp"
+                             [columnMenu]="false">
+          </kendo-grid-column>
+
+
+          <kendo-grid-column [width]="250" field="facultyName"
+                             title="Tổ bộ môn" headerClass="text-center font-weight-bold">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              {{dataItem.facultyName}}
+            </ng-template>
+            <ng-template kendoGridEditTemplate class="mt-5" let-dataItem="dataItem"
+                         let-column="column" let-rowIndex="rowIndex"
+                         let-formGroup="formAddEdit">
+              <kendo-dropdownlist
+                [data]="schoolFaculty$ | async" [defaultItem]="defaultItemSchoolFaculty"
+                [formControl]="formAddEdit.get('facultyId')"
+                textField="facultyName" valueField="id"
+                [valuePrimitive]="true">
+              </kendo-dropdownlist>
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column  field="employeeName" editor="text" class="text-center"
+                             headerClass="text-center font-weight-bold"
+                             title="Giáo viên chủ nhiệm">
+            <ng-template kendoGridEditTemplate let-column="column">
+              <kendo-autocomplete
+                class="form-control"
+                #input
+                [data]="listEmployeeEdit"
+                [valueField]="'fullName'"
+                [filterable]="true"
+                (filterChange)="handleFilter($event)"
+                (valueChange)="checkCateName($event)"
+                [formControl]="formAddEdit.get(column.field)"
+              >
+              </kendo-autocomplete>
+
+            </ng-template>
+
+          </kendo-grid-column>
+
+
+          <kendo-grid-command-column headerClass="text-center font-weight-bold"
+                                     title="Thao tác" [width]="120" class="text-center">
+            <ng-template kendoGridCellTemplate let-isNew="isNew" class="text-center">
+              <button kendoGridEditCommand title="Sửa" [iconClass]="'fas fa-pencil-alt'"></button>
+              <button kendoGridSaveCommand title="Sửa" [iconClass]="'fas fa-check'"></button>
+              <button kendoGridCancelCommand title="Đóng" [iconClass]="'fas fa-times'"></button>
+            </ng-template>
+          </kendo-grid-command-column>
+        </kendo-grid>
+        <div *ngIf="loading" class="k-i-loading"></div>
+      </div>
+    </div>
+
+  </kt-portlet-body>
+</kt-portlet>

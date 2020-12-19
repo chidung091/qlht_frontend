@@ -1,0 +1,63 @@
+.search-box{
+  .k-dropdown {
+    width: 100%;
+  }
+}
+
+
+.class-date {
+  .k-datepicker {
+    width: 100%;
+  }
+}
+
+@media all and(max-width: 576px) {
+  .class-name {
+    margin-top: 1.25rem !important;
+  }
+  .class-date {
+    margin-top: 1.25rem !important;
+  }
+  .class-student {
+    margin-top: 1.25rem !important;
+  }
+
+}
+
+@media all and(max-width: 768px) {
+
+  .class-name {
+    margin-top: 1.25rem !important;
+  }
+  .class-date {
+    margin-top: 1.25rem !important;
+  }
+  .class-student {
+    margin-top: 1.25rem !important;
+  }
+  .class-date {
+    & > div {
+      padding-left: 12.5px !important;
+    }
+  }
+
+}
+
+//
+//@media all and(max-width: 992px) {
+//  .class-name {
+//    div {
+//      padding-right: 6px !important;
+//    }
+//  }
+//  .class-student {
+//    & > div {
+//      padding-right: 6px !important;
+//    }
+//  }
+//  .class-date {
+//    & > div {
+//      padding-left: 0 !important;
+//    }
+//  }
+//}

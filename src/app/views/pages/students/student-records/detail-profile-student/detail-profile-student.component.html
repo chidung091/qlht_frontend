@@ -1,0 +1,37 @@
+<div class="all-tab-custom-h">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink class="text-uppercase nav-tab-custom">Chi tiết hồ sơ học sinh</a>
+            <ng-template ngbNavContent>
+                <kt-detail-student></kt-detail-student>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink class="text-uppercase nav-tab-custom">Quá trình học tập</a>
+            <ng-template ngbNavContent>
+                <kt-study-process></kt-study-process>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+            <a ngbNavLink class="text-uppercase nav-tab-custom">Khen thưởng, kỷ luật</a>
+            <ng-template ngbNavContent>
+                <kt-commendation-discipline></kt-commendation-discipline>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="4">
+            <a ngbNavLink class="text-uppercase nav-tab-custom"> Vi phạm, nghỉ học, miễn giảm</a>
+            <ng-template ngbNavContent>
+                <kt-violate-exemptions></kt-violate-exemptions>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="5">
+            <a ngbNavLink class="text-uppercase nav-tab-custom">Kết quả khám sức khỏe định kỳ</a>
+            <ng-template ngbNavContent>
+                <kt-health-results></kt-health-results>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav"></div>
+
+</div>

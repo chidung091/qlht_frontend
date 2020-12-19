@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <div class="text-header">
+      <label><i class="flaticon-search text-dark icon-header cursor-pointer"></i> Thông tin tìm kiếm</label>
+    </div>
+    <div class="btn-header">
+      <i class="fas fa-angle-double-down text-dark mt-2" *ngIf="openModalSearchBody" (click)="openModalSearchBody = !openModalSearchBody"></i>
+      <i class="fas fa-angle-double-up text-dark mt-2" *ngIf="!openModalSearchBody" (click)="openModalSearchBody = !openModalSearchBody"></i>
+    </div>
+  </div>
+
+  <!-- Start Modal Search -->
+  <div class="row" *ngIf="openModalSearchBody">
+    <div class="col-sm-12 pb-3 dropdownSearch">
+      <div class="row">
+<!--    Show List Môn Học    -->
+        <div class="col-sm-1">
+          <label class="label-custom">Môn</label>
+        </div>
+        <div class="col-sm-3 kendo-form">
+          <kendo-dropdownlist
+            [data]="listAllSubject"
+            [textField]="'tenMon'"
+            [valueField]="'id'" [(ngModel)]="selectedSubject">
+          </kendo-dropdownlist>
+        </div>
+<!--    End Show List Môn Học    -->
+
+<!--    Show List Phân môn    -->
+        <div class="col-sm-1">
+          <label class="label-custom">Phân môn</label>
+        </div>
+        <div class="col-sm-3 kendo-form">
+          <kendo-dropdownlist
+            [textField]="'value'"
+            [valueField]="'id'" [defaultItem]="defaultPhanMon">
+          </kendo-dropdownlist>
+        </div>
+<!--     End Show List Phân Môn   -->
+
+<!--     Show List Tuần   -->
+        <div class="col-sm-1">
+          <label class="label-custom">Tuần</label>
+        </div>
+        <div class="col-sm-3 kendo-form">
+          <kendo-dropdownlist
+            [textField]="'value'"
+            [valueField]="'id'" [defaultItem]="defaultTuan">
+          </kendo-dropdownlist>
+        </div>
+<!--     End Show List Tuần   -->
+
+<!--      Show List Khối  -->
+        <div class="col-sm-1">
+          <label class="label-custom">Khối</label>
+        </div>
+        <div class="col-sm-3 kendo-form">
+          <kendo-dropdownlist
+            [data]="listAllGrade"
+            [textField]="'tenDanhMuc'" (selectionChange)="changeValueGrade($event)"
+            [valueField]="'id'" [(ngModel)]="selectedGrade">
+          </kendo-dropdownlist>
+        </div>
+<!--      End Show List Khối  -->
+
+<!--     Show List Lớp   -->
+        <div class="col-sm-1">
+          <label class="label-custom">Lớp</label>
+        </div>
+        <div class="col-sm-3 kendo-form">
+          <kendo-dropdownlist #dropDownListClass
+            [data]="listClassByGrade"
+            [textField]="'tenLop'"
+            [valueField]="'id'" [(ngModel)]="selectedClass">
+          </kendo-dropdownlist>
+        </div>
+<!--      End Show List Lớp  -->
+      </div>
+    </div>
+  </div>
+  <!--End Modal Search-->
+</div>

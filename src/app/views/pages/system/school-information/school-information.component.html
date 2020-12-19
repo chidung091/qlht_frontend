@@ -1,0 +1,36 @@
+<div class="position-relative">
+  <div class="custom-loading-h">
+    <div *ngIf="isLoading$" class="k-i-loading"></div>
+  </div>
+
+  <!-- <kt-upload-file></kt-upload-file> -->
+  <kt-general-information (dataOutput)="getDataGeneral($event)" [initGeneral]="initInfo"></kt-general-information>
+  <!-- <kt-school-place></kt-school-place> -->
+
+  <!--    <div class="card mb-5 mt-5">-->
+  <kt-school-place></kt-school-place>
+  <!--    </div>-->
+
+  <kt-portlet>
+    <kt-portlet-header (click)="collapser = !collapser" [class]="'card-head-lg bgr-custom'" [icon]="'far fa-list-alt'"
+      [title]="'Thông tin khác'">
+      <ng-container ktPortletTools>
+        <i [hidden]="collapser" class="fas fa-angle-double-down"></i>
+        <i [hidden]="!collapser" class="fas fa-angle-double-up"></i>
+      </ng-container>
+    </kt-portlet-header>
+
+    <kt-portlet-body>
+      <kt-other-school-information (otherInfoOutput)="getDataOther($event)" *ngIf="collapser" [extraInfo]="extraInfo">
+      </kt-other-school-information>
+    </kt-portlet-body>
+
+    <div class="d-flex justify-content-end mt-3 mb-2 mr-3">
+      <button (click)="save()" *ngIf="initInfo" class="btn-custom button-next-step mr-2 border-radius" kendoButton>
+        {{VI_LANG.BUTTON.NEXT}}
+        <span class="k-icon k-i-arrow-right k-icon-32 ml-1" style="color: white"></span>
+      </button>
+    </div>
+  </kt-portlet>
+</div>
+

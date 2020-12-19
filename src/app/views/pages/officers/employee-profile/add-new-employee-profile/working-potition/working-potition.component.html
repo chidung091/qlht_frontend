@@ -1,0 +1,120 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Nhiệm vụ kiêm nhiệm</label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0"
+                          formControlName="concurrentWorkCode"
+                          [data]="mission$ | async"
+                          [loading]="!(missionLoaded$ | async)"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          (selectionChange)="cateSelected($event,'concurrentWorkName')"
+                          [valuePrimitive]="true"
+                          [defaultItem]="defaultDropdown">
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Số buổi dạy trên ngày </label>
+    </div>
+    <div class="col-md-4 mb-5">
+      <kendo-dropdownlist class="w-100 p-0"
+                          [data]="periodsPerDay"
+                          formControlName="sectionPerDay"
+                          [defaultItem]="defaultDropdown"
+                          [textField]="'cateName'"
+                          [valueField]="'cateCode'"
+                          [valuePrimitive]="true"
+      ></kendo-dropdownlist>
+    </div>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label>Ngày tuyển dụng</label>
+    </div>
+    <kendo-formfield class="col-md-4 mb-5">
+      <kendo-datepicker class="p-0 rounded w-100"
+                        formControlName="recruitmentDate"
+                        [max]="maxDate"
+                        format="dd/MM/yyyy"
+                        placeholder="Ngày tuyển dụng"
+                        [ngClass]="{ 'ng-invalid ng-touched':submitStatus && form.controls.recruitmentDate.errors }">
+      </kendo-datepicker>
+      <div class="text-danger m-auto" *ngIf="form.controls.recruitmentDate.value>nowDate">
+        Ngày không hợp lệ
+      </div>
+    </kendo-formfield>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label for="coHourPerWeek">S.tiết thực dạy/tuần</label>
+    </div>
+    <kendo-formfield class="col-md-4 mb-5">
+      <input class="form-control" id="coHourPerWeek" formControlName="coHourPerWeek" smasTrim >
+      <kendo-formerror>
+        <div  *ngIf="form.controls.coHourPerWeek.errors?.pattern">
+          {{VI_LANG.FIELD.TIMES_WEEK}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+        </div>
+      </kendo-formerror>
+    </kendo-formfield>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label for="recruitmentAgency">Cơ quan tuyển dụng</label>
+    </div>
+    <kendo-formfield class="col-md-4 mb-5">
+      <input class="form-control" id="recruitmentAgency" formControlName="recruitmentAgency" smasTrim>
+    </kendo-formfield>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label> Ngày vào biên chế</label>
+    </div>
+    <kendo-formfield class="col-md-4 mb-5">
+      <kendo-datepicker class="p-0 rounded w-100"
+                        formControlName="careerJoinDate"
+                        [max]="maxDate"
+                        format="dd/MM/yyyy"
+                        placeholder="Ngày vào biên chế"
+                        [ngClass]="{ 'ng-invalid ng-touched':submitStatus && form.controls.careerJoinDate.errors }"
+      ></kendo-datepicker>
+      <div class="text-danger m-auto" *ngIf="form.controls.careerJoinDate.value>nowDate">
+        Ngày không hợp lệ
+      </div>
+    </kendo-formfield>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label for="foreignLanguageRecruitment">NN khi được tuyển dụng</label>
+    </div>
+    <kendo-formfield class="col-md-4 mb-5">
+      <input class="form-control"
+             id="foreignLanguageRecruitment"
+             formControlName="foreignLanguageRecruitment" smasTrim>
+    </kendo-formfield>
+    <div class="col-md-2 mb-5 align-self-center">
+      <label for="sectionPerWeek">S.tiết thực k.nhiệm/tuần</label>
+    </div>
+    <kendo-formfield class="col-md-4 mb-5">
+      <input class="form-control" id="sectionPerWeek" formControlName="sectionPerWeek" maxlength="2" smasTrim >
+      <kendo-formerror>
+        <div  *ngIf="form.controls.sectionPerWeek.errors?.pattern">
+          {{VI_LANG.FIELD.TIMES_WEEK}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+        </div>
+        <div  *ngIf="form.controls.sectionPerWeek.errors?.maxlength">
+          {{VI_LANG.FIELD.TIMES_WEEK}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_2}}
+        </div>
+      </kendo-formerror>
+    </kendo-formfield>
+
+    <div class="col-md-4 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isSoftSkillTrained" style="margin-top: 2px" formControlName="isSoftSkillTrained">
+      </div>
+      <label for="isSoftSkillTrained" class="label-custom ml-2">Đã t.huấn dạy KN sống</label>
+    </div>
+    <div class="col-md-4 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isDedicatedForYouthLeage" style="margin-top: 2px" formControlName="isDedicatedForYouthLeage">
+      </div>
+      <label for="isDedicatedForYouthLeage" class="label-custom ml-2">Chuyên trách Đoàn/Đội</label>
+    </div>
+    <div class="col-md-4 d-flex align-self-center">
+      <div>
+        <input type="checkbox" id="isTeachStudentDisability" style="margin-top: 2px" formControlName="isTeachStudentDisability">
+      </div>
+      <label for="isTeachStudentDisability" class="label-custom ml-2">Dạy HSKT học hòa nhập</label>
+    </div>
+  </div>
+</form>

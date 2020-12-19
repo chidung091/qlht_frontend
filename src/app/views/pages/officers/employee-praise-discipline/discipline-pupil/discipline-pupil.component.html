@@ -1,0 +1,150 @@
+<kt-portlet>
+  <!-- Search -->
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body *ngIf="isCollapsed">
+    <div>
+      <form class="row" [formGroup]="form">
+        <div class="col-md-5 row align-items-center mt-2">
+          <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tổ bộ môn:</label>
+          <div class=" col-sm-8 ">
+            <kendo-dropdownlist #tenToBoMon class="dropdown-l" formControlName="FacultyId" [valuePrimitive]="true"
+                                [data]="schoolFaculty$ | async" [textField]="'facultyName'" [valueField]="'id'"
+                                [defaultItem]="defaultItemSchoolFaculty" (selectionChange)="nameDepar($event)"
+                                [loading]="!(schoolFacultyLoaded$ | async)">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-5 row align-items-center  mt-2">
+          <label class="col-sm-3 pl-md-0 col-md-4">Giáo viên:</label>
+          <div class=" col-sm-8 ">
+            <kendo-dropdownlist #tencanbo class="dropdown-l" formControlName="EmployeeId" [valuePrimitive]="true"
+                                [data]="listEmployee" [textField]="'fullName'" [valueField]="'id'"
+                                [disabled]="disableDefaultDistrict"
+                                [defaultItem]="defaultItemEmployee" [loading]="loadEmployee">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-2 d-flex justify-content-md-end  mt-2">
+          <button type="submit" class="btn  btn-primary" (click)="search()">
+            <i class="fas fa-filter"></i> Tìm kiếm
+          </button>
+        </div>
+      </form>
+    </div>
+  </kt-portlet-body>
+  <!--End Search -->
+</kt-portlet>
+
+<div class="link-router-l">
+  <a routerLink="../praise-pupil">Khen thưởng</a>
+  <a class="active" routerLink="../discipline-pupil">Kỷ luật</a>
+</div>
+
+<kt-portlet>
+  <!--ky luat-->
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách kỷ luật'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button class="btn btn-primary btn-sm mr-2" type="button" (click)="openModalAdd()" ngbTooltip="Thêm"
+              placement="bottom" [disabled]="checkDisableYear" *ktPermission="UserPemiss">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button class="btn btn-danger btn-sm" type="button" (click)="openModalDeleteList()" ngbTooltip="Xóa"
+              placement="bottom" [disabled]="checkDeleteAll" *ktPermission="UserPemiss">
+        <i class="far fa-trash-alt"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="col-lg-12">
+      <kendo-grid *ngIf="isLoading$ | async" [pageSize]="_pageSize" [pageable]="true" (pageChange)="pageChange($event)"
+                  [kendoGridSelectBy]="'id'" [selectable]="{checkboxOnly : true}" [data]="dataDiscipline"
+                  [sortable]="true"
+                  [reorderable]="true" [resizable]="true" [skip]="skip" (selectedKeysChange)="onChange($event)"
+                  [selectedKeys]="mySelection" [height]="500"
+                  [style]="{'border-radius': '25px'}">
+        <kendo-grid-checkbox-column *ngIf="!checkDisableYear" [columnMenu]="false" headerClass="text-center"
+                                    [resizable]="false" [width]="45" showSelectAll="true"
+                                    class="text-center">
+          <ng-template let-dataItem="dataItem">
+            <input type="checkbox" kendoCheckBox>
+          </ng-template>
+        </kendo-grid-checkbox-column>
+        <kendo-grid-column title="TT" class="text-center" headerClass="text-center font-weight-bold"
+                           [width]="50" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" editor="text" title="Họ và tên"
+                           field="employeeName">
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" editor="text" title="Tổ bộ môn"
+                           field="facultyName">
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" editor="text" title="HT kỷ luật"
+                           field="disciplineFormName">
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" title="Lý do kỷ luật"
+                           field="disciplineDetailContent">
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" editor="text"
+                           title="Cấp ký kỷ luật " field="disciplineLevelName">
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" editor="text" title="QĐ kỷ luật"
+                           field="decisionNumber">
+        </kendo-grid-column>
+        <kendo-grid-column class="text-center" headerClass="text-center font-weight-bold" [width]="200" editor="text"
+                           title="Ngày QĐ kỷ luật" field="decisionDate">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.decisionDate | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" [width]="120" editor="text" title="Ghi chú"
+                           field="description">
+        </kendo-grid-column>
+        <kendo-grid-command-column headerClass="text-center font-weight-bold" title="Thao tác" [width]="120"
+                                   [resizable]="false" [columnMenu]="false">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+            <div class="d-flex justify-content-around align-items-center">
+              <button kendoGridEditCommand ngbTooltip="Sửa" placement="left" container="body"
+                      (click)="openModalEdit(dataItem)" *ktPermission="UserPemiss" [disabled]="checkDisableYear"
+                      container="body">
+                <i class="fas fa-pencil-alt " style="color: #419197"></i>
+              </button>
+            </div>
+          </ng-template>
+        </kendo-grid-command-column>
+        <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                     let-skip="skip" let-pageSize="pageSize">
+          <div class="d-flex justify-content-between w-100">
+            <div class="p-1 d-flex">
+              <kendo-dropdownlist class="w-60px" [data]="pageSizes" [(ngModel)]="_pageSize"
+                                  (ngModelChange)="pageSizeChange()">
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex">
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+              </kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template kendoGridNoRecordsTemplate>
+          {{VI_LANG.NOTIFICATION.NO_DATA}}
+        </ng-template>
+      </kendo-grid>
+      <div class="custom-loading-h">
+        <div *ngIf="loading" class="k-i-loading"></div>
+      </div>
+    </div>
+  </kt-portlet-body>
+  <!--end ky luat -->
+</kt-portlet>

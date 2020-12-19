@@ -1,0 +1,14 @@
+
+<kendo-tabstrip (tabSelect)="onTabSelect($event)">
+  <kendo-tabstrip-tab [selected]="selectedTab === 0" [title]="'Khen thưởng'">
+    <ng-template kendoTabContent style="overflow: hidden">
+      <kt-praise></kt-praise>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab [selected]="selectedTab === 1" [title]="'Kỷ luật'" >
+    <ng-template kendoTabContent>
+      <kt-discipline></kt-discipline>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>
+

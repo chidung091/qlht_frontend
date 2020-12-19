@@ -1,0 +1,35 @@
+.grid-wrapper {
+    position: relative;
+}
+//custom css
+.form-control.form-control-solid{
+  background: white !important
+}
+.col-form-label{
+  font-weight: bold;
+}
+.bnt-s{
+  background-color: #419197;color: #ffffff; margin-top: 37px;
+}
+.bnt-res{
+  background-color: #333;color: #ffffff; margin-top: 37px; margin-left: 10px;
+}
+
+.card-header.bg-dark-o-20.d-flex.justify-content-between{
+  height: 50px;
+}
+
+@media(max-width: 1290px){
+  .bnt-res{
+    margin-left: 4px;
+  }
+}
+@media(max-width: 767px){
+  .bnt-s, .bnt-res{
+    margin-top: 15px;
+  }
+  .custom-mt-15{
+    margin-top: 15px;
+  }
+}
+

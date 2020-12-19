@@ -1,0 +1,24 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <p class="modal-title" id="modalDeleteSchool" style="font-size: large; font-weight: bold">Xóa điểm trường?</p>
+    <button (click)="activeModal.close()" aria-label="Close" class="close" type="button">
+      <i class="fas fa-times" style="font-size: large"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="question" style="display: flex">
+      <i class="far fa-question-circle" style="font-size: 100px; color: red"></i>
+      <p style="text-align: center; margin-top: 35px; margin-left: 30px; margin-right: 30px">
+        {{VI_LANG.NOTIFICATION.CONFIRM_DELETE}} </p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="activeModal.close()" class="btn btn-secondary mr-3"
+            type="button">{{VI_LANG.BUTTON.CANCEL}}</button>
+    <button (click)="submitDelete()" class="btn  btn-primary" id="btn-delete"
+            type="button">{{VI_LANG.BUTTON.OK}}</button>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="isLoading" class="k-i-loading"></div>
+  </div>
+</div>

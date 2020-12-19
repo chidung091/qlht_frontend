@@ -1,0 +1,78 @@
+<ng-container *ngIf="action === 'create'">
+  <kendo-dialog title="Tạo mới Lỗi vi phạm" (close)="close.emit()" [width]="500">
+    <div class="card-body">
+      <div class="pb-5">
+        <span>Lỗi vi phạm</span>
+        <input  kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" placeholder="Nhập lỗi vi phạm">
+      </div>
+      <div class="pb-5">
+        <span>Nhóm lỗi vi phạm</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" placeholder="Nhóm lôi vi phạm">
+      </div>
+      <div class="pb-5">
+        <span>Điểm trừ</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" placeholder="Nhập điểm trừ">
+      </div>
+      <div class="pb-5">
+        <span>Lỗi điểm danh</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" placeholder="Nhập lỗi vi phạm">
+      </div>
+      <div class="pb-5">
+        <span>Mô tả</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" placeholder="Nhập lỗi vi phạm">
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="btn btn-outline-primary m-3 w-100px" (click)="close.emit()">Đóng</div>
+        <div class="btn btn-success m-3 w-100px" (click)="save()">Lưu</div>
+      </div>
+    </div>
+  </kendo-dialog>
+</ng-container>
+
+<ng-container *ngIf="action === 'edit'">
+  <kendo-dialog title="Chỉnh sửa Lỗi vi phạm" (close)="close.emit()" [width]="500">
+    <div class="card-body">
+      <div class="pb-5">
+        <span>Lỗi vi phạm</span>
+        <input  kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" value="{{data.violation}}" placeholder="Nhập lỗi vi phạm">
+      </div>
+      <div class="pb-5">
+        <span>Nhóm lỗi vi phạm</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" value="{{data.type}}"  placeholder="Nhóm lôi vi phạm">
+      </div>
+      <div class="pb-5">
+        <span>Điểm trừ</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" value="{{data.pointMinus}}" placeholder="Nhập điểm trừ">
+      </div>
+      <div class="pb-5">
+        <span>Lỗi điểm danh</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" value="{{data.id}}" placeholder="Nhập lỗi vi phạm">
+      </div>
+      <div class="pb-5">
+        <span>Mô tả</span>
+        <input kendoTextBox  type="text" class="w-100 p-2 mt-2 border bd-radius-5" value="{{data.description}}" placeholder="Nhập lỗi vi phạm">
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="btn btn-outline-primary m-3 w-100px" (click)="close.emit()">Đóng</div>
+        <div class="btn btn-success m-3 w-100px" (click)="save()">Lưu</div>
+      </div>
+    </div>
+  </kendo-dialog>
+</ng-container>
+
+<ng-container *ngIf="action === 'delete'">
+  <kendo-dialog title="Thông báo" (close)="close.emit()" [minWidth]="250" [width]="450">
+    <div *ngIf="data === undefined || data.length === 0; else elseBlock">
+      Chưa có item được chọn
+      <br/>
+      <div class="btn btn-outline-primary m-3 w-100px" (click)="close.emit()">Đóng</div>
+    </div>
+    <ng-template #elseBlock>
+      {{data | json}}
+      <br/>
+      <div class="btn btn-outline-primary m-3 w-100px" (click)="close.emit()">Đóng</div>
+    </ng-template>
+  </kendo-dialog>
+</ng-container>

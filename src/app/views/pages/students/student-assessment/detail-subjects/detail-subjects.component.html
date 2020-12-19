@@ -1,0 +1,62 @@
+<kt-portlet>
+    <kt-portlet-header [icon]="'fas fa-th-list'" [title]="'Dánh giá học sinh'" [class]="'card-head-lg'">
+    </kt-portlet-header>
+    <kt-portlet-body>
+      <div class="table_tt">
+        <kendo-grid [pageable]="true">
+          <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false" showSelectAll="true"
+                                      class="text-center" headerClass="text-center">
+          </kendo-grid-checkbox-column>
+  
+          <kendo-grid-column field="id" title="TT" [width]="70" [resizable]="false" [columnMenu]="false" editable="false"
+                             class="text-center" headerClass="text-center font-weight-bold">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}
+            </ng-template>
+          </kendo-grid-column>
+  
+          <kendo-grid-column field="competitionMarkType" headerClass="text-center font-weight-bold" title="Họ và tên"
+                             [width]="150">
+          </kendo-grid-column>
+  
+          <kendo-grid-column field="benchmark" title="Giữa học kỳ II" class="text-center" headerClass="text-center font-weight-bold"
+                             [width]="200">
+  
+          </kendo-grid-column>
+          <kendo-grid-column-group title="Cuối học kỳ II" [width]="40" [resizable]="false" sortable="false" [columnMenu]="false"
+                                   class="text-center" headerClass="text-center font-weight-bold">
+            <kendo-grid-column field="Mức đạt được" title="Mức đạt được">
+            </kendo-grid-column>
+            <kendo-grid-column field="Mức đạt được" title="Điểm KTĐK">
+            </kendo-grid-column>
+          </kendo-grid-column-group>
+          <kendo-grid-column field="competitionMarkType" headerClass="text-center font-weight-bold" title="Nhận xét"
+                             [width]="150">
+          </kendo-grid-column>
+  
+                    <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                                 let-skip="skip" let-pageSize="pageSize">
+                      <div class="d-flex justify-content-between w-100">
+                        <div class="p-1 d-flex">
+                          <kendo-dropdownlist class="w-60px" [data]="pageSizes" [defaultItem]="5" [(ngModel)]="_pageSize"
+                                              (ngModelChange)="pageSizeChange()">
+                          </kendo-dropdownlist>
+                          <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                            - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+                        </div>
+                        <div class="d-flex">
+                          <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                          <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+                          </kendo-pager-numeric-buttons>
+                          <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template kendoGridNoRecordsTemplate>
+                      Không có dữ liệu
+                    </ng-template>
+        </kendo-grid>
+      </div>
+    </kt-portlet-body>
+  </kt-portlet>
+  
+  

@@ -1,0 +1,279 @@
+<kt-portlet>
+  <kt-portlet-header *ngIf="nameEmp" [title]="'Cán bộ : ' + nameEmp"
+                     [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button [iconClass]="'fas fa-plus'" ngbTooltip="Thêm mới" placement="bottom"
+              (click)="addNewItem()" class="btn btn-primary mr-2" kendoButton type="button"></button>
+      <button [disabled]="checkDeleteAll" (click)="Delete(mymodal)" ngbTooltip="Xoá" placement="bottom"
+              style="margin-right: 5px;" class="btn btn-sm btn-danger"><i
+        class="fas fa-trash-alt"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div>
+    <kendo-grid *ngIf="isLoading$ | async"
+                [data]="dataEmployeeSalary"
+                [skip]="skip"
+                [pageSize]="_pageSize"
+                [pageable]="true"
+                (pageChange)="pageChange($event)"
+                [selectable]="{checkboxOnly : true}"
+                kendoGridSelectBy="id"
+                [selectedKeys]="listIdsDel"
+                (selectedKeysChange)="onChange($event)"
+                (add)="addHandler($event)"
+                (edit)="editHandler($event)"
+                (save)="saveHandler($event)"
+                (cancel)="cancelHandler($event)"
+                >
+      <kendo-grid-checkbox-column class="text-center" [width]="45"
+                                  [resizable]="false" [columnMenu]="false"
+                                  headerClass="text-center font-weight-bold"
+                                  showSelectAll="true">
+        <ng-template kendoGridFooterTemplate let-rowIndex="rowIndex">
+          <button hidden kendoGridAddCommand class="addBtn" id="addBtn"></button>
+        </ng-template>
+      </kendo-grid-checkbox-column>
+
+      <kendo-grid-column [width]="50" class="text-center"
+                         headerClass="text-center font-weight-bold" title="TT">
+        <ng-template kendoGridCellTemplate let-dataItem
+                     let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="180" class="text-center" editor="date"
+                         id="ngayhuong" format="dd/MM/yyyy"
+                         headerClass="text-center font-weight-bold"
+                         field="appliedDate" title="Ngày hưởng">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.appliedDate | date: 'dd/MM/yyyy'}}
+        </ng-template>
+          <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                       let-column="column" let-rowIndex="rowIndex"
+                       let-formGroup="formDataSalary">
+            <kendo-datepicker [formControl]="formDataSalary.get('appliedDate')"
+                              [format]="'dd/MM/yyyy'"
+                              id="appliedDate"
+                              [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                              placeholder="dd/mm/yyyy"
+                              (ngModelChange)="changeNgachHang()"
+                              style="width: 100%">
+            </kendo-datepicker>
+          </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="250" field="employeeScale"
+                         title="Ngạch/Hạng" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.employeeScaleName}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate class="mt-5" let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <kendo-dropdownlist
+            [data]="ngachHang$ | async" [defaultItem]="default"
+            (ngModelChange)="changeNgachHang()"
+            [formControl]="formDataSalary.get('employeeScale')"
+            textField="cateName" valueField="cateCode"
+            id="employeeScale"
+            [valuePrimitive]="true">
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="100" class="text-center" [editable]="false"
+                         headerClass="text-center font-weight-bold"
+                         field="employeeScaleCode"
+                         title="Mã ngạch">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.employeeScaleCode}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <div>
+            <input smasTrim type="text" [formControl]="formDataSalary.get('employeeScaleCode')"
+                   placeholder="0-100" id="employeeScaleCode" class="w-100" kendoTextBox>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="130" field="salaryLevel"
+                         class="text-center" title="Bậc lương"
+                         headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.salaryLevelName}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <kendo-dropdownlist class="w-100"
+                              id="salaryLevel"
+                              [data]="bacLuong$ | async" [defaultItem]="default"
+                              [formControl]="formDataSalary.get('salaryLevel')"
+                              (ngModelChange)="changeNgachHang()"
+                              textField="cateName" valueField="cateCode"
+                              [valuePrimitive]="true"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="100" class="text-center"
+                         headerClass="text-center font-weight-bold"
+                         field="coefficient" title="Hệ số lương">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.coefficient}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <input smasTrim type="text"  [formControl]="formDataSalary.get('coefficient')" (ngModelChange)="changeNgachHang()"
+                 placeholder="0-99.99" id="coefficient" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="120" class="text-center"
+                         headerClass="text-center font-weight-bold"
+                         field="salaryAmount" title="% vượt khung">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.salaryAmount}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <input smasTrim type="text" [formControl]="formDataSalary.get('salaryAmount')"
+                 (ngModelChange)="changeNgachHang()" id="salaryAmount"
+                 placeholder="0-100%" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="200" class="text-center"
+                         headerClass="text-center font-weight-bold"
+                         field="seniorityAllowance"
+                         title="Mức phụ cấp thâm niên (%)">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.seniorityAllowance}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+            <input smasTrim type="text" [formControl]="formDataSalary.get('seniorityAllowance')" (ngModelChange)="changeNgachHang()"
+                   placeholder="0-100%" id="seniorityAllowance" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="220" class="text-center"
+                         headerClass="text-center font-weight-bold"
+                         field="vocationalAllowance" title="Mức phụ cấp thu hút nghề (%)">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.vocationalAllowance}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <input smasTrim type="text" [formControl]="formDataSalary.get('vocationalAllowance')" (ngModelChange)="changeNgachHang()"
+                 placeholder="0-100%" id="vocationalAllowance" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="200" class="text-center"
+                         headerClass="text-center font-weight-bold"
+                         field="preferentialAllowance"
+                         title="Mức phụ cấp ưu đãi nghề (%)">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.preferentialAllowance}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <input smasTrim type="text" [formControl]="formDataSalary.get('preferentialAllowance')" (ngModelChange)="changeNgachHang()"
+                 placeholder="0-100%" id="preferentialAllowance" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [width]="250" class="text-center"
+                         headerClass="text-center font-weight-bold"
+                         field="prefrentialAllowLeadership"
+                         title="Mức phụ cấp chức vụ lãnh đạo (%)">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.prefrentialAllowLeadership}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+          <input smasTrim type="text" [formControl]="formDataSalary.get('prefrentialAllowLeadership')" (ngModelChange)="changeNgachHang()"
+                 placeholder="0-100%" id="prefrentialAllowLeadership" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column [width]="250" type="text"
+                         headerClass="text-center font-weight-bold"
+                         field="description" title="Ghi chú">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.description}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem"
+                     let-column="column" let-rowIndex="rowIndex"
+                     let-formGroup="formDataSalary">
+            <input smasTrim type="text" [formControl]="formDataSalary.get('description')"
+                   (ngModelChange)="changeNgachHang()" id="description"
+                   placeholder="Ghi chú" class="w-100" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="Thao tác" headerClass="text-center font-weight-bold"
+                                 [style]="{'text-align': 'center'}" [width]="110">
+<!--        [locked]="true"-->
+        <ng-template kendoGridCellTemplate let-isNew="isNew"  ktPortletTools>
+          <button kendoGridEditCommand ngbTooltip="Edit" placement="bottom" class="border-radius btn btn-add btn-primary"><i
+            class="far fa-edit"></i></button>
+          <button class="btn btn-primary" ngbTooltip="Save" placement="bottom" kendoGridSaveCommand><i
+            class="far fa-save"></i></button>
+          <button class="btn btn-warning" ngbTooltip="Thoát" placement="bottom" kendoGridCancelCommand>
+            <i class="far fa-window-close"></i></button>
+        </ng-template>
+      </kendo-grid-command-column>
+      <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                   let-skip="skip" let-pageSize="pageSize">
+        <div class="d-flex justify-content-between w-100">
+          <div class="p-1 d-flex">
+<!--            <kendo-dropdownlist class="w-60px" [data]="pageSizes" [(ngModel)]="_pageSize" [defaultItem]="5"-->
+<!--                                (ngModelChange)="pageSizeChange()">-->
+<!--            </kendo-dropdownlist>-->
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex">
+            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+            </kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid>
+    </div>
+    <div class="custom-loading-h">
+      <div *ngIf="loading" class="k-i-loading"></div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<ng-template #mymodal let-c="close" let-d="dismiss">
+  <div class="modal-header" style="padding: 10px !important;">
+    <h4 class="modal-title" id="modal-basic-title">Xóa thông tin lương</h4>
+    <button kendoButton type="button" (click)="d('Save click')" [iconClass]="'fas fa-times'">
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 0 !important;">
+    <kt-modal-delete-employee-salary></kt-modal-delete-employee-salary>
+  </div>
+  <div class="modal-footer" style="padding: 10px !important;">
+    <form action="">
+      <button type="button" class="btn btn-secondary mr-3" (click)="d('Save click')">Hủy bỏ</button>
+      <button type="button" class="btn  btn-primary "
+              (click)="deleteClassRoom('yes')" id="focusDelete">Đồng ý</button>
+    </form>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingDelete | async" class="k-i-loading"></div>
+  </div>
+</ng-template>

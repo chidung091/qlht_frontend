@@ -1,0 +1,279 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách đánh giá'" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button kendoButton type="button" title="Xóa" [iconClass]="'far fa-trash-alt'" [disabled]="delAllbtn"
+              style="background: red; color: white; font-size: medium;" (click)="openModalDelete(modalConfirm)"></button>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <kendo-grid
+      *ngIf="isLoading$ | async"
+      [data]="gridView"
+      [skip]="skip"
+      [pageable]="true"
+      [sortable]="false"
+      [resizable]="true"
+      [height]="500"
+      [selectable]="{enabled: true, checkboxOnly: true}"
+      [pageSize]="_pageSize"
+      [style]="{'border-radius': '25px'}"
+      [kendoGridSelectBy]="'id'"
+      (pageChange)="pageChange($event)"
+      (selectedKeysChange)="onChange($event)">
+
+      <kendo-grid-checkbox-column [width]="50" [resizable]="false"  class="text-center" showSelectAll="true"
+                                  headerClass="text-center font-weight-bold" [columnMenu]="false"  >
+<!--        <ng-template kendoGridHeaderTemplate let-dataItem>-->
+<!--          <input   type="checkbox" (change)="setAll($event)" [checked]="allComplete"/>-->
+<!--        </ng-template>-->
+        <ng-template  let-dataItem="dataItem" let-rowIndex="rowIndex">
+        </ng-template>
+      </kendo-grid-checkbox-column>
+      <kendo-grid-column class="text-center" title="TT" field="stt" [width]="50" [resizable]="false" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        headerClass="text-center font-weight-bold"
+        [width]="160"
+        editor="text"
+        title="Họ và tên"
+        field="employeeName"
+      ></kendo-grid-column>
+      <kendo-grid-column
+        headerClass="text-center font-weight-bold"
+        [width]="150"
+        title="Mã cán bộ"
+        field="employeeCode"
+        [resizable]="true"
+        [style]="{'text-align': 'center'}"
+      >
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        headerClass="text-center font-weight-bold"
+        [width]="120"
+        editor="text"
+        title="Ngày sinh"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.employeeBirthDate | date: 'dd/MM/yyyy'}}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        headerClass="text-center font-weight-bold"
+        [width]="100"
+        editor="text"
+        title="Giới tính"
+        field="employeeGender"
+      ></kendo-grid-column>
+      <kendo-grid-column
+        headerClass="text-center font-weight-bold"
+        [width]="150"
+        title="Vị trí việc làm"
+        field="employeePositionStaff"
+
+      ></kendo-grid-column>
+      <kendo-grid-column [width]="120" editor="text"
+                         headerClass="text-center font-weight-bold"
+                         title="Nhóm chức vụ" field="employeePositionGroup"
+      ></kendo-grid-column>
+      <kendo-grid-column title="KQ tự đánh giá chuẩn NN" [width]="200" class="width-custom text-center"
+                         headerClass="text-center font-weight-bold"
+                         [resizable]="false" field="employeeSelfAssessmentResult">
+      </kendo-grid-column>
+      <kendo-grid-column title="KQ cấp trên đánh giá chuẩn NN" [width]="220" class="width-custom text-center"
+                         headerClass="text-center font-weight-bold"
+                         [resizable]="false" field="superiorSelfAssessmentResult">
+      </kendo-grid-column>
+      <kendo-grid-command-column title="Đánh giá" [width]="110"class="width-custom text-center"
+                                 headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate  let-isNew="isNew" let-dataItem="dataItem" class="width-custom">
+          <button class="border-radius btn-custom btn-add mr-2"
+                  kendoButton [iconClass]="'far fa-list-alt'"
+                  style="height: 30px"  (click)="openDialog(content,dataItem)"
+
+          ></button>
+        </ng-template>
+      </kendo-grid-command-column>
+      <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                   let-skip="skip" let-pageSize="pageSize">
+        <div class="d-lg-flex d-md-block justify-content-between w-100">
+          <div class="p-1 d-flex d-sm-flex justify-content-between">
+            <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [defaultItem]="5" [(ngModel)]="_pageSize"
+                                (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex">
+            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="5">
+            </kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template kendoGridNoRecordsTemplate>
+        {{VI_LANG.NOTIFICATION.NO_DATA}}
+      </ng-template>
+    </kendo-grid>
+    <div class="custom-loading-h">
+
+      <div *ngIf="loadingPage | async" class="k-i-loading"></div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<!--    PopUp tiêu chí đánh giá -->
+<ng-template #content let-c="close" let-d="dismiss" id="id01">
+  <div class="modal-header">
+    <h4 class="modal-title" >Đánh giá chuẩn nghề nghiệp - <span>{{tenCanBo}}</span></h4>
+
+    <button kendoButton type="button"  (click)="close()" [iconClass]="'fas fa-times'" >
+    </button>
+  </div>
+      <div class="modal-body">
+        <kendo-grid
+          *ngIf="loadPupupGrid1 && !loadPupupGrid2"
+          [kendoGridBinding]="tieuChi"
+          [sortable]="false"
+          [resizable]="true"
+          [height]="500"
+          id="grid1"
+          options="mainGridOptions"
+          [style]="{'border-radius': '25px'}">
+          <kendo-grid-column title="STT" class="text-center" headerClass="text-center font-weight-bold"
+                             [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column
+            [width]="140" headerClass="text-center font-weight-bold" title="Tên tiêu chí đánh giá"
+            field="name" [resizable]="true" [style]="{'text-align': 'center'}">
+          </kendo-grid-column>
+          <kendo-grid-column
+            [width]="140" title="Nội dung" field="description" headerClass="text-center font-weight-bold"
+            [resizable]="true" [style]="{'text-align': 'center'}"
+          >
+          </kendo-grid-column>
+          <kendo-grid-column-group title="Mức đánh giá" [columnMenu]="false" headerClass="text-center font-weight-bold">
+            <kendo-grid-column  title="Tự đánh giá" [width]="150" *ngIf="checkSelfAssessment" headerClass="text-center font-weight-bold">
+              <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"
+                                    [valuePrimitive]="true"
+                                    [defaultItem]="'Lựa chọn'"
+                                    [data]="list[rowIndex]" (selectionChange)="changeSelfAssessment($event,dataItem)">
+                </kendo-dropdownlist>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column  title="Cấp trên đánh giá"  [width]="150" headerClass="text-center font-weight-bold">
+              <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+                <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"
+                                    [valuePrimitive]="true"
+                                    [data]="list[rowIndex]"
+                                    [defaultItem]="'Lựa chọn'" (selectionChange)="changeSuperiorAssessment($event,dataItem)">
+
+                </kendo-dropdownlist>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid-column-group>
+        </kendo-grid>
+
+        <kendo-grid
+          *ngIf="loadPupupGrid2 && !loadPupupGrid1"
+          [kendoGridBinding]="lichSuDanhGia"
+          [sortable]="false"
+          [resizable]="true"
+          [height]="500"
+          [style]="{'border-radius': '25px','text-aline': 'center'}">
+          <kendo-grid-column title="STT" class="text-center"  headerClass="text-center font-weight-bold"
+                             [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column
+            [width]="140" title="Tên tiêu chí đánh giá" headerClass="text-center font-weight-bold"
+            field="criteriaCode" [resizable]="true" [style]="{'text-align': 'center'}"
+          >
+          </kendo-grid-column>
+          <kendo-grid-column
+            [width]="140" title="Nội dung" headerClass="text-center font-weight-bold"
+            field="criteriaContent" [resizable]="true" [style]="{'text-align': 'center'}"
+          >
+          </kendo-grid-column>
+          <kendo-grid-column-group title="Mức đánh giá" [columnMenu]="false" headerClass="text-center font-weight-bold">
+            <kendo-grid-column  title="Tự đánh giá" [width]="150" *ngIf="checkSelfAssessment" headerClass="text-center font-weight-bold">
+              <ng-template kendoGridCellTemplate let-dataItem="dataItem"  let-rowIndex="rowIndex">
+                <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"
+                                    [valuePrimitive]="true"
+                                    [value]="dataItem.employeeEvaluationValue"
+                                    [data]="list1[rowIndex]" (selectionChange)="changeSelfAssessmentUpdate123($event,dataItem)">
+                </kendo-dropdownlist>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column  title="Cấp trên đánh giá" [width]="150"  headerClass="text-center font-weight-bold">
+              <ng-template kendoGridCellTemplate let-dataItem="dataItem"  let-rowIndex="rowIndex">
+                <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"
+                                    [valuePrimitive]="true"
+                                    [value]="dataItem.superiorEvaluationValue"
+                                    [data]="list1[rowIndex]" (selectionChange)="changeSuperiorAssessmentUpdate123($event,dataItem)">
+                </kendo-dropdownlist>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid-column-group>
+        </kendo-grid>
+      </div>
+    <kt-portlet-footer *ngIf="loadPupupGrid1">
+        <div class="row">
+          <div class="col-6" style="text-align: end">
+            <button style="border-radius: 5px; width: 30%;height: 40px;" class="btn btn-outline-dark" kendoButton  (click)="close()">Đóng</button>
+          </div>
+          <div class="col-6" style="text-align: start">
+            <button style="border-radius: 5px; width: 30%;height: 40px;background: #169bd5;"class="btn btn-primary" kendoButton  (click)="saveTieuChi()" [disabled]="disableBtn1 | async" >Lưu</button>
+          </div>
+        </div>
+    </kt-portlet-footer>
+  <kt-portlet-footer *ngIf="loadPupupGrid2">
+    <div class="row">
+      <div class="col-6" style="text-align: end">
+        <button style="border-radius: 5px; width: 30%;height: 40px;" class="btn btn-outline-dark" kendoButton (click)="close()">Đóng</button>
+      </div>
+      <div class="col-6" style="text-align: start">
+        <button style="border-radius: 5px; width: 30%;height: 40px;background: #169bd5;"class="btn btn-primary" kendoButton (click)="saveTieuChiupdate()" [disabled]="disableBtn2 | async" >Lưu</button>
+      </div>
+    </div>
+  </kt-portlet-footer>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingPopup | async" class="k-i-loading"></div>
+<!--    <div *ngIf="loadingPopupedit | async" class="k-i-loading"></div>-->
+  </div>
+</ng-template>
+
+<!--modal-confirm-->
+<ng-template #modalConfirm let-c="close" let-d="dismiss">
+  <div class="modal-header" style="padding: 10px !important;">
+    <h4 class="modal-title" >Xóa thông tin đào tạo</h4>
+    <button kendoButton type="button" (click)="d('Cross  click')" [iconClass]="'fas fa-times'">
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 0 !important;">
+    <form >
+      <div class="form-group row">
+        <div class="col-3">
+          <img src="/assets/media/bg/normal_u546.svg" class="m-5">
+        </div>
+        <div class="col-9" style="text-align: center; margin: auto">
+          {{VI_LANG.NOTIFICATION.CONFIRM_DELETE}}
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer" style="padding: 10px !important;">
+    <form action="">
+      <button type="button" class="btn btn-secondary mr-3" (click)="d('cancel click')">Hủy</button>
+      <button type="button" class="btn  btn-primary " #buttonDelete [disabled]="btnConfirm"
+              (click)="delete()" id="focusDelete">Đồng ý</button>
+    </form>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingDelete | async" class="k-i-loading"></div>
+  </div>
+</ng-template>

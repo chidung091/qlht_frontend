@@ -1,0 +1,95 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body [ngbCollapse]="isCollapsed">
+    <form class="row" [formGroup]="form">
+      <div class="col-md-4 row align-items-center">
+        <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tổ bộ môn :</label>
+        <div class=" col-sm-8 ">
+          <kendo-dropdownlist
+            class="w-100"
+            [data]="schoolFaculty$ | async"
+            [loading]="!(schoolFacultyLoaded$ | async)"
+            [defaultItem]="defaulSchooFaculty"
+            [valuePrimitive]="true"
+            formControlName="idFaculty"
+            textField="facultyName"
+            valueField="id"
+            (valueChange)="loadEmployeeWR()"
+          >
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="col-md-4 row align-items-center">
+        <label class="col-sm-3 pl-md-0 col-md-4">Giáo viên :</label>
+        <div class=" col-sm-8 ">
+          <kendo-dropdownlist
+            class="w-100"
+            [data]="listEmployeeWorkR"
+            [loading]="loadEployeeWR | async"
+            [defaultItem]="defalEmployee"
+            [valuePrimitive]="true"
+            [textField]="'fullName'"
+            [valueField]="'id'"
+            formControlName="employeeID"
+          >
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="col-md-4 row align-items-center">
+        <label class="col-sm-3 pl-md-0 col-md-4">Công việc kiêm nhiệm :</label>
+        <div class=" col-sm-8 ">
+          <kendo-dropdownlist
+            class="w-100"
+            [data]="listConcurentType"
+            [defaultItem]="defal"
+            [valuePrimitive]="true"
+            [loading]="loadCVKN"
+            textField="name"
+            valueField="id"
+            formControlName="cateCode"
+          >
+            <ng-template kendoDropDownListNoDataTemplate>
+              {{VI_LANG.NOTIFICATION.NO_DATA}}
+            </ng-template>
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="col-md-12 d-flex justify-content-center mt-5">
+        <button type="submit" class="btn btn-primary" (click)="search()">
+          <i class="fas fa-filter"></i> {{VI_LANG.BUTTON.SEARCH}}
+        </button>
+      </div>
+
+    </form>
+  </kt-portlet-body>
+
+  <div class="all-tab-custom-h mt-5">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <li [ngbNavItem]="1" (click)="resetForm()" id="tap1">
+        <a ngbNavLink class="text-uppercase nav-tab-custom" >Phân công kiêm nhiệm</a>
+        <ng-template ngbNavContent>
+          <kt-concurrent-work [inforFind]="form.value"></kt-concurrent-work>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2" (click)="resetForm()" id="tap2">
+        <a ngbNavLink class="text-uppercase nav-tab-custom">Làm thay kiêm nhiệm</a>
+        <ng-template ngbNavContent>
+          <kt-instead-work></kt-instead-work>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
+  </div>
+</kt-portlet>

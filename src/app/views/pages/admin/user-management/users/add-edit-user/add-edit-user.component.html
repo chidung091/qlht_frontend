@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        {{title}}
+    </h4>
+</div>
+
+
+<div class="modal-body">
+    <form [formGroup]="userForm" autocomplete="off">
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">UserName:</label>
+            <div class="col-sm-9">
+                <input type="text" (focusout)="trimSpace('userName')" class="form-control form-control-solid"
+                    formControlName="userName" placeholder="Nhập tên đăng nhập" name="userName" />
+                <div *ngIf="submitted && f.userName.errors" class="text-danger">
+                    <div *ngIf="f.userName.errors.required">Hãy nhập User Name!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="!this.selectedItem">
+            <label class="col-sm-3 col-form-label">Password:</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control form-control-solid" formControlName="password"
+                    placeholder="Nhập mật khẩu" name="password" />
+                <div *ngIf="submitted && f.password.errors" class="text-danger">
+                    <div *ngIf="f.password.errors.required">Hãy nhập mật khẩu!</div>
+                    <div *ngIf="f.password.errors.minlength">Mật khẩu có ít nhất 6 ký tự!</div>
+                    <!-- <div *ngIf="f.password.errors.pattern">Mật khẩu phải có ít nhất một ký tự không phải là chữ và số,
+                        phải có ít nhất một chữ thường ('a'-'z'),
+                        phải có ít nhất một chữ hoa ('A'-'Z').!</div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="!this.selectedItem">
+            <label class="col-sm-3 col-form-label">Confirm Password:</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control form-control-solid" formControlName="confirmPassword"
+                    placeholder="Nhập lại mật khẩu" name="confirmPassword" />
+                <div *ngIf="submitted && f.confirmPassword.errors" class="text-danger">
+                    <div *ngIf="f.confirmPassword.errors.required">Hãy xác nhận mật khẩu!</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">Mật khẩu không trùng!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Email:</label>
+            <div class="col-sm-9">
+                <input type="text" (focusout)="trimSpace('email')" class="form-control form-control-solid"
+                    formControlName="email" placeholder="Nhập email" name="email" />
+                <div *ngIf="submitted && f.email.errors" class="text-danger">
+                    <div *ngIf="f.email.errors.required">Hãy nhập email!</div>
+                    <div *ngIf="f.email.errors.pattern">Email sai định dạng!</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Phone Number:</label>
+            <div class="col-sm-9">
+                <input type="text" (focusout)="trimSpace('phoneNumber')" class="form-control form-control-solid"
+                    formControlName="phoneNumber" placeholder="Nhập số điện thoại" name="phoneNumber" />
+                <div *ngIf="submitted && f.phoneNumber.errors" class="text-danger">
+                    <div *ngIf="f.phoneNumber.errors.required">Hãy nhập số điệnt thoại!</div>
+                    <div *ngIf="f.phoneNumber.errors.pattern">Số điện thoại sai định dạng!</div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Đóng</button>
+        <button type="submit" (click)="onSubmit()" class="btn  btn-primary">Lưu</button>
+    </div>
+    <div class="custom-loading-h">
+        <div *ngIf="isloading" class="k-i-loading"></div>
+    </div>
+</div>

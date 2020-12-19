@@ -1,0 +1,112 @@
+<!--tìm kiếm-->
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body *ngIf="!isCollapsed">
+    <form [formGroup]="formSearch">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="f-group">
+            <label class="col-form-label">Mã cán bộ:</label>
+            <input (blur)="formatStaffCode()" placeholder="Nhập mã cán bộ" kendoTextBox formControlName="staffCode">
+          </div>
+        </div>
+        <div class="col-md-5 mb-15-h">
+          <div class="f-group">
+            <label class="col-form-label">Họ và tên:</label>
+            <input (blur)="formatNameTeacher()" placeholder="Nhập tên cán bộ" kendoTextBox formControlName="nameTeacher">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2">
+          <button type="button" class="btn btn-custom-h-cl btn-primary">
+            <i class="fas fa-filter"></i> Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </form>
+  </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách tiếp nhận'" [class]="'card-head-lg'">
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div style="overflow-x: auto">
+      <kendo-grid [pageSize]="_pageSize" [pageable]="true" [selectedKeys]="mySelection" kendoGridSelectBy="id" [skip]="skip"
+                  [kendoGridBinding]="fakeData" [data]="data" [sortable]="true"
+                  (selectedKeysChange)="onChange($event)" [height]="500" [style]="{'border-radius': '25px'}">
+<!--        [reorderable]="true" [resizable]="true"-->
+        <kendo-grid-column title="STT" headerClass="text-center font-weight-bold"
+                           [width]="50" [resizable]="false" class="text-center">
+          <ng-template kendoGridCellTemplate let-dataItem
+                       let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="180" headerClass="text-center font-weight-bold"
+                           field="ProductName" editor="text" title="Họ và tên">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="150" editor="text" field="SupplierID" class="text-center"
+                           headerClass="text-center font-weight-bold" title="Mã cán bộ">
+
+        </kendo-grid-column>
+        <kendo-grid-column [width]="80" editor="text" field="DateOfBirth" class="text-center"
+                           headerClass="text-center font-weight-bold" title="Ngày sinh">
+
+        </kendo-grid-column>
+        <kendo-grid-column [width]="60" editor="text" field="Gender" class="text-center"
+                           headerClass="text-center font-weight-bold" title="Giới tính">
+
+        </kendo-grid-column>
+        <kendo-grid-column headerClass="text-center font-weight-bold" title="Chuyển đến từ trường"
+                           field="QuantityPerUnit" [width]="180" [resizable]="false">
+        </kendo-grid-column>
+        <kendo-grid-column [width]="180"
+                           headerClass="text-center font-weight-bold" title="Tổ bộ môn">
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-rowIndex="rowIndex">
+            <kendo-dropdownlist class="drop{{rowIndex}} subject-dropdown w-100 h-100 align-items-center"
+                                [data]="schoolFaculty$ | async"
+                                [loading]="!(schoolFacultyLoaded$ | async)"
+                                [defaultItem]="defaultFaculty"
+                                textField="facultyName" valueField="id"
+                                [valuePrimitive]="true"
+                                (selectionChange)="changeSubject($event, dataItem)">
+            </kendo-dropdownlist>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column title="Tiếp nhận" headerClass="text-center font-weight-bold" [width]="70">
+          <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
+            <div class="d-flex justify-content-around align-items-center">
+              <button class="btn btn-primary btn-sm mr-2" placement="left" ngbTooltip="Tiếp nhận cán bộ"
+                      [disabled]="false" (click)="receiveOfficers(dataItem)" kendoButton
+                      [iconClass]="'fas fa-check'"></button>
+            </div>
+          </ng-template>
+        </kendo-grid-command-column>
+        <ng-template kendoPagerTemplate let-currentPage="currentPage" let-total="total" let-skip="skip"
+                     let-pageSize="pageSize">
+          <div class="d-flex justify-content-between w-100">
+            <div class="p-1 d-flex">
+                          <kendo-dropdownlist style="width: 60px;"
+                                              [data]="pageSizes"
+                                              [(ngModel)]="_pageSize"x
+                                              class="table-total"
+                          >
+                          </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2 show-total">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex page-number">
+              <kendo-pager-prev-buttons class="pagenumbernext"></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons class="pagenumberlast"></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,73 @@
+<div class="modal-body">
+  <form [formGroup]="form">
+
+    <div class="pt-5 row">
+      <div class="col-sm-5">
+        <label for="nameCon">{{VI_LANG.FIELD.CONCURRENT_WORK_TYPE_NAME}}<span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-7">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" id="nameCon" class="form-control" placeholder="Nhập tên"
+                 [formControlName]="'name'" disabled (change)="edit()">
+          <kendo-formhint>{{VI_LANG.FIELD.CONCURRENT_WORK_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.name.errors?.required">
+            {{VI_LANG.FIELD.CONCURRENT_WORK_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.name.errors?.maxlength">
+              {{VI_LANG.FIELD.CONCURRENT_WORK_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+
+
+      <div class="pt-5 row">
+        <div class="col-sm-5">
+          <label for="sumCon">{{VI_LANG.FIELD.TIMES_WEEK}}</label>
+        </div>
+        <div class="col-sm-7">
+          <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+            <input type="number" id="sumCon" class="form-control" placeholder="Nhập số tiết"
+                   [formControlName]="'sectionPerWeek'" #soTiet
+                   (change)="edit()">
+            <kendo-formhint>Validate số tiết/tuần</kendo-formhint>
+            <kendo-formerror>
+              <div *ngIf="form.controls.sectionPerWeek.hasError('pattern')">
+                {{VI_LANG.FIELD.TIMES_WEEK}} {{VI_LANG.COMMON_ERROR.PATTERN_NUMBER}}
+              </div>
+            </kendo-formerror>
+            <kendo-formerror>
+              <div *ngIf="form.controls.sectionPerWeek.errors?.max">
+                {{VI_LANG.FIELD.TIMES_WEEK}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_2}}
+              </div>
+            </kendo-formerror>
+          </kendo-formfield>
+        </div>
+
+      </div>
+      <!--            <kendo-formerror *ngIf="form.controls.soTiet.errors?.required">-->
+      <!--              Số tiết không được để trống-->
+      <!--            </kendo-formerror>-->
+
+      <div class="pt-5 row">
+        <div class="col-sm-5">
+          <label for="descCon">{{VI_LANG.FIELD.DESCRIPTION}}</label>
+        </div>
+       <div class="col-sm-7">
+         <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+           <input type="text" id="descCon" class="form-control" placeholder="Nhập mô tả" [formControlName]="'description'"
+                  (ngModelChange)="edit()" smasTrim>
+           <kendo-formhint>Validate mô tả</kendo-formhint>
+           <kendo-formerror>
+             <div *ngIf="form.controls.description.errors?.maxlength">
+               {{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+             </div>
+           </kendo-formerror>
+         </kendo-formfield>
+       </div>
+      </div>
+
+  </form>
+</div>

@@ -1,0 +1,128 @@
+.nav-std{
+  padding: 0;
+  display: flex;
+  .av-std-li{
+    padding: 8px 0;
+    background-color: #017284;
+    .active{
+      background: #2b4a4f;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+      transition: .3s;
+    }
+    a{
+      color: #fff;
+      padding: 8px 20px;
+      border: 1px solid #017284;
+      background-color: #017284;
+    }
+    a:hover{
+      background: #2b4a4f;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+      transition: .3s;
+    }
+  }
+}
+
+@media(max-width: 767px){
+  .bnt-s, .bnt-res{
+    margin-top: 15px;
+  }
+  .custom-mt-15{
+    margin-top: 15px;
+  }
+  .mb-15-h{
+    margin-bottom: 15px;
+  }
+  .btn-custom-h-cl{
+    margin-top: 0px !important;
+  }
+  .text-view-mmb {
+    text-align: start !important;
+    margin: auto !important;
+  }
+
+}
+
+@media(max-width: 1290px){
+  .bnt-res{
+    margin-left: 4px;
+  }
+  .search-box-header-flex-h{
+    display: block;
+    .col-form-label, .col-form-label-gv-2{
+      width: 100%;
+    }
+    .search-box-header-flex-h-kendo, .search-box-header-flex-h-kendo2{
+      width: 100%;
+    }
+  }
+  .btn-custom-h-cl{
+    margin-top: 30px !important;
+  }
+  .mb-t-10{
+    padding: 9px 0px;
+  }
+  .text-view-mmb {
+    text-align: end !important;
+  }
+
+}
+
+
+
+//custom css
+.form-control.form-control-solid{
+  background: white !important
+}
+.col-form-label{
+  font-weight: bold;
+}
+.bnt-s{
+  background-color: #419197;color: #ffffff; margin-top: 37px;
+}
+.bnt-ss{
+  background-color: #419197;color: #ffffff;
+}
+.bnt-res{
+  background-color: #333;color: #ffffff; margin-top: 37px; margin-left: 10px;
+}
+
+.card-header.bg-dark-o-20.d-flex.justify-content-between{
+  height: 50px;
+}
+
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+}
+
+//@media(max-width: 1290px){
+//  .bnt-res{
+//    margin-left: 4px;
+//  }
+//}
+//@media(max-width: 767px){
+//  .bnt-s, .bnt-res{
+//    margin-top: 15px;
+//  }
+//  .custom-mt-15{
+//    margin-top: 15px;
+//  }
+//}
+
+
+.card-body{
+  padding: 10px 0 !important;
+}
+.bgr-custom{
+  background: rgba(24, 28, 50, 0.08) !important;
+}
+

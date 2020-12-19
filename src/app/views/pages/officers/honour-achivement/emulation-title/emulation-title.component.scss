@@ -1,0 +1,28 @@
+
+  .btn-add-l {
+    background: #419197;
+    color: white;
+    font-size: medium;
+    margin-right: 10px
+  }
+  .btn-delete-l{
+    background: red;
+    color: white;
+    font-size: medium;
+    margin-right: 25px
+  }
+  .btn-edit-l {
+    height: 40px
+  }
+  .btn-delete-lam {
+    height: 40px
+  }
+  .dropdown-l{
+    width:100%
+  }
+  @media (max-width: 767px) {
+    .link-router-l a{
+      width: 145px;
+    }
+  }
+  

@@ -1,0 +1,195 @@
+<kt-portlet>
+  <kt-portlet-header *ngIf="nameEmp" [title]="'Cán Bộ : '+ nameEmp" [class]="'card-head-lg bgr-custom'">
+    <ng-container ktPortletTools>
+      <button ngbTooltip="Thêm" style="margin-right: 5px" class="btn btn-sm btn-primary" (click)="addNewItem()">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button [disabled]="checkDelete" ngbTooltip="Xoá" style="margin-right: 5px" class="btn btn-sm btn-danger"
+        (click)="openModalDelete(dataItem)">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <kendo-grid (pageChange)="pageChange($event)"
+                (selectedKeysChange)="onChange($event)"
+                [pageSize]="_pageSize"
+                [pageable]="true"
+                [selectedKeys]="mySelection"
+                kendoGridSelectBy="id"
+                [skip]="skip"
+                [data]="gridView"
+                [sortable]="true"
+                [scrollable]="true"
+                [selectable]="{checkboxOnly: true}"
+                [reorderable]="false"
+                [resizable]="false"
+                (edit)="editHandler($event)"
+                (cancel)="cancelHandler($event)"
+                (save)="saveHandler($event)"
+                (add)="addHandler($event)"
+                [navigable]="true"
+                [height]="500" [style]="{'border-radius': '25px'}">
+
+      <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false"
+        headerClass="text-center font-weight-bold" class="text-center" showSelectAll="true">
+        <ng-template kendoGridFooterTemplate>
+          <button hidden kendoGridAddCommand class="addBtn" id="addBtn"><i class="fas fa-plus"></i>
+          </button>
+        </ng-template>
+      </kendo-grid-checkbox-column>
+
+      <kendo-grid-column [width]="40" title="TT" class="text-center" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="languageCode" title="Ngoại ngữ khác" headerClass="text-center font-weight-bold">
+
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.languageName}}
+        </ng-template>
+
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+          let-formGroup="formData">
+            <kendo-dropdownlist [loading]="!(otherForeignLanguagesLoaded$ | async)" class="w-100"
+              [data]="otherForeignLanguages$ | async" [defaultItem]="defaultCategory" id="languageCode"
+              [formControl]="formData.get('languageCode')" textField="cateName" valueField="cateCode"
+              [valuePrimitive]="true">
+            </kendo-dropdownlist>
+        </ng-template>
+
+      </kendo-grid-column>
+
+      <kendo-grid-column field="languageLevelCode" title="Trình độ ngoại ngữ"
+        headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.languageLevelName}}
+        </ng-template>
+
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+          let-formGroup="formData">
+            <kendo-dropdownlist [loading]="!(levelForeignLanguagesLoaded$ | async)" class="w-100"
+              [data]="levelForeignLanguages$ | async" [defaultItem]="defaultCategory" id="languageLevelCode"
+              [formControl]="formData.get('languageLevelCode')" textField="cateName" valueField="cateCode"
+              [valuePrimitive]="true">
+            </kendo-dropdownlist>
+        </ng-template>
+
+      </kendo-grid-column>
+
+      <kendo-grid-column field="issueDate" editor="date" title="Ngày cấp" id="ngaycap" format="dd/MM/yyyy"
+        class="text-center" headerClass="text-center font-weight-bold">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          {{dataItem.issueDate | date: 'dd/MM/yyyy'}}
+        </ng-template>
+
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+          let-formGroup="formData">
+            <kendo-datepicker [formControl]="formData.get('issueDate')"
+                              [format]="'dd/MM/yyyy'" [max]="maxDate"
+                              [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                              placeholder="dd/mm/yyyy"
+                              id="issueDate"
+              class="w-100">
+            </kendo-datepicker>
+        </ng-template>
+
+      </kendo-grid-column>
+
+      <kendo-grid-column field="score" title="Điểm ngoại ngữ" headerClass="text-center font-weight-bold" class="text-center">
+
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.score}}
+        </ng-template>
+
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+          let-formGroup="formData">
+            <input smasTrim type="text" [formControl]="formData.get('score')" class="form-control w-100" id="score"
+                   placeholder="VD: 6.45" (focusout)="trimSpace('score')" kendoTextBox>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="description" title="Ghi chú" headerClass="text-center font-weight-bold">
+
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.description}}
+        </ng-template>
+
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+          let-formGroup="formData">
+            <input smasTrim type="text" [formControl]="formData.get('description')" class="form-control w-100" id="description"
+                   placeholder="Ghi chú" (focusout)="trimSpace('description')" kendoTextBox>
+        </ng-template>
+
+      </kendo-grid-column>
+
+      <kendo-grid-command-column title="Thao tác" headerClass="text-center font-weight-bold"
+        [style]="{'text-align': 'center'}" width="120">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+          <button kendoGridEditCommand class="border-radius btn btn-add btn-primary" ngbTooltip="Chỉnh sửa" placement="left" container="body"><i
+              class="far fa-edit"></i></button>
+          <button class="btn btn-primary" kendoGridSaveCommand ngbTooltip="Lưu" placement="left" container="body"><i
+              class="far fa-save"></i></button>
+          <button class="btn btn-warning" kendoGridCancelCommand><i class="far fa-window-close" ngbTooltip="Đóng" placement="right" container="body"></i></button>
+        </ng-template>
+
+      </kendo-grid-command-column>
+
+      <ng-template kendoPagerTemplate let-currentPage="currentPage" let-total="total" let-skip="skip"
+        let-pageSize="pageSize">
+        <div class="d-flex justify-content-between w-100">
+          <div class="p-1 d-flex d-sm-flex justify-content-between">
+            <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [(ngModel)]="_pageSize"
+              (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex page-number">
+            <kendo-pager-prev-buttons class="pagenumbernext"></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons class="pagenumberlast"></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template kendoGridNoRecordsTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+
+    </kendo-grid>
+
+    <div class="custom-loading-h">
+      <div *ngIf="loadingKendoGrid | async" class="k-i-loading"></div>
+    </div>
+
+  </kt-portlet-body>
+
+</kt-portlet>
+
+<ng-template #deleteDialog class="modal-dialog modal-dialog-centered modal-dialog-scrollable" let-c="close"
+  let-d="dismiss">
+  <div class="modal-content">
+    <div class="modal-header">
+      <p class="modal-title" id="modalDeleteSchool" style="font-size: large; font-weight: bold">Xóa thông tin ngoại ngữ</p>
+      <button (click)="closeModalDelete()" aria-label="Close" class="close" type="button">
+        <i class="fas fa-times" style="font-size: large"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="question" style="display: flex">
+        <i class="far fa-question-circle" style="font-size: 100px; color: red"></i>
+        <p style="text-align: center; margin-top: 35px; margin-left: 30px; margin-right: 30px">
+          {{VI_LANG.NOTIFICATION.CONFIRM_DELETE}} </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="closeModalDelete()" class="btn btn-secondary mr-3"
+        type="button">{{VI_LANG.BUTTON.CANCEL}}</button>
+      <button (click)="submitDelete()" id="focusDelete" class="btn  btn-primary"
+        type="button">{{VI_LANG.BUTTON.OK}}</button>
+    </div>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingSubmit" class="k-i-loading"></div>
+  </div>
+</ng-template>

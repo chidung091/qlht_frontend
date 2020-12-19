@@ -1,0 +1,110 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        {{title}}
+    </h4>
+    <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form (ngSubmit)="onSubmit()" [formGroup]="rolesForm">
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <label class="col-sm-4 col-form-label">Vai trò gốc <span class="color-red">*</span>:</label>
+                    <div class="col-sm-8">
+                        <div class="col-form-select kendo-form">
+                            <kendo-dropdownlist #vaitrogoc formControlName="parentRoleId" [valueField]="'id'"
+                                (valueChange)="changeParentRole($event)" [defaultItem]="defaultParentRole"
+                                style="width: 100%" [data]="dsRoleChild" [textField]="'remark'" [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <label class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-8">
+                        <div class="col-form-select kendo-form">
+                            <kendo-dropdownlist formControlName="isActive" [valueField]="'value'" style="width: 100%"
+                                [data]="status" [textField]="'text'" [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Mã vai trò <span class="color-red">*</span>:</label>
+            <div class="col-sm-10">
+                <input type="text" (focusout)="trimSpace('name')" class="form-control" formControlName="name"
+                    placeholder="Nhập mã vai trò">
+                <div *ngIf="submitted && f.name.errors || (f.name.dirty || f.name.touched) && f.name.errors">
+                    <div class="text-error">
+                        <div *ngIf="f.name.errors.required">
+                            Mã vai trò không được để trống
+                        </div>
+                        <div *ngIf="f.name.errors.maxlength">
+                            Mã vai trò tối đa 50 ký tự
+                        </div>
+                        <div *ngIf="f.name.errors.pattern">
+                            Mã vai trò sai định dạng
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Tên vai trò <span class="color-red">*</span>:</label>
+            <div class="col-sm-10">
+                <input type="text" (focusout)="trimSpace('remark')" formControlName="remark" class="form-control"
+                    placeholder="Nhập tên vai trò" name="remark" />
+                <div *ngIf="submitted && f.remark.errors || (f.remark.dirty || f.remark.touched) && f.remark.errors">
+                    <div class="text-error">
+                        <div *ngIf="f.remark.errors.required">
+                            Tên vai trò không được để trống
+                        </div>
+                        <div *ngIf="f.remark.errors.maxlength">
+                            Tên vai trò tối đa 100 ký tự
+                        </div>
+                        <div *ngIf="f.remark.errors.pattern">
+                            Tên vai trò sai định dạng
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Mô tả:</label>
+            <div class="col-sm-10">
+                <input type="text" (focusout)="trimSpace('description')" class="form-control"
+                    formControlName="description" placeholder="Mô tả">
+                <div
+                    *ngIf="submitted && f.description.errors || (f.description.dirty || f.description.touched) && f.description.errors">
+                    <div class="text-error">
+                        <div *ngIf="f.description.errors.maxlength">
+                            Mô tả tối đa 250 ký tự
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input type="checkbox" formControlName="isAdminRole"> Là vai trò admin trường
+            </div>
+        </div> -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary mr-3" (click)="cancel()">Đóng</button>
+            <button type="submit" class="btn  btn-primary" [disabled]="isDisabled" [ngClass]="{
+                'spinner spinner-right spinner-md spinner-black': loading
+              }">Lưu</button>
+        </div>
+    </form>
+    <div class="custom-loading-h">
+        <div *ngIf="loading" class="k-i-loading"></div>
+    </div>
+</div>

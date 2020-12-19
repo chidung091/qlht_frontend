@@ -1,0 +1,55 @@
+<div class="content">
+  <div class="col-sm-12 pb-3 dropdownSearch">
+    <div class="row">
+      <div class="col-sm-12 subject-dropdown">
+        <div class="col-sm-4">
+          <label class="label-custom mt-3 ml-6" for="dropMonHoc">Môn học<span>*</span></label>
+        </div>
+        <div class="col-sm-8">
+          <kendo-dropdownlist
+            [data]="listAllSubject" [loading]="loadingSubject"
+            [textField]="'tenMon'" id="dropMonHoc"
+            [valueField]="'id'" [defaultItem]="defaultSubject">
+          </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="col-sm-12 tenphanmon">
+        <div class="col-sm-4">
+          <label class="label-custom mt-3 ml-6" for="inputTenphanmon">Tên phân môn<span>*</span></label>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="inputTenphanmon">
+        </div>
+      </div>
+        <div class="col-sm-8 note ml">
+          <p>Có thể thêm nhiều phân môn cách nhau bởi dấu phẩy. Ví dụ: Đại số, Hình học</p>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="">
+      <label>Khối áp dụng<span>*</span></label>
+      <div class="row">
+        <div class="col-3 mb-2" *ngFor="let item of listCheckBox">
+          <input type="checkbox" class="mb-1" kendoCheckBox [(ngModel)]="item.id"/>
+          <kendo-label class="ml-3">{{item.tenDanhMuc}}</kendo-label>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="custom-loading-h">
+  <div *ngIf="loadingCheckBoxGrade" class="k-i-loading"></div>
+</div>
+
+
+<hr>
+
+<div class="col-sm-12 pb-3 buttonGroup">
+  <div class="col-sm-6 text-center">
+    <button type="button" class="btn button">Lưu</button>
+  </div>
+  <div class="col-sm-6 text-center">
+    <button type="button" class="btn button" (click)="closeModal()">Đóng</button>
+  </div>
+</div>

@@ -1,0 +1,171 @@
+<kt-portlet>
+
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'" (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body *ngIf="!isCollapsed">
+
+    <form  [formGroup]="formDataSearch">
+      <div class="row">
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4 text-center">
+              <label class="col-form-label w-100" for="semester">Học kỳ</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist #semester class="dropdown-css" id="semester" formControlName="semester"
+                                  [defaultItem]="defaultItem"
+                                  [valuePrimitive]="true"
+                                  [data]="listSemester"
+                                  (valueChange)="changeValueSemester()"
+                                  [textField]="'name'"
+                                  [valueField]="'id'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4 text-center">
+              <label class="col-form-label w-100" for="grade-level">Khối</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist class="dropdown-css" id="grade-level" #gradeLevel
+                                  [defaultItem]="defaultCategory" formControlName="gradeLevel"
+                                  [data]="grade$ | async"
+                                  [loading]="!(gradeLoaded$ | async)"
+                                  (valueChange)="changeValueGrade()"
+                                  [valuePrimitive]="true"
+                                  [textField]="'cateName'"
+                                  [valueField]="'cateCode'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4 text-center">
+              <label class="col-form-label w-100" for="class">Lớp</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist class="dropdown-css" id="class" #class
+                                  [defaultItem]="defaultClassroom" formControlName="class"
+                                  [valuePrimitive]="true"
+                                  [data]="listClassroom"
+                                  [textField]="'className'"
+                                  [valueField]="'id'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4 text-center">
+              <label class="col-form-label w-100" for="schoolFaculty">Tổ bộ môn</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist class="dropdown-css" id="schoolFaculty" #schoolFaculty
+                                  [valuePrimitive]="true"
+                                  formControlName="schoolFaculty"
+                                  [defaultItem]="defaultSchoolFaculty"
+                                  [data]="schoolFaculty$ | async"
+                                  [loading]="!(schoolFacultyLoaded$ | async)"
+                                  textField="facultyName"
+                                  valueField="id"
+                                  (valueChange)="changeValueSchoolFaculty()">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row">
+            <div class="col-sm-4 text-center">
+              <label class="col-form-label w-100" for="teacher">Giáo viên</label>
+            </div>
+            <div class="col-sm-8 w-100">
+              <kendo-dropdownlist class="dropdown-css" id="teacher" #teacher
+                                  [defaultItem]="defaultTeacher"
+                                  [loading]="loadingDropdownTeacher"
+                                  [data]="listEmployee"
+                                  [valuePrimitive]="true"
+                                  formControlName="teacher"
+                                  [textField]="'fullName'"
+                                  [valueField]="'id'">
+                <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 mb-15-h">
+          <div class="f-group row text-center mt-10">
+
+            <div class="col-sm-4">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="active" id="all" [checked]="true" [value]='' formControlName="active">
+                <label class="form-check-label" for="all">Tất cả</label>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="active" id="unassigned" [value]='0' formControlName="active">
+                <label class="form-check-label" for="unassigned">Chưa phân công</label>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="active" id="assigned" [value]='1' formControlName="active">
+                <label class="form-check-label" for="assigned">Đã phân công</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-sm-12 text-center mt-5">
+          <button type="submit" class="btn  btn-primary" (click)="submitSearchData()">
+            <i class="fas fa-filter"></i>Tìm kiếm</button>
+        </div>
+      </div>
+    </form>
+
+  </kt-portlet-body>
+
+</kt-portlet>
+
+<kt-portlet>
+  <div class="all-tab-custom-h">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <li [ngbNavItem]="'1'">
+        <a ngbNavLink class="text-uppercase nav-tab-custom" >Học kỳ 1</a>
+        <ng-template ngbNavContent>
+          <kt-assignment-list [dataSearchAssignment]="dataOutput" [semesterActive]="active"></kt-assignment-list>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="'2'">
+        <a ngbNavLink class="text-uppercase nav-tab-custom">Học kỳ 2</a>
+        <ng-template ngbNavContent>
+          <kt-assignment-list [dataSearchAssignment]="dataOutput" [semesterActive]="active"></kt-assignment-list>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav"></div>
+
+  </div>
+</kt-portlet>

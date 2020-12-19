@@ -1,0 +1,77 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <div class="text-header">
+      <label><i class="flaticon-search text-dark icon-header"></i> Thông tin tìm kiếm</label>
+    </div>
+    <div class="btn-header">
+      <button kendoButton *ngIf="openModalSearchBody" (click)="openModalSearchBody = !openModalSearchBody"><i class="fas fa-angle-double-down text-dark mt-2"></i></button>
+      <button kendoButton *ngIf="!openModalSearchBody" (click)="openModalSearchBody = !openModalSearchBody"><i class="fas fa-angle-double-up text-dark mt-2"></i></button>
+    </div>
+  </div>
+
+  <!-- Start Modal Search -->
+  <div class="row" *ngIf="openModalSearchBody">
+    <div class="col-sm-12 pb-3 dropdownSearch">
+      <div class="row">
+        <div class="col-sm-2">
+          <label class="label-custom">Loại báo cáo</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [data]="defaultReportType"
+            [textField]="'nameReportType'"
+            [valueField]="'id'" [defaultItem]="defaultReportType[0]">
+          </kendo-dropdownlist>
+        </div>
+<!--        -->
+        <div class="col-sm-2">
+          <label class="label-custom">Từ tuần</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [textField]="'value'"
+            [valueField]="'id'">
+          </kendo-dropdownlist>
+        </div>
+<!--        -->
+        <div class="col-sm-2">
+          <label class="label-custom">Đến tuần</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [textField]="'value'"
+            [valueField]="'id'">
+          </kendo-dropdownlist>
+        </div>
+<!--        -->
+        <div class="col-sm-2">
+          <label class="label-custom">Giáo viên</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [textField]="'value'"
+            [valueField]="'id'">
+          </kendo-dropdownlist>
+          <p>[Nhập họ tên hoặc Mã GV để tìm kiếm]</p>
+        </div>
+<!--        -->
+        <div class="col-sm-2">
+          <label class="label-custom">Trạng thái</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [data]="defaultStatus"
+            [textField]="'valueStatus'"
+            [valueField]="'id'" [defaultItem]="defaultStatus[0]">
+          </kendo-dropdownlist>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 pb-3 buttonSearch">
+      <div class="col-sm-12 text-center">
+        <button kendoButton><i class="flaticon-search"></i>Tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+  <!--End Modal Search-->
+</div>

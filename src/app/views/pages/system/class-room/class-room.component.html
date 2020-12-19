@@ -1,0 +1,184 @@
+<kt-portlet>
+  <kt-portlet>
+  <!--tìm kiếm-->
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg'"
+    (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body [ngbCollapse]="!isCollapsed">
+    <form [formGroup]="form">
+      <div class="bg-white">
+        <div class="search-box-header">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 mb-15-h">
+              <div class="search-box-header-flex-h">
+                <label class="m-auto">Khối:</label>
+                <div class="search-box-header-flex-h-kendo">
+                  <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center" textField="cateName"
+                    #selectKhoi [data]="grade$ | async" valueField="cateCode" [loading]="kLoading$ | async"
+                    [defaultItem]="defaultKhoi" [valuePrimitive]="true" (valueChange)="checkClass()"
+                    formControlName="khoi">
+                    <ng-template kendoDropDownListNoDataTemplate>
+                      <p>{{VI_LANG.NOTIFICATION.NO_DATA}}</p>
+                    </ng-template>
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 mb-15-h">
+              <div class="search-box-header-flex-h">
+                <label class="m-auto">Lớp:</label>
+                <div class="search-box-header-flex-h-kendo">
+                  <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center" #classReset
+                    [data]="listClassRoom | async" id="tenLopID" [loading]="lLoading$ | async" [defaultItem]="classRoom"
+                    [valuePrimitive]="true" textField="className" valueField="id" [disabled]="disableClass"
+                    formControlName="idlop" (selectionChange)="selectionLop($event)">
+                    <ng-template kendoDropDownListNoDataTemplate>
+                      <p>{{VI_LANG.NOTIFICATION.NO_DATA}}</p>
+                    </ng-template>
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-3 mb-15-h">
+              <div class="search-box-header-flex-h">
+                <label class="col-form-label-gv-2 mb-t-10">Giáo viên chủ nhiệm:</label>
+                <div class="search-box-header-flex-h-kendo2">
+                  <kendo-formfield class="p-0 w-100">
+                    <input type="text" class="form-control" (blur)="formatGV()"
+                      placeholder="Nhập tên giáo viên chủ nhiệm" formControlName="ten">
+                    <kendo-formerror *ngIf="form.controls.ten.errors?.maxlength">
+                      {{VI_LANG.FIELD.TEACHER_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_100}}
+                    </kendo-formerror>
+                  </kendo-formfield>
+                </div>
+              </div>
+
+
+
+              <!-- <div class="row">
+                <label class="col-lg-5 col-md-12 col-form-label m-auto"></label>
+                <div class="col-lg-7 col-md-12 m-auto">
+                  <kendo-formfield class="p-0 w-100">
+                    <input type="text" class="form-control" (blur)="formatGV()"
+                      placeholder="Nhập tên giáo viên chủ nhiệm" formControlName="ten">
+                    <kendo-formerror *ngIf="form.controls.ten.errors?.maxlength">Không quá 100 kí tự</kendo-formerror>
+                  </kendo-formfield>
+                </div>
+              </div> -->
+            </div>
+            <div class="col-lg-2 col-md-3">
+              <button type="submit" class="btn btn-primary" (click)="submit1()">
+                <i class="fas fa-filter"></i> {{VI_LANG.BUTTON.SEARCH}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </kt-portlet-body>
+  <!--tìm kiếm end-->
+</kt-portlet>
+
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách lớp học'" [class]="'card-head-lg'">
+    <ng-container ktPortletTools>
+      <button type="button" class="mr-2 btn btn-success btn-sm" placement="bottom"
+        ngbTooltip="Thêm nhiều lớp bằng excel" [disabled]="checkDisableYear">
+        <i class="fas fa-file-excel"></i>
+      </button>
+      <button type="button" class="mr-2 btn btn-primary btn-sm" placement="bottom" ngbTooltip="Thêm lớp"
+        *ktPermission="classRoomCreate" [disabled]="checkDisableYear" (click)="opend()">
+        <i class="fas fa-plus"></i>
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" placement="bottom" ngbTooltip="Xóa lớp"
+        *ktPermission="classRoomDelete" [disabled]="checkDeleteAll" (click)="openModalDelete(mymodal)">
+        <i class="far fa-trash-alt"></i>
+      </button>
+
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div>
+      <kendo-grid *ngIf="isLoading$ | async" [data]="gridView" kendoGridSelectBy="id" scrollable="scrollable"
+        [pageSize]="_pageSize" [pageable]="true" [reorderable]="false" [resizable]="false"
+        [selectable]="selectTableSetting" [selectedKeys]="listIdsDel" (selectedKeysChange)="onChange($event)"
+        (pageChange)="pageChange($event)" [skip]="skip" [style]="{'border-radius': '25px'}">
+        <!--      *ngIf="isLoading$ | async"-->
+        <kendo-grid-checkbox-column [columnMenu]="false" headerClass="text-center" [resizable]="false" [width]="45" showSelectAll="true"
+          class="text-center">
+          <ng-template let-dataItem="dataItem">
+            <input type="checkbox" kendoCheckBox>
+          </ng-template>
+        </kendo-grid-checkbox-column>
+
+        <kendo-grid-column field="id" title="TT" headerClass="text-center font-weight-bold" class="text-center" [width]="50" [resizable]="false" editable="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="className" [width]="200" headerClass="text-center font-weight-bold" editor="text" title="Tên lớp"></kendo-grid-column>
+        <kendo-grid-column field="teacherName" [width]="200" headerClass="text-center font-weight-bold" editor="text" class="text-center" title="Giáo viên chủ nhiệm">
+        </kendo-grid-column>
+        <kendo-grid-column field="description" [width]="200" headerClass="text-center font-weight-bold" editor="text" title="Ghi chú"></kendo-grid-column>
+        <kendo-grid-command-column title="Thao tác" headerClass="text-center font-weight-bold" [width]="70">
+          <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
+            <div class="d-flex justify-content-around align-items-center">
+              <button class="btn btn-primary btn-sm mr-2" placement="left" ngbTooltip="Sửa lớp"
+                [disabled]="checkDisableYear" (click)="openModalEdit(dataItem)" kendoButton
+                *ktPermission="classRoomEdit" [iconClass]="'fas fa-pencil-alt'" disableDelete></button>
+            </div>
+          </ng-template>
+        </kendo-grid-command-column>
+        <ng-template kendoGridNoRecordsTemplate>
+          {{VI_LANG.NOTIFICATION.NO_DATA}}
+        </ng-template>
+        <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+          let-skip="skip" let-pageSize="pageSize">
+          <div class="d-lg-flex d-md-block justify-content-between w-100">
+            <div class="p-1 d-flex d-sm-flex justify-content-between">
+              <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [defaultItem]="5" [(ngModel)]="_pageSize"
+                (ngModelChange)="pageSizeChange()">
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex justify-content-center custom-mt-15">
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+  <div class="custom-loading-h">
+    <div *ngIf="loading" class="k-i-loading"></div>
+  </div>
+</kt-portlet>
+
+
+<ng-template #mymodal let-c="close" let-d="dismiss">
+  <div class="modal-header" style="padding: 10px !important;">
+    <h4 class="modal-title" id="modal-basic-title">Xóa lớp học</h4>
+    <button kendoButton type="button" (click)="d('Save click')" [iconClass]="'fas fa-times'">
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 0 !important;">
+    <kt-delete-class-room></kt-delete-class-room>
+  </div>
+  <div class="modal-footer" style="padding: 10px !important;">
+    <form action="">
+      <button type="button" class="btn btn-secondary mr-3" (click)="d('Save click')">{{VI_LANG.BUTTON.CANCEL}}</button>
+      <button type="button" class="btn  btn-primary " #buttonDelete [disabled]="disableDelete"
+        (click)="deleteClassRoom('yes')" id="focusDelete">{{VI_LANG.BUTTON.OK}}</button>
+    </form>
+  </div>
+
+  <div class="custom-loading-h">
+    <div *ngIf="loadingdelete | async" class="k-i-loading"></div>
+  </div>
+</ng-template>

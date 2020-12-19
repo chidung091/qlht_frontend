@@ -1,0 +1,17 @@
+<div class="row other-information">
+  <div class="col-md-6 mb-2" *ngFor="let item of listSchoolBinding; let i = index">
+    <input type="checkbox" id="{{i}}" class="mb-1" kendoCheckBox [(ngModel)]="item.status"  (change)="change(item)"/>
+    <label for="{{i}}" class="ml-3">{{item.cateName}}</label>
+  </div>
+    <div class="col-md-6 mb-2" *ngFor="let item of listDropdowns; let i = index">
+      <kendo-dropdownlist
+        [data]="item.listCategory"
+        [disabled]="disableDropdown[i]"
+        textField="cateName"
+        valueField="cateCode"
+        [defaultItem]="defaultDropdown"
+        [(ngModel)]="listSelectDropdown[i]"
+        (selectionChange)="changeDropDown($event, item.categoryPropertyTenantKey.cateCode)"
+        ></kendo-dropdownlist>
+    </div>
+</div>

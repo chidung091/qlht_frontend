@@ -1,0 +1,137 @@
+<div class="row" style="padding-left: 12.5px">
+  <button #anchor (click)="onToggle()" class="btn btn-primary grade mb-3"><i class="fas fa-list"></i>{{ selectedKeys }}</button>
+  <kendo-buttongroup [selection]="'single'">
+    <button class="btn btn-primary" kendoButton >Học kì I</button>
+    <button class="btn btn-primary" kendoButton >Học kì II</button>
+  </kendo-buttongroup>
+</div>
+
+<kendo-popup #popup [anchor]="anchor" (anchorViewportLeave)="show = false"   *ngIf="show">
+  <kendo-treeview
+    [nodes]="data"
+    textField="text"
+    kendoTreeViewExpandable
+    kendoTreeViewSelectable
+    kendoTreeViewHierarchyBinding
+    childrenField="items"
+    [selectBy]="'text'"
+    [(selectedKeys)]="selectedKeys"
+    [hasChildren]="hasChildren"
+    [children]="fetchChildren"
+    [expandBy]="'text'"
+    [(expandedKeys)]="expandedKeys"
+    (selectionChange)="handleSelection($event)"
+  >
+  </kendo-treeview>
+</kendo-popup>
+<kt-portlet>
+  <!-- Search -->
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-up"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-down"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body *ngIf="!isCollapsed">
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-md-4 mb-15-h">
+          <div class="f-group">
+            <label class="col-form-label p-0">Khối</label>
+            <div class="kendo-form">
+            <kendo-dropdownlist formControlName="lop" class="dropdown-css"
+                                style="width: 100%"
+                                [data]="listKhoi"
+                                [valuePrimitive]="true"
+                                [defaultItem]="defaultItem"
+                                [textField]="'cateName'"
+                                [valueField]="'cateCode'">
+              <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+            </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-15-h ">
+          <div class="f-group">
+            <label class="col-form-label pt-0">Lớp</label>
+            <div class="kendo-form">
+            <kendo-dropdownlist formControlName="khoi" class="dropdown-css"
+                                [data]="listClass"
+                                style="width: 100%" [valuePrimitive]="true"
+                                [defaultItem]="defaultItem"
+                                [textField]="'cateName'"
+                                [valueField]="'cateCode'">
+              <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+            </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 text-center mb-15-h mt-4">
+          <button type="button" class="btn btn-custom-h-cl btn-primary" (click)="search()">
+            <i class="fas fa-filter"></i> Tìm kiếm
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </kt-portlet-body>
+</kt-portlet>
+<!--End Search -->
+<kt-portlet>
+
+  <kt-portlet-header [icon]="'fas fa-th-list'" [title]="'Danh sách '" [class]="'card-head-lg'">
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <kendo-grid
+      [data]="gridView"
+      [style]="{'border-radius': '25px'}"
+      [pageSize]="_pageSize" [pageable]="true" scrollable="scrollable"
+      [sortable]="true" [reorderable]="true"
+      [resizable]="false"
+      [height]="500">
+      <kendo-grid-column title="TT" headerClass="text-center font-weight-bold" class="text-center" [width]="40" [resizable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column editor="text" title="Lớp " [width]="200" field="fullName"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+      </kendo-grid-column>
+      <kendo-grid-column [width]="150" editor="text" title="Tên môn học" field="studentCode"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+      </kendo-grid-column>
+      <kendo-grid-column [width]="100" editor="text" title="Kí hiệu" field="gender"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+      </kendo-grid-column>
+      <kendo-grid-column [width]="200" editor="text" title="Số học sinh đang kí" field="receptionFrom"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+      </kendo-grid-column>
+      <kendo-grid-column [width]="140" editor="text" title="Đăng kí" field="receptionTo"
+                         [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" >
+      </kendo-grid-column>
+      <ng-template kendoPagerTemplate let-currentPage="currentPage" let-total="total" let-skip="skip"
+                   let-pageSize="pageSize">
+        <div class="d-lg-flex d-md-block justify-content-between w-100">
+          <div class="p-1 d-flex d-sm-flex justify-content-between">
+            <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [defaultItem]="5" [(ngModel)]="_pageSize"
+                                (ngModelChange)="pageSizeChange()">
+            </kendo-dropdownlist>
+            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+          </div>
+          <div class="d-flex justify-content-center custom-mt-15">
+            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+            <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template kendoGridNoRecordsTemplate>
+        {{VI_LANG.NOTIFICATION.NO_DATA}}
+      </ng-template>
+    </kendo-grid>
+
+  </kt-portlet-body>
+
+</kt-portlet>

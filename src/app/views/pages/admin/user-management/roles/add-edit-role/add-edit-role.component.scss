@@ -1,0 +1,35 @@
+.col-form-select{
+    margin-top: 4px;
+  }
+  .text-error{
+      font-size: 12px;
+      color: red;
+      margin-top: 4px;
+  }
+  .modal-header{
+    position: relative;
+    .bt-close{
+      position: absolute;
+      top: 15px;
+      right: 10px;
+      background: none;
+      border: none;
+      i{
+        font-size: 23px;
+      }
+    }
+  }
+.modal-footer {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: center;
+}
+.spinner-black:disabled,
+.spinner-black[disabled]{
+  color: #ffffff;
+  background-color: #181C32;
+  border-color: #181C32;
+}
+.color-red{
+  color: red;
+}

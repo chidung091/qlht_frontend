@@ -1,0 +1,127 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Phân quyền
+    </h4>
+    <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label class="col-form-label" for="">Hệ thống</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="kendo-form">
+                            <kendo-dropdownlist #hethong [valueField]="'value'" [defaultItem]="fakeHeThong"
+                                style="width: 100%" [textField]="'text'" [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label class="col-form-label" for="">Tên vai trò</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control"  value="{{roleRemark}}" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label class="col-form-label" for="">Cấp học</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="kendo-form">
+                            <kendo-dropdownlist [valueField]="'value'" [defaultItem]="fakeCapHoc"
+                                style="width: 100%" [textField]="'text'" [valuePrimitive]="true">
+                            </kendo-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" >
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label class="col-form-label" for="">Vai trò gốc</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" disabled [value]="roleNameParent">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="custom-checkbox custom-control mb-2 ml-4">
+                <input type="checkbox" id="select-all-in-all-tabs" name="select-all-in-all-tabs"
+                    class="custom-control-input" [(ngModel)]="selectAllTab" (click)="onClickSelectAll()" />
+                <label class="custom-control-label" for="select-all-in-all-tabs">Cấp/hủy toàn bộ quyền </label>
+            </div>
+        </div>
+
+        <div class="all-role-header" *ngIf="selectedGroup">
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="font-weight-bold" style="font-size: 16px">Nhóm chức năng</p>
+                </div>
+                <div class="col-md-8">
+                    <div class="role-header-flex">
+                        <p class="font-weight-bold " style="font-size: 16px;">Chức năng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="all-role" *ngIf="selectedGroup">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="sidebar-left-all">
+                        <ul class="sidebar-left" *ngFor="let data of selectedGroup, let i = index">
+                            <li (click)="showContentRole(data.name, i)" [ngClass]="{'active': active === i}">
+                                {{data.displayName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="content-role">
+                        <div class="custom-checkbox custom-control">
+                            <input type="checkbox" id="select-all-in-this-tabs" name="select-all-in-this-tabs"
+                                class="custom-control-input" [(ngModel)]="selectThisTab"
+                                (click)="onClickSelectThisTab()" />
+                            <label class="custom-control-label" for="select-all-in-this-tabs">Chọn/bỏ tất cả</label>
+                        </div>
+                        <div class="input-rold" *ngFor="let permission of DsPermissions;  trackBy: trackByFn">
+                            <div class="input-rold-child">
+                                <input #permissionCheckbox type="checkbox" [attr.id]="permission.name"
+                                    class="custom-control-input" [value]="getChecked(permission.name)"
+                                    [checked]="getChecked(permission.name)">
+                                <label [ngClass]="{'m_left20' :
+                          permission.parentName != null}" [attr.for]="permission.name" class="custom-control-label"
+                                    (click)="onClickCheckbox(permission, permissionCheckbox.value)">
+                                    {{ permission.displayName }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Đóng</button>
+        <button type="submit" class="btn  btn-primary" (click)="save()">Lưu</button>
+    </div>
+    <div class="custom-loading-h">
+        <div *ngIf="isloading" class="k-i-loading"></div>
+    </div>
+</div>

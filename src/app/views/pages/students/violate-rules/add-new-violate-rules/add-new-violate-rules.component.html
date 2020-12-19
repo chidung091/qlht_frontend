@@ -1,0 +1,140 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Thêm mới vi phạm'"
+                     [class]="'card-head-lg bgr-custom'">
+<!--    <ng-container ktPortletTools>-->
+<!--      <button kendoButton [iconClass]="'fas fa-save'"-->
+<!--              type="button"-->
+<!--              class="btn btn-primary btn-sm mr-2 btn-custom"-->
+<!--              placement="bottom">-->
+<!--      </button>-->
+<!--      <button kendoButton [iconClass]="'fas fa-arrow-left'"-->
+<!--              type="button"-->
+<!--              class="btn btn-danger btn-sm btn-custom">-->
+<!--      </button>-->
+<!--    </ng-container>-->
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="row">
+      <div class="col-xl-5">
+        <div class="row">
+          <div class="col-xl-5 col-md-6 col-sm-12 d-flex flex-row align-items-center">
+            <p class="col-md-3 col-sm-3 col-3 px-0 mb-0">Khối</p>
+            <div class="col-md-9 col-sm-9 col-9 px-0">
+              <kendo-dropdownlist [data]="_data" [defaultItem]="_valueDefault">
+              </kendo-dropdownlist>
+            </div>
+          </div>
+          <div class="col-xl-7 col-md-6 col-sm-12 class-name d-flex flex-row align-items-center">
+            <p class="col-md-3 col-sm-3 col-3 px-0 mb-0">Lớp học:</p>
+            <div class="col-md-9 col-sm-9 col-9 px-0">
+              <kendo-dropdownlist [data]="_data" [defaultItem]="_valueDefault">
+              </kendo-dropdownlist>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5 d-flex align-items-center">
+          <p class="col-md-2 col-3 mb-0 pr-0 label-txt">Mã/Tên sinh viên</p>
+          <div class="col-md-10 col-9 pl-0 field-edit">
+            <input type="text" class="form-control" name="" placeholder="">
+          </div>
+        </div>
+
+        <kendo-grid class="mt-5 ">
+          <kendo-grid-column field="id" title="TT"
+                             [width]="40"
+                             [resizable]="false"
+                             [columnMenu]="false"
+                             editable="false"
+                             class="text-center"
+                             headerClass="text-center font-weight-bold">
+          </kendo-grid-column>
+          <kendo-grid-column field="id" title="Ảnh"
+                             [width]="100"
+                             [resizable]="false"
+                             [columnMenu]="false"
+                             editable="false"
+                             class="text-center"
+                             headerClass="text-center font-weight-bold">
+          </kendo-grid-column>
+          <kendo-grid-column field="id" title="Họ và tên"
+                             [width]="150"
+                             [resizable]="false"
+                             [columnMenu]="false"
+                             editable="false"
+                             class="text-center"
+                             headerClass="text-center font-weight-bold">
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+      <div class="col-xl-7 content-violation">
+        <div class="row">
+          <div class="col-md-10 col-sm-8 col-10 d-flex align-items-center justify-content-end">
+            <p class="mb-0 px-2">Ngày vi phạm:</p>
+            <kendo-datepicker></kendo-datepicker>
+            <div class="btn-nav ml-5">
+              <button kendoButton [iconClass]="'fas fa-angle-double-left'" class="rounded-pill mr-1"></button>
+              <button kendoButton [iconClass]="'fas fa-angle-double-right'" class="rounded-pill ml-1"></button>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4 col-2 d-flex justify-content-end">
+            <div class="btn-save d-flex flex-row justify-content-end">
+              <button kendoButton [iconClass]="'fas fa-save'" class="btn-success mr-1" ngbTooltip="Lưu"></button>
+              <button kendoButton [iconClass]="'fas fa-arrow-left'" class="ml-1 text-white" routerLink="/students/violate-rules"></button>
+            </div>
+          </div>
+        </div>
+        <ng-container>
+          <kendo-grid class="mt-5 table-violation">
+            <kendo-grid-checkbox-column [width]="40"
+                                        [resizable]="false"
+                                        [columnMenu]="false"
+                                        showSelectAll="true"
+                                        class="text-center"
+                                        headerClass="text-center">
+            </kendo-grid-checkbox-column>
+            <kendo-grid-column field="id" title="Lỗi vi phạm"
+                               [width]="120"
+                               [resizable]="false"
+                               [columnMenu]="false"
+                               editable="false"
+                               class="text-center"
+                               headerClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="id" title="Số lần vi phạm"
+                               [width]="100"
+                               [resizable]="false"
+                               [columnMenu]="false"
+                               editable="false"
+                               class="text-center"
+                               headerClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="id" title="Điểm trừ"
+                               [width]="100"
+                               [resizable]="false"
+                               [columnMenu]="false"
+                               editable="false"
+                               class="text-center"
+                               headerClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="id" title="Tổng số điểm trừ"
+                               [width]="100"
+                               [resizable]="false"
+                               [columnMenu]="false"
+                               editable="false"
+                               class="text-center"
+                               headerClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="id" title="Ghi chú"
+                               [width]="100"
+                               [resizable]="false"
+                               [columnMenu]="false"
+                               editable="false"
+                               class="text-center"
+                               headerClass="text-center font-weight-bold">
+            </kendo-grid-column>
+          </kendo-grid>
+        </ng-container>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

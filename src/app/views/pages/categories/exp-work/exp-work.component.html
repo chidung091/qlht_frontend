@@ -1,0 +1,105 @@
+<kt-search [component]="'exp-work'" (submitSearch)="search($event)" ></kt-search>
+<kt-action-exp-work [action]="actionDialog" [data]="data" (close)="setAction('')"></kt-action-exp-work>
+
+<!--phần chính-->
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách công việc kiêm nhiệm'" [class]="'card-head-lg bgr-custom'">
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="card-body">
+      <kendo-grid
+        [kendoGridBinding]="gridView"
+        [selectedKeys]="mySelection"
+        kendoGridSelectBy="id"
+        [pageSize]="_pageSize"
+        [pageable]="true"
+        scrollable="scrollable"
+        [sortable]="true"
+        [reorderable]="true"
+        [resizable]="true"
+        [height]="600"
+        [columnMenu]="{ filter: true }"
+        (selectedKeysChange)="onChange($event)"
+        [selectable]="selectTableSetting"
+        [style]="{'border-radius': '25px'}"
+        [style.maxHeight.px]="600">
+
+        <kendo-grid-checkbox-column
+          [width]="45"
+          [resizable]="false"
+          [columnMenu]="false"
+          showSelectAll="true"
+        ></kendo-grid-checkbox-column>
+
+        <kendo-grid-column field="id" title="STT"
+                           [width]="70"
+                           [resizable]="false"
+                           [columnMenu]="false"
+                           editable = "false"
+                           class="text-center"
+                           headerClass="text-center"
+        ></kendo-grid-column>
+
+        <kendo-grid-column field="nameWork"
+                           headerClass="text-center"
+                           title="Tên công việc kiêm nhiệm" [width]="300">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="lessonWeek"
+                           title="Số tiết/tuần"
+                           class="text-center"
+                           headerClass="text-center"
+                           [width]="150"
+        ></kendo-grid-column>
+
+        <kendo-grid-column field="descWork"
+                           class="text-center"
+                           headerClass="text-center"
+                           [width]="240" title="Mô tả"
+        ></kendo-grid-column>
+        <kendo-grid-command-column title="Sửa"
+                                   [width]="80"
+                                   [resizable]="false"
+                                   sortable="false"
+                                   [columnMenu]="false"
+                                   class="text-center"
+                                   headerClass="text-center"
+        >
+
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem"  >
+            <div class="btn btn-warning" (click)="editAction(dataItem)">Edit</div>
+          </ng-template>
+        </kendo-grid-command-column>
+
+        <!--      <ng-template kendoPagerTemplate-->
+        <!--                   let-totalPages="totalPages"-->
+        <!--                   let-currentPage="currentPage"-->
+        <!--                   let-total="total"-->
+        <!--                   let-skip="skip"-->
+        <!--                   let-pageSize="pageSize">-->
+        <!--        <div class="d-flex justify-content-between w-100">-->
+        <!--          <div class="p-1 d-flex">-->
+        <!--            <kendo-dropdownlist style="width: 60px;"-->
+        <!--                                [data]="pageSizes"-->
+        <!--                                [defaultItem]="5"-->
+        <!--                                [(ngModel)]="_pageSize"-->
+
+        <!--            >-->
+        <!--            </kendo-dropdownlist>-->
+        <!--            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}} - {{pageSize*currentPage >= total ? total : pageSize*currentPage}}</p>-->
+        <!--          </div>-->
+        <!--          <div class="d-flex">-->
+        <!--            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>-->
+        <!--            <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>-->
+        <!--            <kendo-pager-next-buttons></kendo-pager-next-buttons>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--      </ng-template>-->
+
+      </kendo-grid>
+
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+<!--phần chính end-->
+

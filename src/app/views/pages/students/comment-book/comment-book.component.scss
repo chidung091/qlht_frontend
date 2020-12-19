@@ -1,0 +1,93 @@
+
+.backbtn{
+    border-radius: 5px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;  
+    font-size: 15px; 
+    background-color:darkcyan; 
+    float: left;
+    width: 60px !important;
+    left: 15px;
+    
+}
+.nextbtn{
+    border-radius: 5px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;  
+    font-size: 15px; 
+    background-color:darkcyan; 
+    float: right;
+    width: 60px !important;
+    left: 15px;
+}
+.monhoc{
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px; 
+    // background-color:#9dc7ca; 
+    font-size: 16px;
+    font-weight: bold;
+    float: none;
+}
+.iphone{
+    display: none;
+}
+.br1{
+    display: none;
+}
+
+@media all and(max-width:768px){
+.iphone{
+    display: block;
+}
+.destop{
+    display: none;
+}
+.br1{
+    display: block;
+}
+ 
+
+    .backbtn{
+        border-radius: 5px;
+        height: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+        font-size: 15px;
+        background-color:darkcyan;
+        float: left;
+        right: 20px;
+        width: 150px !important;
+    }
+    .nextbtn{
+        border-radius: 5px;
+        height: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: 15px;
+        background-color:darkcyan;
+        float: left;
+        left: 40px;
+        width: 150px !important;
+
+    }
+    .monhoc{
+        height: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+        background-color:#9dc7ca;
+        font-size: 16px;
+        font-weight: bold;
+        float: left !important;
+        // left: 40px;
+
+    }
+    .listmonhoc1{
+        display: none;
+    }
+    .listmonhoc2{
+        display: inline;
+    }
+}

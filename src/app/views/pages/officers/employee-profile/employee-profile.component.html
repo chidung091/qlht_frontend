@@ -1,0 +1,19 @@
+<div class="all-tab-custom-h">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink class="text-uppercase nav-tab-custom" >Hồ sơ</a>
+      <ng-template ngbNavContent>
+        <kt-profile></kt-profile>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink class="text-uppercase nav-tab-custom">Tiếp nhận chuyển công tác</a>
+      <ng-template ngbNavContent>
+        <kt-receive-switch-work></kt-receive-switch-work>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav"></div>
+
+</div>

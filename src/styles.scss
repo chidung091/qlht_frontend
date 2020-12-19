@@ -1,0 +1,218 @@
+/* You can add global styles to this file, and also import other style files */
+// Global vendors
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~material-design-icons/iconfont/material-icons.css";
+@import "~highlight.js/styles/googlecode.css";
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+// Global fonts
+@import "~socicon/css/socicon.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "./assets/plugins/flaticon/flaticon.css";
+@import "./assets/plugins/flaticon2/flaticon.css";
+@import "./assets/plugins/keenthemes-icons/font/ki.css";
+
+// Metronic styles
+@import "./assets/sass/style.angular.scss";
+@import "./assets/sass/vendors/angular/material/angular-material";
+@import "./assets/sass/vendors/angular/material/include";
+
+// Default Layout themes
+@import "./assets/sass/themes/layout/header/base/light.scss";
+@import "./assets/sass/themes/layout/header/menu/light.scss";
+@import "./assets/sass/themes/layout/brand/dark.scss";
+@import "./assets/sass/themes/layout/aside/dark.scss";
+
+@import "~ngx-toastr/toastr.css";
+
+// Header themes
+// .header-base-light {
+//     @import "./assets/sass/themes/layout/header/base/light.scss";
+// }
+
+// .header-base-dark {
+//     @import "./assets/sass/themes/layout/header/base/dark.scss";
+// }
+
+// Header Menu themes
+// .header-menu-light {
+//     @import "./assets/sass/themes/layout/header/menu/light.scss";
+// }
+// .header-menu-dark {
+//     @import "./assets/sass/themes/layout/header/menu/dark.scss";
+// }
+
+// Brand themes
+.brand-dark {
+  @import "./assets/sass/themes/layout/brand/dark.scss";
+}
+
+.brand-light {
+  @import "./assets/sass/themes/layout/brand/light.scss";
+}
+
+// Aside themes
+// .aside-dark {
+//   @import "./assets/sass/themes/layout/aside/dark.scss";
+// }
+
+// .aside-light {
+//   @import "./assets/sass/themes/layout/aside/light.scss";
+// }
+
+//hide bootstrap dropdown arrow globally
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.mat-table-wrapper-dashboard .mat-table {
+  min-width: 600px !important;
+  width: 100% !important;
+}
+
+.position-static {
+  position: static;
+}
+
+.kendo-form .k-dropdown .k-dropdown-wrap,
+.k-dropdowntree .k-dropdown-wrap {
+  background: white;
+}
+
+.dropdown-fluid {
+  height: 100%;
+  .topbar-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+}
+
+//Loading
+.custom-loading-h .k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.192);
+  color: #419197;
+  z-index: 9999;
+}
+
+// This is "X" in Model
+.btn-close-h {
+  background: none;
+  border: none;
+  span {
+    font-size: 20px;
+  }
+}
+
+// Custom tabstrip-kendo in data-initialization
+.custom-tabstrip-h ul.k-reset.k-tabstrip-items {
+  justify-content: space-around !important;
+}
+
+.custom-tabstrip-h .k-tabstrip-items .k-item.k-state-active,
+.k-tabstrip-items .k-item.k-state-selected {
+  border: none !important;
+}
+
+.custom-tabstrip-h .k-item.k-state-active .text-tab-h,
+.custom-tabstrip-h .k-tabstrip-items .k-item.k-state-selected .text-tab-h {
+  color: #087d8c !important;
+  i {
+    color: #087d8c !important;
+  }
+  h3 {
+    color: #087d8c;
+  }
+}
+
+.k-dropdown {
+  height: 38px !important;
+}
+
+.k-input {
+  height: 100%;
+}
+
+.font-note {
+  color: red;
+  font-style: italic;
+}
+
+//all tab in officers
+.link-router-l {
+  margin-top: 20px;
+  margin-bottom: 0px;
+  a {
+    padding: 10px 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    border: 1px solid #eee;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    color: #7e8299;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    &:hover {
+      background: #087d8c;
+      color: white !important;
+    }
+  }
+  .active {
+    background: #087d8c;
+    color: white !important;
+  }
+}
+
+.all-tab-custom-h {
+  li {
+    margin-right: 0 !important;
+  }
+  .nav .nav-link {
+    border: 1px solid #eee;
+  }
+}
+
+.nav-tab-custom {
+  font-size: 12px;
+  color: black;
+  background-color: #fff;
+  font-weight: bold;
+  border: 1px solid #eee;
+}
+
+.all-tab-custom-h .nav .show > .nav-link,
+.all-tab-custom-h .nav .nav-link:hover:not(.disabled),
+.all-tab-custom-h .nav .nav-link.active {
+  background: #087d8c;
+  color: white !important;
+}
+
+.toboMonField span .k-input {
+  color: black;
+  font-weight: 400;
+}
+
+.k-filter-row {
+  display: none;
+}
+
+.k-checkbox:focus {
+  border-color: #087d8c !important;
+  box-shadow: 0 0 0 0.2rem rgba(8, 125, 140, 0.25) !important;
+}
+.k-checkbox:checked {
+  border-color: #087d8c !important;
+  color: #ffffff;
+  background-color: #087d8c !important;
+}

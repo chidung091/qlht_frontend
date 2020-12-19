@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h4 class="modal-title">Xóa danh hiệu thi đua tập thể</h4>
+    <button class="btn-close-h" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <div class="form-delete-h">
+        <img class="d-block m-auto" src="/assets/media/bg/normal_u546.svg">
+        <p class="text-center mt-5">Quý thầy, cô có đồng ý xóa hay không?</p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mr-3" (click)="close()">Hủy bỏ</button>
+        <button type="submit" #focus class="btn  btn-primary" (click)="onSubmit()" [disabled]="isDisabled"
+            [ngClass]="{ 'spinner spinner-right spinner-md spinner-black': loading}">Đồng ý</button>
+    </div>
+</div>

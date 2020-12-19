@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    Cập nhật khen thưởng học sinh
+<!--    {{title}}-->
+  </h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="action-container">
+    <form>
+      <div>
+        <div class="form-group">
+          <label class="col-form-label">Hình thức khen thưởng<span class="red">*</span> :</label>
+          <div class="">
+            <kendo-dropdownlist class="kendo-dropdown">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Nơi khen thưởng <span class="red">*</span> :</label>
+          <div class="">
+            <kendo-dropdownlist class="kendo-dropdown" >
+            </kendo-dropdownlist>
+            <div class="col-sm-2"></div>
+            <!--            <div class="col-sm-10"-->
+            <!--                 *ngIf="submitted &&  f.facultyName.errors || f.facultyName.errors && (f.facultyName.dirty || f.facultyName.touched)">-->
+            <!--              <div class="text-error">-->
+            <!--                <div *ngIf="f.facultyName.errors.required">-->
+            <!--                  Tổ bộ môn không được để trống!-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--            </div>-->
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Ngày khen thưởng<span class="red">*</span> :</label>
+          <div class="">
+            <kendo-datepicker class="kendo-date" [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                              [format]="'dd/MM/yyyy'" aria-label="Ngày quyết định">
+            </kendo-datepicker>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="">
+            <input type="checkbox"> Được lưu vào học bạ
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Nội dung khen thưởng</label>
+          <div class="">
+            <input type="text" class="form-control"
+                   name="description"/>
+          </div>
+          <div class="col-sm-2"></div>
+<!--          <div class="col-sm-10"-->
+<!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
+<!--            <div class="text-error">-->
+<!--              <div *ngIf="f.description.errors.maxlength">-->
+<!--                Ghi chú tối đa 500 ký tự!-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="cancel()">Đóng</button>
+    <button type="submit" class="btn  btn-primary" (click)="onSubmit()">Lưu</button>
+  </div>
+</div>

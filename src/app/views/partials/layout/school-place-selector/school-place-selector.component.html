@@ -1,0 +1,22 @@
+<div class="d-flex align-items-center all-box" *ngIf="tenant$|async as tenant">
+    <div ngbDropdown placement="bottom" autoClose="outside" class="dropdown dropdown-fluid">
+      <div *ngIf="isDisableDropdown" class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+        <div class="all-box-school"  href="javascript:;">
+          {{smasContextModel.place?.name}}
+        </div>
+      </div>
+      <div *ngIf="!isDisableDropdown" ngbDropdownToggle class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+          <div class="all-box-school"  href="javascript:;">
+            {{smasContextModel.place?.name}} <i  class="fas fa-caret-down"></i>
+          </div>
+      </div>
+
+      <div ngbDropdownMenu class=" p-0 m-0">
+          <div *ngFor="let item of places$ | async" (click)="selectPlace(item)" class="dropdown-school-h">
+              <a ngbDropdownToggle href="javascript:;" class="menu-link menu-toggle" [ngClass]=" item.primary ? 'a-active' : ''">
+                <span>{{item.name}}</span> <i *ngIf="item.primary" class="fas fa-lock ml-3 mb-1"></i>
+              </a>
+          </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <div class="text-header">
+      <label><i class="flaticon-search text-dark icon-header cursor-pointer"></i> Thông tin tìm kiếm</label>
+    </div>
+    <div class="btn-header">
+      <i class="fas fa-angle-double-down text-dark mt-2" *ngIf="openModalSearchBody" (click)="openModalSearchBody = !openModalSearchBody"></i>
+      <i class="fas fa-angle-double-up text-dark mt-2" *ngIf="!openModalSearchBody" (click)="openModalSearchBody = !openModalSearchBody"></i>
+    </div>
+  </div>
+
+<!-- Start Modal Search -->
+  <div class="row" *ngIf="openModalSearchBody">
+    <div class="col-sm-12 pb-3 dropdownSearch">
+      <div class="row">
+        <div class="col-sm-2">
+          <label class="label-custom">Khối</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [data]="listAllGradeLevel" [loading]="isLoadingDropdownGrade" [(ngModel)]="valueGradeSelected" (valueChange)="valueSearchGrade()"
+            [textField]="'tenDanhMuc'" [valueField]="'id'" [defaultItem]="defaultGradeLevel">
+          </kendo-dropdownlist>
+        </div>
+        <div class="col-sm-2">
+          <label class="label-custom">Môn</label>
+        </div>
+        <div class="col-sm-4 kendo-form">
+          <kendo-dropdownlist
+            [data]="listAllSubject" [loading]="isLoadingDropdownSubject" [(ngModel)]="valueSubjectSelected"
+            [textField]="'tenMon'" (valueChange)="valueSearchSubject()"
+            [valueField]="'id'" [defaultItem]="defaultSubject">
+          </kendo-dropdownlist>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 pb-3 buttonSearch">
+      <div class="col-sm-12 text-center">
+        <button class="btn button" (click)="submitSearch()"><i class="flaticon-search"></i>Tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+<!--End Modal Search-->
+</div>

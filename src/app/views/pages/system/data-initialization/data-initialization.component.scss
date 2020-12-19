@@ -1,0 +1,266 @@
+.kendo-tabstrip p {
+  margin: 0;
+  padding: 0px;
+}
+
+.panel-heading {
+  alignment: center;
+}
+
+.card-body {
+  width: 55rem;
+}
+
+.k-grid th {
+  text-align: center;
+}
+
+//.card-header {
+//  background-color: rgba(246, 246, 246, 1);
+//}
+
+.choose {
+  width: 106px;
+  height: 40px;
+  background: inherit;
+  background-color: rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(121, 121, 121, 1);
+  border-radius: 5px;
+  box-shadow: none;
+  text-align: center;
+  float: right;
+  padding-top: 8px;
+}
+
+.filename {
+  width: 360px;
+  height: 40px;
+  background: inherit;
+  background-color: rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(204, 204, 204, 1);
+  border-radius: 3.66665649414063px;
+  font-size: 14px;
+  padding: 3px 2px 3px 10px;
+}
+
+.button-home {
+  background: #67A7AC;
+  margin-top: 2rem;
+  width: 170px;
+  height: 42px;
+  color: white
+}
+
+.excel-template {
+  text-decoration:underline;
+  color: blue;
+  right: 5rem ;
+  margin-left: 200px;
+}
+//.card-header {
+//  padding: 2rem 2.25rem 0.75rem;
+//}
+.card-header-button {
+  background: #67A7AC;
+  width: 150px;
+  height: 42px;
+  margin-bottom: 0.5rem;
+  margin-top: -1rem;
+  color: white;
+}
+.button-input-yes {
+  width: 140px;
+  height: 40px;
+  background-color: rgba(65, 145, 151, 1);
+  border-radius: 5px;
+  border-color: white
+}
+.button-input-no {
+  width: 140px;
+  height: 40px;
+  border-radius: 5px;
+  border-color: black;
+}
+.button-next-step {
+  background: #67A7AC;
+  width: 150px;
+  height: 35px;
+  color: white;
+}
+
+.text-tab-h{
+  color: #000;
+  text-align: center;
+  .icon{
+    fill: #b5b5c3;
+  }
+  i{
+    font-size: 3.75rem;
+    display: block;
+    color: #b5b5c3;
+  }
+  h3{
+    font-size: 16px;
+    color: #b5b5c3
+  }
+}
+
+
+@media(max-width: 767px){
+  .text-tab-h h3{
+    display: none;
+  }
+}
+
+// @media screen and (max-width: 320px) {
+//   .card-body {
+//     width: 215px !important;
+//     overflow-x: auto;
+//   }
+//   .body-grid-scroll {
+//     width: 600px !important;
+//   }
+
+//   .content-step-three{
+//     font-size: xx-small !important;
+//     padding: 0 0 !important;
+//   }
+
+//   .button-home {
+//     width: 100px;
+//     font-size: smaller;
+//   }
+//   .excel-template {
+//     margin-left: 40px;
+//   }
+//   .filename {
+//     width: 150px !important;
+//   }
+
+// }
+
+// @media (min-width: 321px) and (max-width: 480px) {
+//   kendo-dialog .dialog-upload {
+//     width: 320px !important;
+//   }
+//   .button-next-step{
+//     width: auto;
+//   }
+//   .card-header-button {
+//     margin-top: 0 !important;
+//     margin-bottom: 0 !important;
+//     width: 100px !important;
+//     height: 30px !important;
+//   }
+//   //.card-header {
+//   //  font-size: initial;
+//   //  padding: 10px 0px 10px 0px;
+//   //}
+//   .card-body {
+//     width: 392px !important;
+//     overflow-x: auto;
+//   }
+
+//   .content-step-three{
+//     font-size: x-small !important;
+//     padding: 0 0 !important;
+//   }
+
+//   .body-grid-scroll {
+//     width: 600px !important;
+//   }
+//   .excel-template {
+//     margin-left: 40px;
+//   }
+//   .filename {
+//     width: 150px !important;
+//   }
+
+//   .card-header-button {
+//     margin-top: 0px !important;
+//     margin-bottom: 0px !important;
+//     width: 66px !important;
+//     height: 30px !important;
+//     font-size: xx-small;
+//   }
+// }
+
+// @media (min-width: 481px) and (max-width: 600px) {
+//   .card-body {
+//     width: 495px !important;
+//     overflow-x: auto;
+//   }
+//   .card-header-button {
+//     margin-top: 0 !important;
+//     margin-bottom: 0 !important;
+//     width: 100px !important;
+//     height: 30px !important;
+//   }
+//   .body-grid-scroll {
+//     width: 600px !important;
+//   }
+//   //.card-header {
+//   //  font-size: small !important;
+//   //  padding: 10px 0px 10px 0px;
+//   //}
+
+
+// }
+
+// @media (min-width: 601px) and (max-width: 768px) {
+//   .card-header-button {
+//     margin-top: 0 !important;
+//     margin-bottom: 0 !important;
+//     width: 100px !important;
+//     height: 30px !important;
+//   }
+//   .body-grid-scroll {
+//     width: 600px !important;
+//   }
+
+//   .card-body {
+//     overflow-x: auto;
+//   }
+//   //.card-header {
+//   //  padding: 10px 0px 10px 0px;
+//   //}
+
+// }
+
+// @media (min-width: 769px) and (max-width: 1024px) {
+//   .card-header-button {
+//     margin-top: 0px !important;
+//     margin-bottom: 0px !important;
+//     width: 141px;
+//   }
+//   .card-body {
+//     width: 631px !important;
+//     overflow-x: auto;
+
+//   }
+//   .body-grid-scroll {
+//     width: 600px !important;
+//   }
+//   .row {
+//     margin-top: -17px;
+//   }
+// }
+// @media (min-width: 1025px) and (max-width: 1280px){
+//   .card-header-button{
+//     width: 149px;
+//   }
+// }
+
+
+
+
+
+
+
+

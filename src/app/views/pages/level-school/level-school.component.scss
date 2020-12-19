@@ -1,0 +1,70 @@
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #087d8c;
+}
+.all-box {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    .logo-h{
+      margin-top: 50px !important;margin-bottom: 40px !important;
+      img{
+        height:36px;width: 122px 
+      }
+    }
+    .custom-h{
+      margin-top: 30px;
+      .custom-h-box{
+        margin: 0px 5px;
+        margin-bottom: 35px !important;
+        cursor: pointer;
+        .custom-h-school{
+          font-size: 1.285em;
+          background: #027185;
+          color:#fff;
+          min-height: 80px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+}
+
+.btn-back-to-login {
+  padding-bottom: 50px;
+  text-align: center;
+  a{
+    color: #027185;
+    text-decoration: underline;
+    font-size: 16px;
+  }
+  cursor: pointer;
+}
+
+@media(max-width: 1023px){
+  .custom-h{
+    flex-wrap: wrap;
+  }
+  .custom-h-box{
+    width: 23%;
+  }
+}
+@media(max-width: 767px){
+  .custom-h-box{
+    width: 47%;
+    margin-bottom: 20px;
+  }
+}
+@media(max-width: 374px){
+  .custom-h-box{
+    width: 46%;
+    margin-bottom: 20px;
+  }
+}

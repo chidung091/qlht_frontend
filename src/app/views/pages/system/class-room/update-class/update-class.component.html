@@ -1,0 +1,404 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{title}}
+  </h4>
+  <button (click)="close()" aria-label="Close" class="btn-close-h">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="action-container">
+    <form [formGroup]="formGroup">
+      <!--năm học  - khối-->
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 mt-1">
+            <label>Năm học:</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist [defaultItem]="namHoc$" [valuePrimitive]="true"
+                                class="w-100" formControlName="schoolYearId" textField="code" valueField="code">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-6 row ">
+          <div class="col-sm-4 mt-1 mb-t">
+            <label>Khối</label>
+            <label style="color: red">*</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeKhoi()" [data]="dataKhoi$ | async" [defaultItem]="default"
+                                [loading]="loadingGrade$ | async" [valuePrimitive]="true" class="w-100" formControlName="gradeLevelCode"
+                                textField="cateName" valueField="cateCode">
+            </kendo-dropdownlist>
+            <kendo-formerror *ngIf="checkKhoiHoc">{{VI_LANG.FIELD.GRADE}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+            </kendo-formerror>
+          </div>
+        </div>
+      </div>
+      <!--Tên lớp - giáo viên chủ nhiệm-->
+      <div class="row mb-t">
+        <div class="col-md-6 row ">
+          <div class="col-sm-4 mt-2">
+            <label>Tên lớp</label>
+            <label style="color: red">*</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-formfield class="mt-0 p-0 w-100">
+              <input #tenlopinput (blur)="formatTenLop()" (ngModelChange)="changeCheckAddClassRoom()"
+                     [(ngModel)]="formGroup.value.className" class="w-100 form-control h-35px" formControlName="className"
+                     kendoTextBox placeholder="Nhập tên lớp" style="border-radius: 4px !important;" type="text">
+              <kendo-formerror *ngIf="formGroup.controls.className.errors?.required">
+                {{VI_LANG.FIELD.CLASS_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+              </kendo-formerror>
+              <kendo-formerror *ngIf="formGroup.controls.className.errors?.maxlength">
+                {{VI_LANG.FIELD.CLASS_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+              </kendo-formerror>
+              <kendo-formerror *ngIf="formGroup.controls.className.hasError('pattern')">
+                {{VI_LANG.FIELD.CLASS_NAME}} {{VI_LANG.COMMON_ERROR.PATTERN_INVALID_CHAR}}
+              </kendo-formerror>
+            </kendo-formfield>
+            <p *ngIf="!dataEdit.id" style="margin: 0 !important;"><i style="font-size: 10px;color: #777373">Có thể thêm
+              nhiều lớp cách nhau bởi dấu
+              phẩy.</i></p>
+            <p *ngIf="!dataEdit.id" style="margin: 0 !important;"><i style="font-size: 10px;color: #777373">Ví dụ: 10A1,
+              10A2,10A3</i></p>
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 mt-2">
+            <label>Giáo viên chủ nhiệm:</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-formfield class="">
+              <kendo-autocomplete (blur)="checkValue()" (filterChange)="findGVBykey($event)" (keyup)="keyUp($event)"
+                                  [(ngModel)]="formGroup.value.teacherName" [data]="dataListManagerment" [filterable]="true"
+                                  [placeholder]="'Nhập tên giáo viên chủ nhiệm'" [valueField]="'fullName'" class="w-100 h-35px"
+                                  formControlName="teacherName" maxlength="100" style="padding: 0.2rem 0.5rem; border-radius: 4px"
+                                  textField="fullName">
+                <ng-template class="m-0" kendoAutoCompleteItemTemplate let-dataItem>
+                  <span (click)="chooseValue(dataItem)" class="w-100 p-5px">{{dataItem.fullName}}
+                    -{{dataItem.code}} </span>
+                </ng-template>
+                <ng-template kendoAutoCompleteNoDataTemplate>
+                  {{VI_LANG.NOTIFICATION.NO_DATA}}
+                </ng-template>
+              </kendo-autocomplete>
+              <kendo-formerror *ngIf="formGroup.controls.teacherName.errors?.maxLength">
+                {{VI_LANG.FIELD.TEACHER_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_100}}
+              </kendo-formerror>
+            </kendo-formfield>
+          </div>
+        </div>
+      </div>
+      <!--mô tả -  chọn buổi học-->
+      <div class="row mt-2">
+        <div class="col-md-6 row">
+          <div class="col-sm-4 mt-2">
+            <label>Mô tả:</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-formfield>
+              <input (blur)="formatMoTa()"
+                     (ngModelChange)="changeCheckAddClassRoom()"
+                     [(ngModel)]="formGroup.value.description"
+                     class="w-100 form-control h-35px"
+                     formControlName="description"
+                     placeholder="Nhập mô tả lớp"
+                     type="text">
+              <kendo-formhint>Validate mô tả</kendo-formhint>
+              <kendo-formerror *ngIf="formGroup.controls.description.errors?.maxlength">
+                {{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_200}}
+              </kendo-formerror>
+            </kendo-formfield>
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top: -5px">
+          <div class="row">
+            <div class="col-sm-3">
+              <label>Học buổi<label style="color: red">*</label></label>
+
+            </div>
+            <div class="col-sm-9 row">
+              <div class="col-4">
+                <input (change)="checkHocsang()" class="mt-1" formControlName="hasMorningStudy" id="hocsang" name="hocsang"
+                       type="checkbox">
+                <label for="hocsang">&nbsp; Sáng</label>
+              </div>
+              <div class="col-4">
+                <input (change)="checkHocchieu()" class="mt-1" formControlName="hasAfternoolStudy" id="hocchieu" name="hocchieu"
+                       type="checkbox">
+                <label for="hocchieu">&nbsp; Chiều</label>
+              </div>
+              <div class="col-4">
+                <input (change)="checkHoctoi()" class="mt-1" formControlName="hasEveningStudy" id="hoctoi" name="hoctoi"
+                       type="checkbox">
+                <label for="hoctoi">&nbsp; Tối</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <label>Buổi học chính<label style="color: red">*</label></label>
+            </div>
+            <div class="col-sm-9 row">
+              <div class="col-4">
+                <input (change)="checkHocchinhsang()" [checked]="formGroup.value.isMainMorningStudy" class="mt-1"
+                       formControlName="isMainMorningStudy" id="hocSangChinh"  name="hocSangChinh" type="checkbox">
+                <label for="hocSangChinh">&nbsp; Sáng</label>
+              </div>
+              <div class="col-4">
+                <input (change)="checkHocchinhchieu()" [checked]="formGroup.value.isMainAfternoolStudy" class="mt-1"
+                       formControlName="isMainAfternoolStudy" id="hocChieuChinh" name="hocChieuChinh" type="checkbox">
+                <label for="hocChieuChinh">&nbsp; Chiều</label>
+              </div>
+              <div class="col-4">
+                <input (change)="checkHocchinhtoi()" [checked]="formGroup.value.isMainEveningStudy" class="mt-1"
+                       formControlName="isMainEveningStudy" id="hocToiChinh" name="hocToiChinh" type="checkbox">
+                <label for="hocToiChinh">&nbsp; Tối</label>
+              </div>
+            </div>
+          </div>
+          <kendo-formerror *ngIf="checkHocBuoi">
+            {{VI_LANG.FIELD.LESSON_OR_MAIN_LESSON}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+        </div>
+      </div>
+      <!--đặc điểm lóp-->
+      <div class="row">
+        <div class="class-room-h-title">
+          <label>Đặc điểm lớp</label>
+          <div class='class-room-h-title-line'></div>
+        </div>
+      </div>
+      <!--Lớp ghép - mã lớp - loại lớp-->
+      <div class="row mb-t">
+        <div class="col-md-6 row">
+          <div class="col-sm-4 mt-3">
+            <input (change)="checklopghep()" class="m-auto" formControlName="isCompoundClass" id="lopGhep" name="lopGhep"
+                   type="checkbox">
+            <label for="lopGhep">&nbsp; Lớp ghép</label>
+          </div>
+          <div class="col-sm-8">
+            <div class="row form-group">
+              <div class="col-sm-4 m-auto">
+                <label> Mã Lớp ghép:</label>
+              </div>
+              <div class="col-sm-8">
+                <input (blur)="formatMaLopGhep()" (ngModelChange)="changeCheckAddClassRoom()"
+                       [(ngModel)]="formGroup.value.compoundClassCode" class="w-100 form-control h-35px" formControlName="compoundClassCode"
+                       placeholder="Nhập mã lớp ghép" type="text">
+                <kendo-formerror *ngIf="formGroup.controls.compoundClassCode.errors?.maxlength">
+                  {{VI_LANG.FIELD.COMPOUND_CLASS_ID}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_50}}
+                </kendo-formerror>
+                <kendo-formerror *ngIf="formGroup.controls.compoundClassCode.hasError('pattern')">
+                  {{VI_LANG.FIELD.COMPOUND_CLASS_ID}} {{VI_LANG.COMMON_ERROR.PATTERN_INVALID_CHAR}}
+                </kendo-formerror>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 mt-3">
+            <label>Loại lớp:</label>
+          </div>
+          <div class="col-sm-8 mt-2">
+            <kendo-dropdownlist (ngModelChange)="changeLoaiLop()" [data]="kieuLop$ | async" [defaultItem]="default$"
+                                [loading]="loadingLoaiLop$ | async" [valuePrimitive]="true" class="w-100" formControlName="classCodeType"
+                                textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+            <!--          <kendo-formerror *ngIf ="checkLoaiLop">Loại lớp không được để trống</kendo-formerror>-->
+          </div>
+        </div>
+      </div>
+      <!--Điểm trường - bộ sách giáo khoa-->
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 m-auto">
+            <label>Điểm trường: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeCheckAddClassRoom()" [data]="listSchool$ | async"
+                                [defaultItem]="defaultshool" [valuePrimitive]="true" class="w-100"
+                                formControlName="schoolPlaceId" textField="schoolPlaceName" valueField="id">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 m-auto">
+            <label>Bộ sách giáo khoa: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeCheckAddClassRoom()" [data]="BSGK$ | async"
+                                [defaultItem]="default" [loading]="loadingBSGK$ | async" [valuePrimitive]="true" class="w-100"
+                                formControlName="textBookSetCode" textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <!--  Số buổi học/tuần - Hướng nghiệp dậy nghề:-->
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 m-auto">
+            <label>Số buổi học/tuần: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeCheckAddClassRoom()" [data]="SBHTT$ | async"
+                                [defaultItem]="default" [loading]="loadingSBH$ | async" [valuePrimitive]="true" class="w-100"
+                                formControlName="lessonOfWeekCode" textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 m-auto">
+            <label>Hướng nghiệp dạy nghề: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeCheckAddClassRoom()" [data]="HNDN$ | async"
+                                [defaultItem]="default" [loading]="loadingHNDN$ | async" [valuePrimitive]="true" class="w-100"
+                                formControlName="vocationalTrainingGuideCode" textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <!--  Hình thức học tập: - CT đào tạo bồi dưỡng:-->
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 m-auto">
+            <label>Hình thức học tập: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeCheckAddClassRoom()" [data]="HTDT$ |async"
+                                [defaultItem]="default" [loading]="loadingHTHT$ | async" [valuePrimitive]="true" class="w-100"
+                                formControlName="learnModeCode" textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 m-auto">
+            <label>CT đào tạo bồi dưỡng: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changeCheckAddClassRoom()" [data]="LDTBD$ |async"
+                                [defaultItem]="default" [loading]="loadingCTDTBD$ | async" [valuePrimitive]="true" class="w-100"
+                                formControlName="fosteringTrainingProgramCode" textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <!--Ngoại ngữ-->
+      <div class="row">
+        <div class="class-room-h-title">
+          <label>Ngoại ngữ</label>
+          <div class='class-room-h-title-line'></div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 mt-2">
+            <label>Ngoại ngữ 1:</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changecheckNgoaiNgu1($event)" [data]="ngoaiNgu$ | async "
+                                [defaultItem]="default" [loading]="loadingNN$ | async" [valuePrimitive]="true" class="w-100"
+                                formControlName="foreignLanguage1Code" textField="cateName" valueField="cateCode"></kendo-dropdownlist>
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 mt-2">
+            <label>Ngoại ngữ 2: </label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist (ngModelChange)="changecheckNgoaiNgu2($event)"
+                                [data]="ngoaiNgu$ | async "
+                                [defaultItem]="default"
+                                [loading]="loadingNN$ | async"
+                                [valuePrimitive]="true" class="w-100"
+                                formControlName="foreignLanguage2Code"
+                                textField="cateName"
+                                valueField="cateCode"></kendo-dropdownlist>
+            <kendo-formerror *ngIf="checkNgoaiNgu">
+              {{VI_LANG.FIELD.LANGUAGE_1_AND_2}} {{VI_LANG.COMMON_ERROR.DUPLICATE}}
+            </kendo-formerror>
+          </div>
+        </div>
+      </div>
+      <!--ctnn1 - ctnn2-->
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 m-auto">
+            <label>Chương trình (NN1):</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist #resetNgoaiNgu1 (ngModelChange)="changeCheckAddClassRoom()"
+                                [data]="chuongTrinhNgoaiNgu" [defaultItem]="default"
+                                [valuePrimitive]="true" class="w-100" formControlName="foreignLanguageProgram1Code" textField="cateName"
+                                valueField="cateCode"></kendo-dropdownlist>
+            <!--            [(ngModel)]="formGroup.value.foreignLanguageProgram1Code"-->
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 m-auto">
+            <label>Chương trình (NN2):</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist #resetNgoaiNgu2 (ngModelChange)="changeCheckAddClassRoom()"
+                                [data]="chuongTrinhNgoaiNgu" [defaultItem]="default"
+                                [valuePrimitive]="true" class="w-100" formControlName="foreignLanguageProgram2Code" textField="cateName"
+                                valueField="cateCode"></kendo-dropdownlist>
+            <!--            [(ngModel)]="formGroup.value.foreignLanguageProgram2Code"-->
+          </div>
+        </div>
+      </div>
+      <!--stnn1 - stnn2-->
+      <div class="row form-group">
+        <div class="col-md-6 row mb-t">
+          <div class="col-sm-4 m-auto">
+            <label>Số tiết NN1/tuần:</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist #resetNN1 (ngModelChange)="changeCheckAddClassRoom()"
+                                [data]="STHNN$ | async" [defaultItem]="default"
+                                [valuePrimitive]="true" class="w-100" formControlName="foreignLanguageLesson1Code" textField="cateName"
+                                valueField="cateCode"></kendo-dropdownlist>
+            <!--            [(ngModel)]="formGroup.value.foreignLanguageLesson1Code"-->
+          </div>
+        </div>
+        <div class="col-md-6 row">
+          <div class="col-sm-4 m-auto">
+            <label>Số tiết NN2/tuần:</label>
+          </div>
+          <div class="col-sm-8">
+            <kendo-dropdownlist #resetNN2 (ngModelChange)="changeCheckAddClassRoom()"
+                                [data]="STHNN$ | async" [defaultItem]="default"
+                                [valuePrimitive]="true" class="w-100" formControlName="foreignLanguageLesson2Code" textField="cateName"
+                                valueField="cateCode"></kendo-dropdownlist>
+            <!--            [(ngModel)]="formGroup.value.foreignLanguageLesson2Code"-->
+          </div>
+        </div>
+      </div>
+      <!--tính chất khác-->
+      <div class="row">
+        <div class="class-room-h-title">
+          <label>Tính chất khác</label>
+          <div class='class-room-h-title-line'></div>
+        </div>
+      </div>
+
+    </form>
+    <div class="col-sm-12 other-information mb-5">
+      <div class="row">
+        <div *ngFor="let item of otherClassroom, let i = index" class="col-sm-6 wrap">
+          <kendo-label>
+            <input #resetCheckbox (change)="changeCheckInformation(item)" [(ngModel)]="item.status" class="mr-3"
+                   id="terms-{{item.cateCode}}" kendoCheckBox type="checkbox" />
+            <label for="terms-{{item.cateCode}}" style="display: contents">{{item.cateName}}</label>
+          </kendo-label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer" style="padding: 5px">
+    <button (click)="close()" class="btn btn-secondary" type="button">{{VI_LANG.BUTTON.CLOSE}}</button>
+    <button (click)="add()" [disabled]="disableAdd" class="btn  btn-primary"
+            type="button">{{VI_LANG.BUTTON.SAVE}}</button>
+  </div>
+  <div class="custom-loading-h">
+    <div *ngIf="loadingEdit$ | async" class="k-i-loading"></div>
+  </div>
+</div>

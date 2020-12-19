@@ -1,0 +1,162 @@
+<!-- <kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Quản lý năm học'" [class]="'card-head-lg bgr-custom'">
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="col-lg-12">
+      <kendo-grid *ngIf="isLoading$ | async" [data]="getData" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+        (pageChange)="pageChange($event)">
+        <kendo-grid-column title="STT" [width]="45" [resizable]="false"
+                           class="text-center"
+                           headerClass="text-center font-weight-bold">
+          <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+            {{rowIndex + 1}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column class="text-center"
+                           headerClass="text-center font-weight-bold"
+                           field="code"
+                           title="Năm học"
+                           [width]="150">
+        </kendo-grid-column>
+        <kendo-grid-column class="text-center"
+                           headerClass="text-center font-weight-bold"
+                           field="firstSemesterStartDate"
+                           title="Ngày bắt đầu học kì I"
+                           [width]="200" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.firstSemesterStartDate | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column class="text-center"
+                           headerClass="text-center font-weight-bold"
+                           field="firstSemesterEndDate"
+                           title="Ngày kết thúc học kì I"
+                           [width]="200" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.firstSemesterEndDate | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="secondSemesterStartDate"
+                           class="text-center"
+                           headerClass="text-center font-weight-bold"
+                           title="Ngày bắt đầu học kì II"
+                           [width]="200" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.secondSemesterStartDate | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column class="text-center"
+                           headerClass="text-center font-weight-bold"
+                           field="secondSemesterEndDate"
+                           title="Ngày kết thúc học kì II"
+                           [width]="200" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.secondSemesterEndDate | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column class="text-center"
+                                   title="Thao tác"
+                                   headerClass="text-center font-weight-bold"
+                                   [width]="100" [resizable]="false" sortable="false" [columnMenu]="false" >
+          <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+            <button kendoGridEditCommand placement="left" ngbTooltip="Sửa" (click)="openModalEdit(dataItem)" class="mr-2">
+              <i class="fas fa-pencil-alt " style="color: #419197"></i>
+            </button>
+          </ng-template>
+        </kendo-grid-command-column>
+        <ng-template kendoPagerTemplate
+                     let-currentPage="currentPage"
+                     let-total="total"
+                     let-skip="skip"
+                     let-pageSize="pageSize">
+          <div class="d-lg-flex d-md-block justify-content-between w-100">
+            <div class="p-1 d-flex d-sm-flex justify-content-between">
+              <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [defaultItem]="5"
+                                  [(ngModel)]="_pageSize" (ngModelChange)="pageSizeChange()">
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}} -
+                {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex justify-content-center custom-mt-15">
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<div class="custom-loading-h">
+  <div *ngIf="isloading" class="k-i-loading"></div>
+</div> -->
+
+
+<!-- <ng-template #template let-anchor>
+  <span>{{ anchor.nativeElement.innerText }}</span>
+</ng-template>
+
+<div class="container-fluid" kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td tr"
+  (mouseover)="helperService.showTooltip($event, tooltipDir)">
+  <h2 class="title">TEST</h2>
+
+</div> -->
+
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Quản lý năm học'" [class]="'card-head-lg bgr-custom'">
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <kendo-grid #grid [data]="gridSettings.gridData" [columnMenu]="gridSettings.columnMenu"
+    [pageable]="{info: true, type:type, pageSizes:pageSizes}" [pageSize]="gridSettings.state.take"
+    [skip]="gridSettings.state.skip" [sort]="gridSettings.state.sort"
+              [filter]="gridSettings.state.filter"
+              [filterable]="true"
+    [sortable]="true" [resizable]="true"  [reorderable]="true"
+    (dataStateChange)="dataStateChange($event)" (pageChange)="pageChange($event)">
+
+    <kendo-grid-messages
+      filterContainsOperator="Toán tử lọc"
+      filterEndsWithOperator="Kết thúc với"
+      filterEqOperator="Bằng"
+      filterNotEqOperator="Không bằng"
+      filterNotContainsOperator="Không chứa"
+      filterStartsWithOperator="Bắt đầu với"
+      filterIsNullOperator="Vô giá trị (null)"
+      filterIsNotNullOperator="Có giá trị (not null)"
+      filterIsEmptyOperator="Giá trị rỗng (empty)"
+      filterIsNotEmptyOperator="Có giá trị khác rỗng (not empty)"
+      sortAscending="Sắp xếp tăng dần"
+      sortDescending="Sắp xếp giảm dần"
+      filter="Lọc"
+      columnsApply="Áp dụng"
+      columns="Danh sách cột"
+      columnsReset="Mặc định"
+      pagerOf="của"
+      pagerItems="trang"
+      pagerItemsPerPage="Số bản ghi trên trang"
+      noRecords="Không có dữ liệu">
+    </kendo-grid-messages>
+  <!--  [filterable]="true"-->
+  <!--  [filter]="gridSettings.state.filter"-->
+  <!--  <ng-template kendoGridToolbarTemplate let-service="service">-->
+      <!-- <kendo-grid-columnmenu-sort [service]="service"></kendo-grid-columnmenu-sort>
+      <kendo-grid-columnmenu-lock [service]="service"></kendo-grid-columnmenu-lock>
+      <kendo-grid-columnmenu-filter [service]="service"></kendo-grid-columnmenu-filter> -->
+      <!-- <kendo-grid-columnmenu-chooser [service]="service"></kendo-grid-columnmenu-chooser> -->
+  <!--  </ng-template>-->
+
+    <kendo-grid-column *ngFor="let col of gridSettings.columnsConfig" [field]="col.field" [title]="col.title"
+      [width]="col.width" [filter]="col.filter" [filterable]="col.filterable" [hidden]="col.hidden" [format]="{ date: 'dd/MM/yyyy' }">
+      <ng-template *ngIf="col.needTemplate" kendoGridCellTemplate let-dataItem>
+        <span *ngIf="col.title === 'Thao tác'">
+          <button kendoButton icon="edit" (click)="openModalEdit(dataItem)">Sửa</button>
+          <!-- <button kendoButton icon="preview" class="mr-1">Change Status</button> -->
+        </span>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+  </kt-portlet-body>
+</kt-portlet>

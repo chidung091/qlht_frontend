@@ -1,0 +1,136 @@
+<kt-portlet>
+  <kt-portlet-header [title]="'Thêm mới phân công giảng dạy'">
+    <ng-container ktPortletTools>
+      <button (click)="closeModal()" aria-label="Close" class="btn-close-h">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="row">
+
+      <div class="col-sm-2">
+        <kendo-treeview [nodes]="items$|async"
+                        [(selectedKeys)]="selectedKeys"
+                        [selectBy]="'code'"
+                        (nodeClick)="gradeSelect($event)"
+                        kendoTreeViewExpandable
+                        kendoTreeViewSelectable
+                        kendoTreeViewHierarchyBinding
+                        textField="name"
+                        [children]="fetchChildren"
+                        [hasChildren]="hasChildren">
+                      >
+
+                      <!-- <ng-template kendoTreeViewNodeTemplate let-dataItem let-index="index">
+                        <span [style.fontWeight]="dataItem.items ? 'bolder': 'normal' ">{{ index }}: {{ dataItem | json }}</span>
+                      </ng-template> -->
+        </kendo-treeview>
+      </div>
+
+      <div class="col-sm-10">
+        <kendo-grid
+          (pageChange)="pageChange($event)"
+          (selectedKeysChange)="onChange($event)"
+          [pageSize]="_pageSize"
+          [pageable]="true"
+          [selectedKeys]="mySelection"
+          kendoGridSelectBy="id"
+          [skip]="skip"
+          [data]="listDataGrid"
+          [sortable]="false"
+          [selectable]="{checkboxOnly: true}"
+          [reorderable]="false"
+          [resizable]="false"
+          [height]="500"
+          [style]="{'border-radius': '25px', 'scroll': 'auto'}">
+
+          <kendo-grid-checkbox-column [width]="40" [resizable]="false" [columnMenu]="false"
+                                      headerClass="text-center font-weight-bold" class="text-center" showSelectAll="true">
+          </kendo-grid-checkbox-column>
+
+          <kendo-grid-column title="TT" headerClass="text-center font-weight-bold" class="text-center" [width]="60" [resizable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-column editor="text" [width]="100" title="Lớp" field="className"
+                             [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" class="text-center">
+          </kendo-grid-column>
+
+          <kendo-grid-column [width]="100" editor="text" title="Môn học" field="subjectName"
+                             [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" class="text-center">
+          </kendo-grid-column>
+
+          <kendo-grid-column [width]="200" editor="text" title="Tổ bộ môn"
+                             [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" class="text-center">
+
+            <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-column="column" let-rowIndex="rowIndex"
+                         let-formGroup="formData">
+              <kendo-dropdownlist [defaultItem]="defaultSchoolFaculty"
+                                  [formControl]="formData.get('schoolFaculty')"
+                                  [data]="schoolFaculty$ | async"
+                                  [loading]="!(schoolFacultyLoaded$ | async)"
+                                  textField="facultyName" valueField="id"
+                                  (valueChange)="changeSchoolFaculty()"
+                                  [valuePrimitive]="true">
+              </kendo-dropdownlist>
+            </ng-template>
+
+          </kendo-grid-column>
+
+          <kendo-grid-column [width]="200" editor="text" title="Giáo viên"
+                             [columnMenu]="false" [resizable]="false" headerClass="text-center font-weight-bold" class="text-center">
+
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <kendo-combobox [data]="listEmployeeFilter" #autoCompleteEmployee
+                              [filterable]="true"
+                              [textField]="'fullName'"
+                              [valueField]="'id'"
+                              (filterChange)="handleFilter($event)"
+                              [placeholder]="'Chọn giáo viên'">
+              </kendo-combobox>
+            </ng-template>
+
+          </kendo-grid-column>
+
+          <ng-template kendoPagerTemplate
+                       let-currentPage="currentPage"
+                       let-total="total"
+                       let-skip="skip"
+                       let-pageSize="pageSize">
+            <div class="d-flex justify-content-between w-100">
+              <div class="p-1 d-flex d-sm-flex justify-content-between">
+                <kendo-dropdownlist style="width: 60px;" [data]="pageSizes" [(ngModel)]="_pageSize"
+                                    (ngModelChange)="pageSizeChange()">
+                </kendo-dropdownlist>
+                <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}}
+                  - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+              </div>
+              <div class="d-flex page-number">
+                <kendo-pager-prev-buttons class="pagenumbernext"></kendo-pager-prev-buttons>
+                <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+                <kendo-pager-next-buttons class="pagenumberlast"></kendo-pager-next-buttons>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template kendoGridNoRecordsTemplate>{{NO_DATA}}</ng-template>
+        </kendo-grid>
+        <!--    <div class="custom-loading-h">-->
+        <!--      <div *ngIf="loadingKendoGrid | async" class="k-i-loading"></div>-->
+        <!--    </div>-->
+      </div>
+
+    </div>
+
+  </kt-portlet-body>
+
+  <kt-portlet-footer>
+    <div class="group-button text-center">
+      <button class="btn btn-secondary mr-3" type="button" (click)="closeModal()">Đóng</button>
+      <button class="btn btn-secondary mr-3" type="button">Lưu</button>
+    </div>
+  </kt-portlet-footer>
+
+</kt-portlet>
+

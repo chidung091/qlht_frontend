@@ -1,0 +1,50 @@
+
+<div class="modal-body">
+  <form [formGroup]="form">
+
+    <div class="pt-5 row">
+      <div class="col-sm-5">
+        <label for="nameExp">{{VI_LANG.FIELD.EXPERIENCE_TYPE_NAME}}<span style="color: red">*</span></label>
+      </div>
+      <div class="col-sm-7">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" id="nameExp" class="form-control"
+                 placeholder="Nhập sáng kiến kinh nghiệm"
+                 [formControlName]="'name'" #tenSangKienKinhNghiem
+                 (change)="actionExp()"
+                 smasTrim>
+          <kendo-formhint>{{VI_LANG.FIELD.EXPERIENCE_TYPE_NAME}}</kendo-formhint>
+          <kendo-formerror *ngIf="form.controls.name.errors?.required" style="font-size: smaller">
+            {{VI_LANG.FIELD.EXPERIENCE_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.REQUIRED}}
+          </kendo-formerror>
+          <kendo-formerror>
+            <div *ngIf="form.controls.name.errors?.maxlength" style="font-size: smaller">
+              {{VI_LANG.FIELD.EXPERIENCE_TYPE_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+
+
+    <div class="pt-5 row">
+      <div class="col-sm-5">
+        <label for="descExp">{{VI_LANG.FIELD.DESCRIPTION}}</label>
+      </div>
+      <div class="col-sm-7">
+        <kendo-formfield style="margin-top: 0; padding: 0; width: 100%">
+          <input type="text" id="descExp" class="form-control" placeholder="Nhập mô tả"
+                 [formControlName]="'description'" smasTrim (change)="actionExp()">
+          <kendo-formhint>{{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}</kendo-formhint>
+          <kendo-formerror>
+            <div *ngIf="form.controls.description.errors?.maxlength" style="font-size: smaller">
+             {{VI_LANG.FIELD.DESCRIPTION}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}
+            </div>
+          </kendo-formerror>
+        </kendo-formfield>
+      </div>
+    </div>
+
+  </form>
+</div>
+

@@ -1,0 +1,71 @@
+<kt-portlet>
+
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'" (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body *ngIf="!isCollapsed">
+
+    <div class="row">
+
+      <div class="col-sm-6 mb-15-h">
+        <div class="f-group row">
+          <div class="col-sm-4 text-center">
+            <label class="col-form-label w-100" for="department">Tổ bộ môn</label>
+          </div>
+          <div class="col-sm-8 w-100">
+            <kendo-dropdownlist class="dropdown-css" id="department"
+                                [defaultItem]="defaultItem"
+                                [textField]="'value'"
+                                [valueField]="'id'">
+              <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+            </kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 mb-15-h">
+        <div class="f-group row">
+          <div class="col-sm-4 text-center">
+            <label class="col-form-label w-100" for="officer">Cán bộ</label>
+          </div>
+          <div class="col-sm-8 w-100">
+            <kendo-dropdownlist class="dropdown-css" id="officer"
+                                [defaultItem]="defaultItem"
+                                [textField]="'value'"
+                                [valueField]="'id'">
+              <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>
+            </kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </kt-portlet-body>
+
+</kt-portlet>
+
+<kt-portlet>
+  <div class="all-tab-custom-h">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink class="text-uppercase nav-tab-custom" >Học kỳ 1</a>
+        <ng-template ngbNavContent>
+          <kt-according-teacher-list></kt-according-teacher-list>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink class="text-uppercase nav-tab-custom">Học kỳ 2</a>
+        <ng-template ngbNavContent>
+          <kt-according-teacher-list></kt-according-teacher-list>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav"></div>
+
+  </div>
+</kt-portlet>

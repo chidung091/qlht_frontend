@@ -1,0 +1,48 @@
+<kt-search-box-teaching-schedule></kt-search-box-teaching-schedule>
+
+<div class="header">
+  <p>Trạng thái: Đã hủy phê duyệt - bởi Quản trị trường lúc 15:03 12/10/2020 <a href="#">[Xem chi tiết]</a></p>
+  <div class="buttonAdd" >
+    <button class="btn button mr-5">Phê duyệt</button>
+    <button class="btn button">Nhập/xuất</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="table">
+    <kendo-grid
+      [pageSize]=""
+      [pageable]="true"
+      [selectedKeys]=""
+      kendoGridSelectBy="id"
+      [skip]=""
+      [kendoGridBinding]=""
+      [data]="Tetsadsnl"
+      [sortable]="false"
+      [reorderable]="false"
+      [resizable]="false"
+      [height]="500">
+      <ng-template kendoGridToolbarTemplate>
+        <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+      </ng-template>
+      <kendo-grid-column [width]="100" field="thu" editor="text" title="Thứ"></kendo-grid-column>
+      <kendo-grid-column [width]="50" field="buoi" editor="text" title="Buổi"></kendo-grid-column>
+      <kendo-grid-column [width]="50" field="tiet" editor="text" title="Tiết"></kendo-grid-column>
+      <kendo-grid-column [width]="80" field="mon" editor="text" title="Môn"></kendo-grid-column>
+      <kendo-grid-column [width]="80" field="phanmon" editor="text" title="Phân môn"></kendo-grid-column>
+      <kendo-grid-column [width]="80" field="lop" editor="text" title="Lớp"></kendo-grid-column>
+      <kendo-grid-column [width]="80" field="tietPPCT" editor="text" title="Tiết PPCT"></kendo-grid-column>
+      <kendo-grid-column [width]="80" field="tenbaihoc" editor="text" title="Tên bài học"></kendo-grid-column>
+      <kendo-grid-column-group title="Đăng ký đồ dùng dạy học">
+        <kendo-grid-column [width]="80" editor="text" title="Đăng ký"></kendo-grid-column>
+        <kendo-grid-column [width]="80" editor="text" title="Đồ dùng dạy học"></kendo-grid-column>
+        <kendo-grid-column [width]="80" editor="text" title="Số lượng"></kendo-grid-column>
+        <kendo-grid-column [width]="80" editor="text" title="Phân loại"></kendo-grid-column>
+      </kendo-grid-column-group>
+      <kendo-grid-column [width]="80" editor="text" title="Trạng thái"></kendo-grid-column>
+      <kendo-grid-column [width]="80" editor="text" title="Cập nhật"></kendo-grid-column>
+      <kendo-grid-column [width]="80" editor="text" title="Chọn"></kendo-grid-column>
+      <kendo-grid-excel fileName="TeachingSchedule.xlsx"></kendo-grid-excel>
+    </kendo-grid>
+  </div>
+</div>

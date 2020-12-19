@@ -1,0 +1,38 @@
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+  z-index: 9999;
+}
+
+.btn-add-l {
+  background: #419197;
+  color: white;
+  font-size: medium;
+  margin-right: 10px
+}
+.btn-delete-l{
+  background: red;
+  color: white;
+  font-size: medium;
+  margin-right: 25px
+}
+.btn-edit-l {
+  height: 40px
+}
+.btn-delete-lam {
+  height: 40px
+}
+.dropdown-l{
+  width:100%
+}
+@media (max-width: 767px) {
+  .link-router-l a{
+    width: 145px;
+  }
+}

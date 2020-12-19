@@ -1,0 +1,204 @@
+.all-page{
+  display: flex;
+  min-height:100vh;
+  .all-page-left{
+    background: #F2C98A;
+    width: 40%;
+    max-width: 600px;
+    flex: 1 auto;
+    display: flex;
+    min-width: 0;
+    flex-direction: column!important;
+    .img-logo{
+      margin: auto;
+      text-align: center;
+      margin-top:  5rem !important;
+      .img-logo-app{
+        justify-content: center;
+        display: flex;
+        margin-top: 30px;
+        img{
+          width: 130px !important;
+          margin: 0 10px;
+          height: 40px;
+          object-fit: cover;
+          border-radius: 7px;
+        }
+      }
+      img{
+        width: 300px;
+      }
+      h2{
+        font-size: 2rem;
+        font-weight: bold;
+        color: #986923;
+        text-align: center;
+        width: 70%;
+        margin: 30px auto 0;
+      }
+    }
+    .img-bottom{
+      background-image: url('../../assets/media/smas_backdrop.png');
+      background-position-x: center;
+      background-position-y: bottom;
+      background-repeat: no-repeat;
+      min-height: 450px;
+      background-size: 100%;
+    }
+  }
+  .all-page-right{
+    width: 60%;
+    padding: 9% 0;
+    min-height: 100%;
+    position: relative;
+    .page-right-content{
+      width: 51%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      margin: auto;
+      position: absolute;
+      .title-right{
+        font-size: 2rem;
+        color: #181c32;
+        font-weight: 600;
+      }
+      .span-right{
+        display: block;
+        color: #b5b5c3;
+        font-weight: 600;
+        font-size: 1.35rem;
+        margin-bottom: 3.25rem;
+        a{
+          color: #3699ff;
+        }
+      }
+      .span-right-alert{
+        background-color: #eee5ff;
+        border-color: transparent;
+        color: #8950fc;
+        display: block;
+        margin-bottom: 2.5rem!important;
+        padding: .75rem 1.25rem;
+        padding-right: 4rem !important;
+        border: 1px solid transparent;
+        border-radius: .42rem;
+        font-size: 1rem;
+      }
+      .form-group{
+        margin-bottom: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        label{
+          display: block;
+          font-size: 1.175rem!important;
+          color: #181c32!important;
+          font-weight: 600;
+        }
+        input{
+          background-color: #f3f6f9;
+          border-color: #f3f6f9;
+          color: #3f4254;
+          transition: color .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .15s ease;
+          width: 100%;
+          padding: 1.75rem 1.5rem;
+          border-radius: .85rem!important;
+          font-size: 1rem;
+        }
+        .label-flex{
+          display: flex;
+          justify-content: space-between;
+          a{
+            color: #3699ff;
+            font-weight: 600;
+            font-size: 1.175rem;
+          }
+        }
+      }
+      .btn-all{
+        margin-top: 10px;
+        button{
+          font-size: 1.175rem;
+          font-weight: 600;
+          box-shadow: none;
+          line-height: 1.5;
+          border-radius: .42rem;
+          border: 1px solid transparent;
+          padding: .75rem 1.5rem;
+        }
+        .btn-sign{
+          color: #fff;
+          background-color: #087d8c;
+          border-color: #087d8c;
+          margin-right: 10px;
+          &:hover{
+            transition: .3s;
+            background-color: #09a0b3;
+            border-color: #09a0b3;
+          }
+        }
+        .btn-sign-gg{
+          color: #3699ff;
+          background-color: #e1f0ff;
+          border-color: transparent;
+          &:hover{
+            transition: .3s;
+            color: #fff;
+            background-color: #3699ff;
+            border-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media(max-width: 1200px){
+  .all-page{
+    .all-page-right .page-right-content{
+      width: 90%;
+    }
+  }
+}
+@media(max-width: 767px){
+  .all-page{
+    display: block;
+    height: auto !important;
+    .all-page-left{
+      height: auto !important;
+      width: 100%;
+      .img-logo{
+        margin-top: 0 !important;
+        img{
+          margin-top: 30px !important;
+          width: 50%;
+        }
+        h2{
+          font-size: 1.35rem!important;
+        }
+      }
+      .img-bottom{
+        position: relative;
+        min-height: 290px;
+      }
+    }
+    .all-page-right{
+      height: auto !important;
+      width: 100%;
+      .page-right-content{
+        position: relative;
+        transform: none;
+        width: 90%;
+        left: 0;
+      }
+    }
+    .span-right-alert{
+      margin-bottom: 0 !important;
+    }
+  }
+  .all-page .all-page-left .img-logo .img-logo-app{
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+}

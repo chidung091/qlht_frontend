@@ -1,0 +1,31 @@
+<div class="card card-custom">
+  <div class="container" style="background-color: #419197" >
+    <div class="card-header d-flex justify-content-between"  style="border-width: 0; background-color: #419197">
+      <div>
+        <span style="font-size: 20px">
+            <span><i class="flaticon-search"></i>THÔNG TIN TÌM KIẾM</span>
+        </span>
+      </div>
+      <div (click)="isCollapsed = !isCollapsed">
+        <i [hidden]="!isCollapsed" class="flaticon2-down"></i>
+        <i [hidden]="isCollapsed" class="flaticon2-up"></i>
+      </div>
+    </div>
+  </div>
+  <div class="  card-body row" style="padding-bottom: 10px;" *ngIf="isCollapsed">
+    <div class="labell col-2">Mã cán bộ</div>
+    <div class="col-4">
+      <input class="input1 textBox" type="text"   />
+    </div>
+    <div class="labell col-2" >Họ và tên </div>
+    <div class="col-4" >
+      <input class="input1 textBox" type="text"  />
+    </div>
+  </div>
+
+  <div class="Button" *ngIf="isCollapsed">
+    <hr>
+    <button class="btn btn-primary"><span><i class="flaticon-search"></i>Tìm Kiếm</span></button>
+  </div>
+</div>
+

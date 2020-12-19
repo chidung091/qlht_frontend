@@ -1,0 +1,134 @@
+
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg'"
+        (click)="isCollapsed = !isCollapsed">
+        <ng-container ktPortletTools>
+            <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+            <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+        </ng-container>
+    </kt-portlet-header>
+
+    <kt-portlet-body *ngIf="isCollapsed">
+      <form [formGroup]="_formSearch">
+        <!--  -->
+        <div class="row mt-5">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6 d-flex flex-row align-items-center">
+                <p class="col-md-2 col-sm-3 col-3 mb-0 pl-0">Khối:</p>
+                <div class="col-md-8 col-sm-9 col-9 w-100">
+                  <kendo-dropdownlist style="width: 100%;"
+                   formControlName="gradeLevel" [data]="_data"
+                                      [defaultItem]="_valueDefault">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+              <div class="col-md-6 class-name d-flex flex-row align-items-center">
+                <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Xếp loại theo:</p>
+                <div class="col-md-9 col-sm-9 col-9 d-flex flex-row">
+                  <div class="section col-md-4 col-sm-4 col-4 ">                  
+                    <div class="wrap">
+                        <input type="radio" id="foo" kendoRadioButton />
+                        <label class="k-radio-label" for="foo" >Tuần</label>
+                        
+                    </div>
+                  </div>
+        
+                  <div class="section col-md-6 col-sm-8 col-10 ">                   
+                    <div class="wrap ">
+                      <input type="radio" #bar kendoRadioButton />
+                        <kendo-label class="k-radio-label" [for]="bar" >Tháng</kendo-label>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+          </div>
+          <div class="col-md-4" formGroupName="dateOfViolation">
+            <div class="d-flex flex-row class-date">
+              <p class="col-md-3 col-sm-3 col-3 pl-0 pr-5 mb-0">Từ ngày:</p>
+              <div class="col-md-8 col-sm-9 col-9 w-100">
+                <kendo-datepicker formControlName="formDateOfViolation" style="width: 100%;"></kendo-datepicker>
+              </div>
+            </div>
+            <div class="d-flex flex-row mt-5">
+              <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Đến ngày:</p>
+              <div class="col-md-8 col-sm-9 col-9 w-100">
+                <kendo-datepicker formControlName="toDateOfViolation" style="width: 100%;"></kendo-datepicker>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+            <button type="button" class="btn btn-custom-h-cl btn-primary" (click)="submit()">
+              <i class="fas fa-filter"></i> Tìm kiếm
+            </button>
+        </div>
+      </form>
+    </kt-portlet-body>
+</kt-portlet>
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách Xếp loại'" [class]="'card-head-lg'">
+    <ng-container ktPortletTools>
+      <button kendoButton class="btn btn-outline-primary p-2 ml-1 " ngbTooltip="dowload Excel"> 
+        <i class="far fa-file-excel  " style="left: 6px; position: relative; font-size: 25px; margin-right: 2px; color:darkgray; "></i>
+        <i class="fas fa-download " style="left: -6px; color:dimgrey; position: relative; font-size: 12px; margin-top: 14px;"></i>        
+      </button>
+
+      <button class="btn btn-primary btn-sm mr-2 ml-1" ngbTooltip="Send"><i class="far fa-save"></i></button>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="table_tt">
+        <kendo-grid [data]="gridView"
+                    kendoGridSelectBy="id" 
+                    [pageSize]="_pageSize" 
+                    [pageable]="true"
+                    scrollable="scrollable" 
+                    [sortable]="true" 
+                    [reorderable]="true" 
+                    [resizable]="false" 
+                    [height]="500"
+                    [selectable]="{mode: 'multiple',enable: true, checkboxOnly: true}" 
+                    [style]="{'border-radius': '25px'}"
+                    (pageChange)="pageChange($event)" 
+                    [skip]="skip" 
+                    (selectedKeysChange)="onChange($event)"
+                    [selectedKeys]="mySelection"                  
+                    [style.maxHeight.px]="600">
+
+            <kendo-grid-checkbox-column [width]="45" [resizable]="false" [columnMenu]="false" showSelectAll="true">
+            </kendo-grid-checkbox-column>
+            <kendo-grid-column title="TT" [width]="60" headerClass="text-center font-weight-bold">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="lop" title="Lớp" [width]="130"eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="violate" title="Vi phạm nội quy" [width]="130" eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="emulation" title="Thi đua dạy tốt" [width]="130" eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="emulationTeam" title="Thi đua theo tổ" [width]="130" eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="classification" title="Xếp loại tập thể lớp" [width]="130" eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="ratingsGrade" title="Xếp hạng khối" [width]="130" eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-column field="ratingsSchool" title="Xếp hạng trường" [width]="130" eaderClass="text-center font-weight-bold">
+            </kendo-grid-column>
+            <kendo-grid-command-column title="Thao tác" [width]="105" [resizable]="false" sortable="false" 
+                [columnMenu]="false" headerClass="text-center font-weight-bold">
+                <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
+                    <button class="btn btn-primary" type="button"  >
+                        Chi tiết
+                     </button>
+                </ng-template>
+            </kendo-grid-command-column>
+        </kendo-grid>
+    </div>
+</kt-portlet-body>
+</kt-portlet>

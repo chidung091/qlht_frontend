@@ -1,0 +1,308 @@
+<kt-portlet>
+  <kt-portlet-header [title]="'Thông tin chung'" [class]="'card-head-lg'"
+                     (click)="isCollapsed1 = !isCollapsed1">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed1" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed1" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body *ngIf="!isCollapsed1">
+    <div class="row">
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Khối:</label>
+          <label class="col-8 detail">1</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Trạng thái:</label>
+          <label class="col-8 detail">Chuyển lớp</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Họ và tên:</label>
+          <label class="col-8 detail">Võ Thị Tường Vy</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Giới tính:</label>
+          <label class="col-8 detail">Nữ</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Tỉnh/Thành:</label>
+          <label class="col-8 detail">Tỉnh Bà Rịa-Vũng Tàu</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Xã/Phường:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Ngày vào trường:</label>
+          <label class="col-8 detail">16/08/2020</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Nơi sinh:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Địa chỉ thường trú:</label>
+          <label class="col-8 detail"></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Tên lớp:</label>
+          <label class="col-8 detail">K1 MG</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Số đăng bộ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Mã học sinh:</label>
+          <label class="col-8 detail">42342320Viet00000000007</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Ngày sinh:</label>
+          <label class="col-8 detail">03/11/2020</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Quận/Huyện:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Thôn/Xóm:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Hình thức trúng tuyển:</label>
+          <label class="col-8 detail">Trúng tuyển</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Quê quán:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Địa  chỉ tạm trú:</label>
+          <label class="col-8 detail"></label>
+        </div>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+  <kt-portlet-header [title]="'Thông tin cá nhân'" [class]="'card-head-lg'"
+                     (click)="isCollapsed2 = !isCollapsed2">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed2" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed2" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body *ngIf="!isCollapsed2">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Dân tộc:</label>
+          <label class="col-8 detail">Kinh</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Tôn giáo:</label>
+          <label class="col-8 detail">Không</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Vùng khó khăn:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Chỗ ở:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Được cấp gạo theo QĐ 36/2013/QĐ-TTg:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Mức độ khuyết tật:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Biết bơi:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Nhóm máu:</label>
+          <label class="col-8 detail"></label>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Tên gọi khác (Dân tộc):</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Số CMND:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Đối tượng chính sách:</label>
+          <label class="col-8 detail">Võ Thị Tường Vy</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Thuộc diện tái định cư:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Khuyết tật:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Là đội viên:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Học chương trình GD của bộ:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Số DT nhà:</label>
+          <label class="col-8 detail"></label>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Khu vực:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Email:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Thuộc diện:</label>
+          <label class="col-8 detail">Chưa có</label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Chế độ hỗ trợ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Loại khuyết tật:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Ngày vào dội:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Học sinh DT trợ giảng:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">SĐT di động:</label>
+          <label class="col-8 detail"></label>
+        </div>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+
+<kt-portlet>
+  <kt-portlet-header [title]="'Thông tin gia đình'" [class]="'card-head-lg'"
+                     (click)="isCollapsed3 = !isCollapsed3">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed3" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed3" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+
+  <kt-portlet-body *ngIf="!isCollapsed3">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Thành phần gia đình:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Họ tên cha:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Năm sinh:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Nghề nghiệp của cha:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">SĐT cha:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Email cha:</label>
+          <label class="col-8 detail"></label>
+        </div>
+
+
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Có bố dân tộc:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Họ tên mẹ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Năm sinh:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Nghề nghiêp của mẹ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">SĐT mẹ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Email mẹ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <label class="col-4">Có mẹ dân tộc:</label>
+          <label class="col-8"><input type="checkbox"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Họ tên người bảo hộ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Năm sinh:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Nghề nghiệp:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">SĐT người bảo hộ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+        <div class="row mt-2">
+          <label class="col-4">Email người bảo hộ:</label>
+          <label class="col-8 detail"></label>
+        </div>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,44 @@
+.k-dropdown, .k-dropdowntree {
+  width: 90% !important;
+}
+
+input {
+  width: 90% !important;
+}
+
+span {
+  color: red;
+  margin-left: 3px;
+}
+
+.buttonGroup {
+  display: flex;
+}
+
+.col-sm-12 {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.button{
+  background: #087D8C;
+  color: white;
+  border-radius: 5px;
+  width: 140px;
+}
+
+
+.content {
+  position: relative;
+}
+
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 50px;
+  background-color: rgba(255,255,255,.3);
+  color: #ff6757;
+}

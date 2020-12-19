@@ -1,0 +1,167 @@
+<kt-portlet>
+  <kt-portlet-body style="background-color: #FFFF; padding: 0%; margin: 0;">
+
+    <div class="row mt-10">
+      <div class="col-md-2 col-sm-3 col-4 mt-2" style="left: 20px;">
+        <button #anchor (click)="onToggle()" class="btn btn-primary ">
+          <i class="fas fa-list"></i>{{ selectedKeys }}</button>
+
+        <kendo-popup [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show">
+          <kendo-treeview [nodes]="_data" textField="text" kendoTreeViewExpandable kendoTreeViewSelectable
+            kendoTreeViewHierarchyBinding childrenField="items" [selectBy]="'text'" [(selectedKeys)]="selectedKeys"
+            (selectionChange)="handleSelection($event)" [hasChildren]="hasChildren" [children]="fetchChildren"
+            [expandBy]="'text'" [(expandedKeys)]="expandedKeys">
+          </kendo-treeview>
+        </kendo-popup>
+      </div>
+
+      <div class="col-md-5 col-sm-7 col-10 d-flex justify-content-start">
+        <div class="k-block" style="border-width: 0;">
+          <button kendoButton [toggleable]="true" style="width: 185px; border-radius: 5px; margin: 1px;">
+            Học kỳ 1
+          </button>
+          <button kendoButton [toggleable]="true" style="width: 185px; border-radius: 5px; margin: 1px; ">
+            Học kỳ 2
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </kt-portlet-body>
+  <!-- nav -->
+  <kt-portlet-body style="background-color: #FFFF; padding: 0%; margin: 0;">
+    <div class="row mt-5 m-0 destop">
+      <div class="col-md-12 col-sm-12 col-12 p-0 m-0 row">
+
+        <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+          <div class=" display-5 link-router-l">
+            <button class="btn btn-outline-primary  m-0 backbtn link-router-l" kendoButton 
+            (click)="pageListMonhocBack()" [icon]="'arrow-double-60-left'"></button>
+          </div>
+        </div>
+
+        <div class="col-md-10 col-sm-10 col-10 p-0  justify-content-center row">
+          <div *ngFor="let item of listMonhoc let i = index" class=" display-5 link-router-l">
+              <a  routerLinkActive="active" 
+                  *ngIf="i<(show2+9)&&i>=show2" 
+                  [routerLink]="'detail-comment-book/' + item.stt"
+                  class="monhoc" kendoButton > 
+                {{item.Mon }}
+              </a>
+          </div>
+        </div>
+
+        <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+          <div class=" display-5 link-router-l">
+            <button class="btn btn-outline-primary nextbtn  m-0" kendoButton 
+            (click)="pageListMonhocNext()" [icon]="'arrow-double-60-right'"></button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row mt-5 m-0 iphone">
+      <div class="col-md-12 col-sm-12 col-12 p-0 m-0 row">
+
+        <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+          <div class=" display-5 link-router-l">
+            <button class="btn btn-outline-primary  m-0 backbtn link-router-l" kendoButton 
+            (click)="pageListMonhocBack()" [icon]="'arrow-double-60-left'"></button>
+          </div>
+        </div>
+
+        <div class="col-md-10 col-sm-10 col-10 p-0  justify-content-center row">
+          <div *ngFor="let item of listMonhoc let i = index" class=" display-5 link-router-l">
+              <a  routerLinkActive="active" 
+                  *ngIf="i<(show2+3)&&i>=show2" 
+                  [routerLink]="'detail-comment-book/' + item.stt"
+                  class="monhoc" kendoButton > 
+                {{item.Mon }}
+              </a>
+          </div>
+        </div>
+
+        <div class="col-md-1 col-sm-12 col-12 p-0 mt-1">
+          <div class=" display-5 link-router-l">
+            <button class="btn btn-outline-primary nextbtn  m-0" kendoButton 
+            (click)="pageListMonhocNext()" [icon]="'arrow-double-60-right'"></button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </kt-portlet-body>
+  
+  <kt-portlet-body style="background-color: #FFFF; margin-left: 0%; padding-left: 0%; padding-right: 0%;" class="row">
+
+    <form class="row col-xl-7 col-md-7 col-sm-7 col-12  " [formGroup]="dateForm">
+
+      <div class="col-xl-6 col-md-6 col-sm-6 col-12  mt-2">
+        <div class="d-flex flex-row w-100">
+          <div class="font-weight-bold col-md-2 col-sm-3 col-3 mt-2">
+            <kendo-label text=" Tháng: " ></kendo-label>
+          </div>
+          <div class=" col-md-8 col-sm-8 col-8  w-100">
+            <kendo-dropdownlist style="width: 100%; background: #fff" [data]="listMon" [textField]="'mon'"
+            [valueField]="'value'">
+            </kendo-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-6 col-12  mt-2">
+        <div class="d-flex flex-row w-100">
+          <div class="font-weight-bold col-md-2 col-sm-3 col-3 mt-2">
+            <kendo-label text=" Ngày: " ></kendo-label>
+          </div>
+         <div class=" col-md-8 col-sm-8 col-8  w-100">
+            <kendo-dropdownlist style="width: 100%; background: #fff" [data]="listday" [textField]="'day'"
+            [valueField]="'value'">
+            </kendo-dropdownlist>
+         </div>
+        </div>
+      </div>
+    </form>
+
+    
+
+    <div class="col-xl-5 col-md-5 col-sm-5 col-12 d-flex justify-content-end flex-row mt-2" >
+
+      <div>
+        <button class="btn btn-outline-primary" style="color: black;" ngbTooltip="Gữi sms">
+          <i class="far fa-paper-plane">Gữi SMS</i>
+        </button>
+  
+        <button kendoButton class="btn btn-outline-primary p-2 ml-1 " ngbTooltip="upload Excel">
+          <i class="far fa-file-excel  "
+            style="left: 6px; position: relative; font-size: 25px; margin-right: 2px; color: darkgray; "></i>
+          <i class="fas fa-upload "
+            style="left: -6px; color:dimgrey; position: relative; font-size: 12px; margin-top: 14px;"></i>
+  
+        </button>
+  
+        <button kendoButton class="btn btn-outline-primary p-2 ml-1 " ngbTooltip="dowload Excel">
+          <i class="far fa-file-excel  "
+            style="left: 6px; position: relative; font-size: 25px; margin-right: 2px; color: darkgray;"></i>
+          <i class="fas fa-download "
+            style="left: -6px; color: dimgrey; position: relative; font-size: 12px; margin-top: 14px;"></i>
+  
+        </button>
+  
+        <button class="btn btn-primary btn-sm mr-2 ml-1" ngbTooltip="Send">
+          <i class="far fa-save"></i>
+        </button>
+  
+        <button class="btn btn-danger btn-sm">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+
+    </div>
+
+  </kt-portlet-body>
+
+</kt-portlet>
+<router-outlet></router-outlet>

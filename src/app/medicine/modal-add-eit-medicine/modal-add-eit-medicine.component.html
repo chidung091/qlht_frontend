@@ -1,0 +1,137 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+<!--    {{title}}-->
+  </h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="action-container">
+    <form [formGroup]="form">
+      <div>
+        <div class="form-group">
+          <label class="col-form-label">Email</label>
+          <div class="">
+            <input (focusout)="trimSpace('disciplineLevelName')" type="text" class="form-control"
+                   formControlName="email" name="email"/>
+          </div>
+<!--          <div class="col-sm-2"></div>-->
+<!--          <div class="col-sm-10"-->
+<!--               *ngIf="submitted && f.disciplineLevelName.errors || f.disciplineLevelName.errors && (f.disciplineLevelName.dirty || f.disciplineLevelName.touched)">-->
+<!--            <div class="text-error">-->
+<!--              <div *ngIf="f.disciplineLevelName.errors.maxlength">-->
+<!--                {{VI_LANG.FIELD.DISCIPLINE_LEVEL_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+
+        <div class="form-group">
+          <label class="col-form-label">Password</label>
+          <div class="">
+            <input (focusout)="trimSpace('password')" type="text" class="form-control"
+                   formControlName="password"
+                   name="password"/>
+          </div>
+<!--          <div class="col-sm-2"></div>-->
+<!--          <div class="col-sm-10"-->
+<!--               *ngIf="submitted && f.decisionNumber.errors || f.decisionNumber.errors && (f.decisionNumber.dirty || f.decisionNumber.touched)">-->
+<!--            <div class="text-error">-->
+<!--              <div *ngIf="f.decisionNumber.errors.maxlength">-->
+<!--                {{VI_LANG.FIELD.DECISION_NUMBER_DISCIPLINE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Họ và tên</label>
+          <div class="">
+            <input (focusout)="trimSpace('fullName')" type="text" class="form-control" formControlName="fullName"
+                   name="description"/>
+          </div>
+<!--          <div class="col-sm-2"></div>-->
+<!--          <div class="col-sm-10"-->
+<!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
+<!--            <div class="text-error">-->
+<!--              <div *ngIf="f.description.errors.maxlength">-->
+<!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Ngày sinh</label>
+          <div class="">
+            <input (focusout)="trimSpace('ngaysinh')" type="text" class="form-control" formControlName="ngaysinh"
+                   name="ngaysinh"/>
+          </div>
+          <!--          <div class="col-sm-2"></div>-->
+          <!--          <div class="col-sm-10"-->
+          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
+          <!--            <div class="text-error">-->
+          <!--              <div *ngIf="f.description.errors.maxlength">-->
+          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Số điện thoại:</label>
+          <div class="">
+            <input (focusout)="trimSpace('sodienthoai')" type="text" class="form-control" formControlName="sodienthoai"
+                   name="sodienthoai"/>
+          </div>
+          <!--          <div class="col-sm-2"></div>-->
+          <!--          <div class="col-sm-10"-->
+          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
+          <!--            <div class="text-error">-->
+          <!--              <div *ngIf="f.description.errors.maxlength">-->
+          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Lương</label>
+          <div class="">
+            <input (focusout)="trimSpace('salary')" type="text" class="form-control" formControlName="salary"
+                   name="salary"/>
+          </div>
+          <!--          <div class="col-sm-2"></div>-->
+          <!--          <div class="col-sm-10"-->
+          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
+          <!--            <div class="text-error">-->
+          <!--              <div *ngIf="f.description.errors.maxlength">-->
+          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Quê quán</label>
+          <div class="">
+            <input (focusout)="trimSpace('quequan')" type="text" class="form-control" formControlName="quequan"
+                   name="quequan"/>
+          </div>
+          <!--          <div class="col-sm-2"></div>-->
+          <!--          <div class="col-sm-10"-->
+          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
+          <!--            <div class="text-error">-->
+          <!--              <div *ngIf="f.description.errors.maxlength">-->
+          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+        <div class="custom-loading-h">
+          <div *ngIf="loading | async" class="k-i-loading"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="cancel()">Đóng</button>
+    <button type="submit" class="btn  btn-primary" (click)="onSubmit()">Lưu</button>
+  </div>
+</div>

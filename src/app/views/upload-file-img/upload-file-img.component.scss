@@ -1,0 +1,23 @@
+.upload-img{
+    position: relative;
+    border: .5px solid #eee;
+}
+.upload-img img{
+    height: 150px;
+    object-fit: cover;
+}
+.k-i-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 60px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ff6757;
+  }
+@media(max-width: 767px){
+    .upload-img img{
+        height: auto;
+    }
+}

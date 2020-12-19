@@ -1,0 +1,26 @@
+.buttonChoose{
+  margin-right: 25px; padding: 9px 13px; width: 140px; height: 40px
+}
+.btn-save{
+  background: #087D8C;
+  color: white;
+  border-radius: 5px;
+}
+.btn-save:hover, .btn-save:focus{
+  background-color: #2a7e84;
+}
+.k-i-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #419197;
+}
+wr{
+  overflow: scroll;
+  height: 100%;
+  width: 40%;
+}

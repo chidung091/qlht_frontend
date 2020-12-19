@@ -1,0 +1,206 @@
+<kt-search1></kt-search1>
+<div class="card" style="border-width: 0">
+  <div id="InOutElementExcel" style="text-align: right; margin-top: 10px; margin-bottom: 10px;    margin-right: 16px;">
+    <input type="file" style="display: inline-block;"  placeholder="Upload file" accept=".xlsx">
+    <a class="k-button" id="dropDownTree" style="border-radius: 20px " (click)="show()">
+       Nhập/xuất &nbsp;<span class="k-icon k-i-arrows-no-change"></span>
+    </a>
+    <div id="InOutBoxChoice" style="width: 111px; position: absolute;right: 15px; top: 11%;z-index: 1000;display: none;">
+      <span class="btn btn-primary " style="border-radius: 0px;width: 100%;text-align: start"  (click)="option1()" onclick="document.getElementById('primaryButton').click()" >Xuất Excel</span>
+      <span class="btn btn-primary " style="border-radius: 0px;width: 100%;text-align: start"  type="file"  accept=".xlsx" (click)="option2()" (change)="incomingfile($event)">Nhập từ Excel</span>
+    </div>
+
+  </div>
+
+  <div class="  card-custom">
+    <div class="table" style="overflow-x: auto">
+      <kendo-grid
+        [pageSize]="_pageSize"
+        [pageable]="true"
+        [kendoGridBinding]="listcanbo | async"
+        [sortable]="false"
+        [resizable]="true"
+        [height]="500"
+        [style]="{'border-radius': '25px'}">
+          <ng-template kendoGridToolbarTemplate  *ngIf="true"  style="visibility: hidden;">
+            <div class="ui-fileupload-row">
+              <input style="display: none" type="button"  id="primaryButton" kendoGridExcelCommand icon="file-excel">
+            </div>
+          </ng-template>
+        <kendo-grid-column title="STT" field="stt" [width]="50" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          [width]="150"
+          title="Mã cán bộ"
+          field="maCanBo"
+          [resizable]="true"
+          [style]="{'text-align': 'center'}"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column
+          [width]="160"
+          editor="text"
+          title="Họ và tên"
+          field="hoTen"
+        ></kendo-grid-column>
+        <kendo-grid-column
+          [width]="200"
+          editor="text"
+          title="Ngày sinh"
+          field="ngaySinh"
+        ></kendo-grid-column>
+        <kendo-grid-column
+          [width]="300"
+          editor="text"
+          title="Giới tính"
+          field="gioiTinhId"
+        ></kendo-grid-column>
+        <kendo-grid-column
+          [width]="150"
+          title="Vị trí việc làm"
+          field="vitrivieclam"
+        ></kendo-grid-column>
+        <kendo-grid-column [width]="120" editor="text"
+                           title="Nhóm chức vụ" field="nhomchucvu"
+        ></kendo-grid-column>
+        <kendo-grid-column title="KQ tự đánh giá chuẩn NN" [width]="110"
+                           [resizable]="false" field="KQtudanhgia"   >
+        </kendo-grid-column>
+        <kendo-grid-column title="KQ cấp trên đánh giá chuẩn NN" [width]="110"
+                           [resizable]="false" field="KQcaptren" >
+        </kendo-grid-column>
+        <kendo-grid-command-column title="Đánh giá" [width]="70">
+          <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem="dataItem">
+            <button class="border-radius btn-custom btn-add mr-2"
+                    kendoButton [iconClass]="'far fa-list-alt'"
+                    style="height: 30px" *ngIf="!opened" (click)="open()"
+            ></button>
+          </ng-template>
+        </kendo-grid-command-column>
+        <ng-template kendoPagerTemplate
+                     let-totalPages="totalPages"
+                     let-currentPage="currentPage"
+                     let-total="total"
+                     let-skip="skip"
+                     let-pageSize="pageSize">
+          <div class="d-flex justify-content-between w-100">
+            <div class="p-1 d-flex">
+              <kendo-dropdownlist class="w-60px"
+                                  [data]="pageSizes"
+                                  [defaultItem]="5"
+                                  [(ngModel)]="_pageSize"
+                                  (ngModelChange)="pageSizeChange()"
+              >
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2 show-total">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex page-number">
+              <kendo-pager-prev-buttons class="pagenumbernext"></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons class="pagenumberlast"></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+        <kendo-grid-excel fileName="Products.xlsx"></kendo-grid-excel>
+      </kendo-grid>
+    </div>
+
+<!--    PopUp-->
+
+    <kendo-dialog title="Đánh giá chuẩn nghề nghiệp - GDQP AN" *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="'80%'">
+      <p style="text-align: left;">Thầy/cô bấm vào tiêu đề cột đánh giá để thực hiện đánh giá cho tất cả các tiêu chí.</p>
+
+      <div class="modal-body">
+         <kendo-grid
+        [pageSize]="_pageSize"
+        [pageable]="true"
+        [kendoGridBinding]="dialogData"
+        [sortable]="false"
+        [resizable]="true"
+        [height]="500"
+        [style]="{'border-radius': '25px'}">
+        <kendo-grid-column title="STT" [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          [width]="140"
+          title="Tiêu chí"
+          field="tieuChi"
+          [resizable]="true"
+          [style]="{'text-align': 'center'}"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column
+          [width]="140"
+          title="Nội dung đánh giá"
+          field="noidung"
+          [resizable]="true"
+          [style]="{'text-align': 'center'}"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column-group title="Mức đạt được" [columnMenu]="false">
+          <kendo-grid-column  title="Tự đánh giá" [width]="100">
+            <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+              <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"
+                                  [valuePrimitive]="true"
+                                  [defaultItem]="'[Lựa chọn]'"
+                                  [data]="dropdownData">
+              </kendo-dropdownlist>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column  title="Cấp trên đánh giá"  [width]="100">
+            <ng-template kendoGridCellTemplate>
+              <kendo-dropdownlist style="width: 100%; height: 100%; align-items: center"
+                                  [data]="dropdownData"
+                                  [defaultItem]="'[Lựa chọn]'">
+
+              </kendo-dropdownlist>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid-column-group>
+        <ng-template kendoPagerTemplate
+                     let-totalPages="totalPages"
+                     let-currentPage="currentPage"
+                     let-total="total"
+                     let-skip="skip"
+                     let-pageSize="pageSize">
+          <div class="d-flex justify-content-between w-100">
+            <div class="p-1 d-flex">
+              <kendo-dropdownlist class="w-60px"
+                                  [data]="pageSizes"
+                                  [defaultItem]="5"
+                                  [(ngModel)]="_pageSize"
+                                  (ngModelChange)="pageSizeChange()"
+              >
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2 show-total">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex page-number">
+              <kendo-pager-prev-buttons class="pagenumbernext"></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="5"></kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons class="pagenumberlast"></kendo-pager-next-buttons>
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid>
+      </div>
+      <div class="modal-footer">
+<!--         <div class="card-footer container" style="margin-top: 20px">-->
+        <div class="row">
+          <div class="col-6" style="text-align: end; padding-right: 0px">
+            <button style="border-radius: 20px;width: 90px;" kendoButton (click)="close('no')"><span><i class="k-icon k-i-save"></i>&nbsp;Lưu</span></button>
+          </div>
+          <div class="col-6" style="text-align: start;">
+            <button style="border-radius: 20px; width: 90px; " kendoButton (click)="close('yes')"><span><i class="k-icon k-i-close-outline"></i>&nbsp;Đóng</span></button>
+          </div>
+        </div>
+<!--      </div>-->
+      </div>
+    </kendo-dialog>
+
+  </div>
+
+</div>

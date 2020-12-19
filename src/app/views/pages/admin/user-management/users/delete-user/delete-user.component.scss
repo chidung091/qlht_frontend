@@ -1,0 +1,23 @@
+.question{
+    padding: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn_end{
+    text-align: center; 
+    margin-bottom: 30px;
+    button{
+      margin: 0 5px;
+    }
+  }
+  .btn-delete-h{
+    border: .5px solid #087d8c;
+    background: white;
+    color: #087d8c;
+    &:hover{
+      color: white;
+      background: #087d8c;
+      transition: .3s;
+    }
+  }

@@ -1,0 +1,166 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{title}}
+  </h4>
+  <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="action-container">
+    <form [formGroup]="form">
+      <div class="frames">
+        <div class="m-4">
+          <div class="form-group row">
+            <label class="col-form-label col-4">Khối <span style="color: red">*</span></label>
+            <div class="col-8">
+              <kendo-formfield>
+                <kendo-dropdownlist #selectKhoi (ngModelChange)="checkClass()" [data]="grade$ | async" [defaultItem]="defaultKhoi"
+                                    [loading]="kLoading$ | async" [valuePrimitive]="true" class="w-100" formControlName="khoi"
+                                    textField="tenDanhMuc" valueField="maDanhMuc">
+                </kendo-dropdownlist>
+<!--                <kendo-dropdownlist #selectKhoi style="width:100%"-->
+<!--                                    textField="tenDanhMuc"-->
+<!--                                    [data]="grade$ | async"-->
+<!--                                    valueField="maDanhMuc"-->
+<!--                                    [loading]="kLoading$ | async"-->
+<!--                                    [defaultItem]="defaultKhoi"-->
+<!--                                    [valuePrimitive]="true"-->
+<!--                                    formControlName="khoi"-->
+<!--                                    (valueChange)="checkClass()"-->
+<!--                >-->
+<!--                </kendo-dropdownlist>-->
+                <kendo-formerror>
+                  <div *ngIf="form.controls.tenToBoMon.errors?.required">Tổ bộ môn không được trống không được để
+                    trống
+                  </div>
+                </kendo-formerror>
+              </kendo-formfield>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-form-label col-4">Lớp <span style="color: red">*</span></label>
+            <div class="col-8">
+              <kendo-dropdownlist class="w-100" #classReset
+                                  [data]="listClassRoom | async"
+                                  id="tenLopID"
+                                  [loading]="lLoading$ | async"
+                                  [defaultItem]="classRoom"
+                                  [valuePrimitive]="true" textField="tenLop"
+                                  valueField="id"
+                                  [disabled]="disableClass"
+                                  formControlName="idlop"
+              >
+              </kendo-dropdownlist>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-form-label col-4">Giáo viên chủ nhiệm</label>
+            <div class="col-8">
+              <input class="form-control" formControlName="tenGiaoVienCN" kendoTextBox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 frames">
+        <label class="pr-2 pl-2 title-frames">Cán bộ làm thay</label>
+        <div class="m-4">
+          <div class="form-group row">
+            <label class="col-form-label col-4">Tổ bộ môn <span style="color: red">*</span></label>
+            <div class="col-8">
+              <kendo-dropdownlist style="width:100%" class="kendo-dropdown"
+                                  formControlName="tenToBoMon"
+                                  [valuePrimitive]="true"
+                                  [data]="listSchoolFaculty | async"
+                                  [textField]="'tenBoMon'"
+                                  [valueField]="'tenBoMon'"
+                                  [defaultItem]="defaultItemSchoolFaculty"
+                                  (selectionChange)="nameDepar($event)"
+                                  [(ngModel)]="form.value.tenToBoMon"
+                                  [loading]="loadisLoadingBoMon"
+              >
+              </kendo-dropdownlist>
+              <div class="col-sm-2"></div>
+              <div class="col-sm-10"
+                   *ngIf="submitted &&  f.tenToBoMon.errors || f.tenToBoMon.errors && (f.tenToBoMon.dirty || f.tenToBoMon.touched)">
+                <div class="text-error">
+                  <div *ngIf="f.tenToBoMon.errors.required">
+                    Tổ bộ môn không được để trống!
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-form-label col-4">Giáo viên làm thay <span style="color: red">*</span></label>
+            <div class="col-8">
+              <kendo-dropdownlist #tencanbo class="kendo-dropdown" style="width:100%"
+                                  formControlName="tenGiaoVienLT"
+                                  [valuePrimitive]="true"
+                                  [data]="listEmployee"
+                                  [textField]="'hoTen'"
+                                  [valueField]="'id'"
+                                  [disabled]="disableDefaultEmployee"
+                                  [defaultItem]="defaultItemEmployee"
+                                  [(ngModel)]="form.value.canBoId"
+                                  [loading]="loadEmployee"
+              >
+              </kendo-dropdownlist>
+              <div class="col-sm-2"></div>
+              <div class="col-sm-10"
+                   *ngIf="submitted && f.canBoId.errors || f.canBoId.errors && (f.canBoId.dirty || f.canBoId.touched)">
+                <div class="text-error">
+                  <div *ngIf="f.canBoId.errors.required">
+                    Cán bộ không được để trống!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 frames">
+        <label class="pr-2 pl-2 title-frames">Thời gian làm thay</label>
+        <div class="m-4">
+          <div class="form-group row">
+            <label class="col-form-label col-4">Từ ngày <span style="color: red">*</span></label>
+            <div class="col-8">
+              <kendo-formfield>
+                <kendo-datepicker style="width:100%"
+                                  [format]="'MMMM dd yyyy'"
+                                  [(value)]="valueDateFrom"
+                ></kendo-datepicker>
+              </kendo-formfield>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-form-label col-4">Đến ngày <span style="color: red">*</span></label>
+            <div class="col-8">
+              <kendo-datepicker style="width:100%"
+                                [format]="'MMMM dd yyyy'"
+                                [navigation]="false"
+              ></kendo-datepicker>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-form-label col-4">Ghi chú</label>
+            <div class="col-8">
+              <input class="form-control" placeholder="Ghi chú" kendoTextBox>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary buttonChoose" data-dismiss="modal" (click)="cancel()">Đóng</button>
+  <button type="button" class="btn btn-smas buttonChoose" (click)="onSubmit()">Lưu</button>
+</div>

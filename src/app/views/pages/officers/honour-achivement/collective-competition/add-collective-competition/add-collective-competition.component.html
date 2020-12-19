@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        {{title}}
+    </h4>
+    <button class="btn-close-h" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="formAdd">
+        <div class="form-group kendo-form">
+            <label for="">Tổ bộ môn <span class="text-danger">*</span></label>
+            <kendo-dropdownlist #tobomon formControlName="toboMon" [valueField]="'id'" [defaultItem]="defaultlistSubjects"
+                style="width: 100%" [data]="schoolFaculty$ | async" [loading]="!(schoolFacultyLoaded$ | async)"
+                [textField]="'facultyName'" [valuePrimitive]="true" class="toboMonField">
+            </kendo-dropdownlist>
+            <div *ngIf="submitted && f.toboMon.errors || (f.toboMon.dirty || f.toboMon.touched) && f.toboMon.errors">
+                <div class="text-danger mt-2">
+                    <div *ngIf="f.toboMon.errors.required">
+                        Tổ bộ môn không được để trống
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group kendo-form">
+            <label for="">Danh hiệu thi đua <span class="text-danger">*</span></label>
+            <kendo-dropdownlist formControlName="honourAchivement" [valueField]="'cateCode'"
+                [defaultItem]="defaultlistEmulation" style="width: 100%" [data]="listEmulation$ | async" [textField]="'cateName'"
+                [valuePrimitive]="true">
+            </kendo-dropdownlist>
+            <div
+                *ngIf="submitted && f.honourAchivement.errors || (f.honourAchivement.dirty || f.honourAchivement.touched) && f.honourAchivement.errors">
+                <div class="text-danger mt-2">
+                    <div *ngIf="f.honourAchivement.errors.required">
+                        Danh hiệu thi đua không được để trống
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Ghi chú</label>
+            <input type="text" class="form-control" formControlName="description" (focusout)="trimSpace('description')">
+            <div *ngIf="submitted && f.description.errors || (f.description.dirty || f.description.touched) && f.description.errors">
+                <div class="text-danger mt-2">
+                    <div *ngIf="f.description.errors.maxlength">
+                        Ghi chú không vượt quá 250 ký tự
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Đóng</button>
+            <button type="submit" (click)="onSubmit()" class="btn  btn-primary">Lưu</button>
+        </div>
+    </form>
+    <div class="custom-loading-h">
+        <div *ngIf="isloading" class="k-i-loading"></div>
+    </div>
+</div>

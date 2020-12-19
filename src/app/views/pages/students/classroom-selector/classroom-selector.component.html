@@ -1,0 +1,24 @@
+<div ngbDropdown class="dropdown dropdown-fluid pr-3 position-relative" #dropdown="ngbDropdown"
+  placement="bottom-right">
+  <div ngbDropdownToggle class="d-inline-block w-100">
+    <div class="btn btn-clean w-100" style="border-color: #B5B5C3;">
+      {{classRoomSelector}}
+      <img src="./assets/media/svg/icons/Navigation/Angle-down.svg" style="height: 16px" />
+    </div>
+  </div>
+  <div ngbDropdownMenu class="dropdown-menu">
+    <kendo-treeview [nodes]="dataTreeView$ | async" [textField]="['gradeName', 'className']" kendoTreeViewExpandable
+      [hasChildren]="hasChildren" [children]="fetchChildren" (selectionChange)="handleSelection($event, dropdown)">
+    </kendo-treeview>
+    <!--    <ul class="navi navi-hover">-->
+    <!--      <ng-container *ngFor="let level of levels$ | async">-->
+    <!--        <li class="navi-item">-->
+    <!--          <a ngbDropdownToggle class="navi-link" (click)="selectLevel(level)">-->
+    <!--            <span class="navi-text"> {{level?.schoolLevelName}}</span>-->
+    <!--          </a>-->
+    <!--        </li>-->
+    <!--      </ng-container>-->
+    <!--    </ul>-->
+  </div>
+</div>
+<div *ngIf="!(gradeLoaded$ | async)" class="k-i-loading h-loading"></div>

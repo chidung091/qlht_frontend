@@ -1,0 +1,75 @@
+<kt-search-box-divisive-configuaration (valueEmitter)="getValueSearch($event)"></kt-search-box-divisive-configuaration>
+
+<!--  Start Button Add  -->
+<div class="buttonHeader">
+  <button kendoButton (click)="openModalAdd(contentAdd)" class="btn btn-primary btn-sm mr-2"
+    [iconClass]="'fas fa-plus'"></button>
+  <button kendoButton (click)="openModalDelete(contentDelete)" class="btn btn-primary btn-sm mr-2"
+    [iconClass]="'far fa-trash-alt'"></button>
+</div>
+<!--  End Button Add  -->
+<!--  Start Kendo Grid  -->
+<div class="table">
+  <kendo-grid [pageSize]="" [pageable]="true" [selectedKeys]="" kendoGridSelectBy="id" [skip]="" [kendoGridBinding]=""
+    [data]="" [sortable]="false" [reorderable]="false" [resizable]="false" [height]="500">
+    <kendo-grid-column title="STT" [headerClass]="{'header-table-custom': true}" [width]="50" [resizable]="false">
+      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [width]="180" editor="text" title="Phân môn"></kendo-grid-column>
+    <kendo-grid-column [width]="150" editor="text" title="Môn học"></kendo-grid-column>
+    <kendo-grid-column [width]="80" editor="text" title="Khối áp dụng"></kendo-grid-column>
+    <kendo-grid-command-column title="Hành động" [width]="100" [resizable]="false" [columnMenu]="false">
+      <ng-template kendoGridCellTemplate let-dataItem let-isNew>
+        <div class="d-flex">
+          <button class="btn btn-primary btn-sm mr-2" kendoButton [iconClass]="'fas fa-pencil-alt'"
+            (click)="openModalEdit(contentEdit)"></button>
+        </div>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+</div>
+<!--  End Kendo Grid  -->
+
+<!--Start Modal Add-->
+<ng-template #contentAdd let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Thêm mới phân môn</h4>
+    <i class="fas fa-times close-header" (click)="closeModal()"></i>
+  </div>
+  <div class="modal-body">
+    <kt-modal-add-edit-divisive-configuration></kt-modal-add-edit-divisive-configuration>
+  </div>
+</ng-template>
+
+<!--End Modal Add-->
+
+<!--Start Modal Edit-->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Cập nhật phân môn</h4>
+    <i class="fas fa-times close-header" (click)="closeModal()"></i>
+  </div>
+  <div class="modal-body">
+    <kt-modal-add-edit-divisive-configuration></kt-modal-add-edit-divisive-configuration>
+  </div>
+</ng-template>
+<!--End Modal Edit-->
+
+<!--Start Modal Delete-->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa phân môn</h4>
+    <i class="fas fa-times close-header" (click)="closeModal()"></i>
+  </div>
+  <div class="modal-body">
+    <div class="question">
+      <i class="far fa-question-circle"></i>
+      <p>Bạn có chắc chắn muốn xóa không?</p>
+    </div>
+  </div>
+  <div class="modal-footer m-auto">
+    <button type="button" class="btn button mr-20" (click)="closeModal()">Hủy bỏ</button>
+    <button type="button" class="btn button">Đồng ý</button>
+  </div>
+</ng-template>
+<!--End Modal Delete-->

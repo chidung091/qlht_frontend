@@ -1,0 +1,20 @@
+.width-custom{
+  max-width: 100%;
+  //text-verflow: initial;
+}
+.k-grid-header th{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+}
+//css modal
+::ng-deep .myCustomModalClass  .modal-dialog {
+  max-width:450px;
+  width: 450px;
+  max-height: 300px;
+  height: 300px;
+
+}
+.k-header .k-link{
+  text-align: center;
+}

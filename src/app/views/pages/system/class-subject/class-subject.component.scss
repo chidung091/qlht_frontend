@@ -1,0 +1,112 @@
+
+.save-all {
+  background-color: #fff;
+  color: #4a4a4a;
+  border: 1px solid #4a4a4a;
+  margin-right: 10px;
+}
+
+.inpSotiet {
+  max-width: 100%;
+  border: none;
+  text-align: center;
+  border: 1px solid;
+}
+
+.k-textbox {
+  border: none;
+  background: none !important;
+}
+
+.k-textbox input.k-input {
+  text-align: center !important;
+}
+
+.k-textbox input {
+  text-align: center !important;
+}
+
+.titleSuccess {
+  padding: 20px;
+  margin: auto;
+}
+
+.titleDialog {
+  margin: auto 5px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.btn-saveAlll {
+  background: #fff;
+  font-size: 18px !important;
+  border: 1px solid;
+}
+
+
+.acpAll{
+  font-size: 13px;
+}
+
+.subject-textbox .k-input {
+  text-align: center !important;
+}
+
+.grid-wrapper {
+  position: relative;
+}
+
+.btn-save{
+  background-color: #6cbdc4;
+  color: white;
+}
+.btn-save:hover, .btn-save:focus{
+  background-color: #2a7e84;
+}
+.buttonChoose{
+  padding: 9px 13px; width: 140px; height: 40px; margin: 0 10px;
+}
+
+.buttonCloseSuccess {
+  padding: 0; width: 140px; height: 40px
+}
+
+.subject-textbox {
+  max-width: 100%;
+  text-align: center;
+  border: none;
+  background: none;
+  color: #666;
+}
+
+.subject-textbox:focus {
+  outline: none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed;
+}
+
+@media(max-width: 1290px){
+  .bnt-res{
+    margin-left: 4px;
+  }
+}
+@media(max-width: 767px){
+  .bnt-s, .bnt-res{
+    margin-top: 15px;
+  }
+  .custom-mt-15{
+    margin-top: 15px;
+  }
+}
+
+.save-one:hover {
+  background-color: #5cb7be !important;
+  box-shadow: 1px 1px #5cb7be;
+}
+.save-all:hover {
+  box-shadow: 1px 1px #5cb7be;
+}
+
+.submitSaveAll:focus {
+  border: 3px solid #1eccd9;
+}

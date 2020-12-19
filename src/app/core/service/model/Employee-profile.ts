@@ -1,0 +1,117 @@
+export class EmployeeProfileModel {
+  id: string;
+  code?: string;
+  identificationCode?: string;
+  name?: string;
+  fullName?: string;
+  phone?: string;
+  imageSrc?: string;
+  contractType?: string;
+  alias?: string;
+  signatureSrc?: string;
+  schoolFacultyID?: string;
+  birthDate?: string;
+  birthPlace?: string;
+  genderCode?: string;
+  genderName?: string;
+  joinedDate?: string;
+  identityNumber?: string;
+  identityIssuedDate?: string;
+  identityIssuedPlace?: string;
+  email?: string;
+  nation?: string;
+  religion?: string;
+  contractTpye?: string;
+  healthStatus?: string;
+  status?: string;
+  // provinceId?: string;
+  // districtId?: string;
+  // communeId?: string;
+  insuranceNumber?: string;
+  // positionStaff?: string;
+  // positionGroup?: string;
+  tenantId?: string;
+  fatherFullName?: string;
+  fatherBirthDate?: string;
+  fatherJob?: string;
+  fatherWorkingPlace?: string;
+  motherFullName?: string;
+  motherBirthDate?: string;
+  motherJob?: string;
+  motherWorkingPlace?: string;
+  spouseFullName?: string;
+  spouseBirthDate?: string;
+  spouseJob?: string;
+  spouseWorkingPlace?: string;
+  concurrentSubjectCode?: string;
+  // concurrentSubjectText?: string;
+  familyTypeCode?: string;
+  // familyTypeText?: string;
+  mariageStatusCode?: string;
+  // mariageStatusText?: string;
+  otherNote?: string;
+  isRegularRefresher?: boolean;
+  isTeacherDuties?: boolean;
+  isMotelRoomOutsite?: boolean;
+  isNeedTeacherDuties?: boolean;
+  isCommunistPartyMember?: boolean;
+  partyJoinedDate?: string;
+  partyJoinedPlace?: string;
+  isYouthLeageMember?: boolean;
+  youthLeageJoinDate?: string;
+  youthLeageJoinPlace?: string;
+  schoolFacultyName?: string;
+  homeTown?: string;
+  subjectTaught?: string;
+  isLeader?: boolean;
+  isNew?: boolean;
+  nationName?: string;
+  religionName?: string;
+  provinceCode?: string;
+  provinceName?: string;
+  districtCode?: string;
+  districtName?: string;
+  communeCode?: string;
+  communeName?: string;
+  positionStaffCode?: string;
+  positionStaffName?: string;
+  positionGroupCode?: string;
+  positionGroupName?: string;
+  creationTime?: string;
+  concurrentSubjectName?: string;
+  familyTypeName?: string;
+  mariageStatusName?: string;
+  tenantCode?: string;
+  sectionPerWeek?: number;
+  isSoftSkillTrained?: boolean;
+  isDedicatedForYouthLeage?: boolean;
+  isTeachStudentDisability?: boolean;
+  lstQualification: LstQualification[];
+  employeeSalary: EmployeeSalary[];
+}
+
+export class LstQualification {
+  categoryCode: string;
+  categoryName: string;
+  categoryTypeCode: string;
+}
+
+export class EmployeeSalary {
+  id?: string;
+  employeeId?: string;
+  vocationalAllowance?: number;
+  preferentialAllowance?: number;
+  prefrentialAllowLeadership?: number;
+  isActive?: boolean;
+  salaryLevel?: string;
+  employeeScale?: string;
+  employeeScaleCode?: string;
+  coefficient?: number;
+  salaryAmount?: number;
+  isFostering?: boolean;
+  appliedDate?: Date;
+  description?: string;
+  employeeSalaryAllwanceId?: string;
+}
+
+

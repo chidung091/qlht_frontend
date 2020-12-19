@@ -1,0 +1,18 @@
+.f-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+
+  .col-form-label{
+    width: 100%;
+  }
+
+  .dropdown-css{
+    width: 85%;
+    height: 35px;
+    border-radius: 3px;
+    margin: auto !important;
+  }
+
+}

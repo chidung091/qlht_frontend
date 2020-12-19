@@ -1,0 +1,74 @@
+<kt-portlet>
+  <!-- Search -->
+    <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                       (click)="isCollapsed = !isCollapsed">
+      <ng-container ktPortletTools>
+        <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+        <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+      </ng-container>
+    </kt-portlet-header>
+
+  <kt-portlet-body>
+    <div class="card-body" *ngIf="!isCollapsed">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-lg-5 col-md-5 col-sm-12 mb-15-h row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xl-3">
+              <div class="text-view-mmb" style="margin: auto; margin-right: 0px; text-align: end"><label class="mt-2">Tổ bộ môn :</label></div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xl-9">
+              <kendo-dropdownlist
+                class="w-100"
+                [data]="schoolFaculty$ | async"
+                [textField]="'facultyName'"
+                [valueField]="'id'"
+                [valuePrimitive]="true"
+                [defaultItem]="defaultBomon"
+                formControlName="idSchoolFaculty"
+                (valueChange)="selectionByFaculity()"
+              >
+                <ng-template kendoDropDownListNoDataTemplate>
+                  Không có dữ liệu
+                </ng-template>
+              </kendo-dropdownlist>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12 mb-15-h row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xl-3">
+              <div class="text-view-mmb" style="margin: auto; margin-right: 0px; text-align: end"><label class="mt-2">Giáo viên: </label></div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xl-9">
+              <input name="gvlop" class="form-control" formControlName="nameTeacher"
+                     placeholder="Nhập tên giáo viên" kendoTextBox>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12 ">
+            <button  #focusContent type="submit" title="Tìm kiếm" class="btn bnt-ss " (click)="search()">
+              <i class="fas fa-filter"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </kt-portlet-body>
+
+  <kt-portlet-body>
+    <div class="all-tab-custom-h">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Đánh giá xếp loại giáo viên</a>
+          <ng-template ngbNavContent>
+            <kt-grading></kt-grading>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink class="text-uppercase nav-tab-custom">Đánh giá chuẩn nghề nghiệp</a>
+          <ng-template ngbNavContent>
+            <kt-job-grading></kt-job-grading>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
