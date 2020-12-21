@@ -1,0 +1,246 @@
+<!--<ng-container>-->
+<!--  <kt-portlet>-->
+<!--    <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"-->
+<!--                       (click)="_isCollapsed = !_isCollapsed">-->
+<!--      <ng-container ktPortletTools>-->
+<!--        <i [hidden]="_isCollapsed" class="fas fa-angle-double-down"></i>-->
+<!--        <i [hidden]="!_isCollapsed" class="fas fa-angle-double-up"></i>-->
+<!--      </ng-container>-->
+<!--    </kt-portlet-header>-->
+<!--    <kt-portlet-body *ngIf="_isCollapsed" class="search-box">-->
+<!--&lt;!&ndash;      <form [formGroup]="form">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-4 mt-5 d-flex class-violation align-items-center flex-row">&ndash;&gt;-->
+<!--&lt;!&ndash;            <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0 pr-5">Nhóm lỗi vi phạm:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;              <kendo-dropdownlist formControlName="groupOfViolations"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [data]="GroupOfViolations"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [defaultItem]="defaultGroupOfViolations"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [textField]="'faultName'" [valueField]="'faultId'"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [valuePrimitive]="true">&ndash;&gt;-->
+<!--&lt;!&ndash;              </kendo-dropdownlist>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-4 mt-5 d-flex align-items-center flex-row">&ndash;&gt;-->
+<!--&lt;!&ndash;            <p class="col-md-3 col-sm-3 col-3 mb-0 pr-0 pl-0">Theo học kỳ:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;              <kendo-buttongroup selection="single">&ndash;&gt;-->
+<!--&lt;!&ndash;                <button kendoButton (click)="setValueSemester($event)" value="Học kỳ 1" [togglable]="true">Học kỳ 1</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button kendoButton (click)="setValueSemester($event)" value="Học kỳ 2" [togglable]="true">Học kỳ 2</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button kendoButton (click)="setValueSemester($event)" value="Cả năm" [togglable]="true">Cả năm</button>&ndash;&gt;-->
+<!--&lt;!&ndash;              </kendo-buttongroup>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="row mt-5">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-6 d-flex flex-row align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Khối:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <kendo-dropdownlist class="dropdown-css" id="grade-level" #gradeLevel&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [defaultItem]="defaultCategory" formControlName="gradeLevel"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [data]="grade$ | async"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [loading]="!(gradeLoaded$ | async)"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      (valueChange)="changeValueGrade()"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [valuePrimitive]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [textField]="'cateName'"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [valueField]="'cateCode'">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </kendo-dropdownlist>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-6 class-name d-flex flex-row align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Lớp học:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <kendo-dropdownlist class="dropdown-css" id="class" #class&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [defaultItem]="defaultClassroom" formControlName="class"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [valuePrimitive]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [data]="listClassroom"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      (valueChange)="changeClass()"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [textField]="'className'"&ndash;&gt;-->
+<!--&lt;!&ndash;                                      [valueField]="'id'">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <ng-template kendoDropDownListNoDataTemplate>{{VI_LANG.NOTIFICATION.NO_DATA}}</ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </kendo-dropdownlist>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="row mt-5">&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-md-6 d-flex flex-row align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <p class="col-md-3 col-sm-3 col-3 mb-0 pr-0 pl-0">Mã học sinh:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <kendo-formfield>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <input type="text" class="form-control" formControlName="CodeStudent">&ndash;&gt;-->
+<!--&lt;!&ndash;                    </kendo-formfield>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-md-6 class-student d-flex flex-row align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <p class="col-md-3 col-sm-3 col-3 mb-0 pr-0 pl-0">Tên học sinh:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <kendo-formfield>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <input type="text" class="form-control" formControlName="nameStudent">&ndash;&gt;-->
+<!--&lt;!&ndash;                    </kendo-formfield>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="d-flex flex-row class-date">&ndash;&gt;-->
+<!--&lt;!&ndash;              <p class="col-md-3 col-sm-3 col-3 pl-0 pr-5 mb-0">Từ ngày vi phạm:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;                <kendo-datepicker formControlName="fromDateOfViolation"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [format]="'dd/MM/yyyy'">&ndash;&gt;-->
+<!--&lt;!&ndash;                </kendo-datepicker>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="d-flex flex-row mt-5 class-date">&ndash;&gt;-->
+<!--&lt;!&ndash;              <p class="col-md-3 col-sm-3 col-3 mb-0 pl-0">Đến ngày vi phạm:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-9 col-sm-9 col-9">&ndash;&gt;-->
+<!--&lt;!&ndash;                <kendo-datepicker formControlName="toDateOfViolation"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                  [format]="'dd/MM/yyyy'">&ndash;&gt;-->
+<!--&lt;!&ndash;                </kendo-datepicker>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="d-flex justify-content-center mt-5">&ndash;&gt;-->
+<!--&lt;!&ndash;          <button type="submit" class="btn  btn-primary" (click)="search()">&ndash;&gt;-->
+<!--&lt;!&ndash;            <i class="fas fa-filter"></i> Tìm kiếm&ndash;&gt;-->
+<!--&lt;!&ndash;          </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </form>&ndash;&gt;-->
+<!--    </kt-portlet-body>-->
+<!--  </kt-portlet>-->
+<!--</ng-container>-->
+
+
+<!--&lt;!&ndash;<kt-search-box-violate (submitted)="submit($event)"></kt-search-box-violate>&ndash;&gt;-->
+<!--<kt-portlet>-->
+<!--  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách vi phạm'"-->
+<!--                     [class]="'card-head-lg bgr-custom'">-->
+<!--    <ng-container ktPortletTools>-->
+<!--      <button kendoButton class="btn btn-light mr-2 btn-custom btn-excel"-->
+<!--              ngbTooltip="Nhập dữ liệu từ excel">-->
+<!--        <i class="far fa-file-excel"></i>-->
+<!--        <i class="fas fa-upload"></i>-->
+<!--      </button>-->
+<!--      <button kendoButton [icon]="'plus'"-->
+<!--              type="button"-->
+<!--              class="btn btn-primary btn-sm mr-2 btn-custom"-->
+<!--              placement="bottom"-->
+<!--              ngbTooltip="Thêm mới"-->
+<!--              routerLink="/students/violate-rules/add-new-violate-rules">-->
+<!--      </button>-->
+<!--      <button class="btn btn-danger btn-sm" type="button" (click)="openModalDeleteList()" ngbTooltip="Xóa"-->
+<!--              placement="bottom" [disabled]="checkDeleteAll" >-->
+<!--        <i class="far fa-trash-alt"></i>-->
+<!--      </button>-->
+<!--    </ng-container>-->
+<!--  </kt-portlet-header>-->
+<!--  <kt-portlet-body>-->
+<!--    <kendo-grid [data]="gridView"-->
+<!--                *ngIf="isLoading$ | async"-->
+<!--                [pageSize]="_pageSize"-->
+<!--                [pageable]="true"-->
+<!--                (pageChange)="pageChange($event)"-->
+<!--                [kendoGridSelectBy]="'studentId'" [selectable]="{checkboxOnly : true}"-->
+<!--                [sortable]="true"-->
+<!--                [reorderable]="true" [resizable]="true" [skip]="skip" (selectedKeysChange)="onChange($event)"-->
+<!--                [selectedKeys]="mySelection" [height]="500"-->
+<!--                [style]="{'border-radius': '25px'}">-->
+<!--      <kendo-grid-checkbox-column [columnMenu]="false" headerClass="text-center"-->
+<!--                                  [resizable]="false" [width]="45" showSelectAll="true"-->
+<!--                                  class="text-center">-->
+<!--        <ng-template let-dataItem="dataItem">-->
+<!--          <input type="checkbox" kendoCheckBox>-->
+<!--        </ng-template>-->
+<!--      </kendo-grid-checkbox-column>-->
+<!--      <kendo-grid-column title="TT" class="text-center" headerClass="text-center font-weight-bold"-->
+<!--                         [width]="50" [resizable]="false">-->
+<!--        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}-->
+<!--        </ng-template>-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-column field="className"-->
+<!--                         title="Lớp"-->
+<!--                         headerClass="text-center font-weight-bold"-->
+<!--                         [width]="120"-->
+<!--                         editor="text">-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-column field="studentCode"-->
+<!--                         title="Mã học sinh"-->
+<!--                         headerClass="text-center font-weight-bold"-->
+<!--                         [width]="120"-->
+<!--                         editor="text">-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-column field="studentName"-->
+<!--                         title="Tên học sinh"-->
+<!--                         headerClass="text-center font-weight-bold"-->
+<!--                         [width]="120" editor="text">-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-column field="dateFault"-->
+<!--                         title="Ngày vi phạm"-->
+<!--                         class="text-center"-->
+<!--                         headerClass="text-center font-weight-bold"-->
+<!--                         [width]="120"-->
+<!--                         editor="text">-->
+<!--        <ng-template kendoGridCellTemplate let-dataItem>-->
+<!--          {{dataItem.dateFault | date: 'dd/MM/yyyy'}}-->
+<!--        </ng-template>-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-column field="allFaultName"-->
+<!--                         title="Lỗi vi phạm"-->
+<!--                         headerClass="text-center font-weight-bold"-->
+<!--                         [width]="120"-->
+<!--                         editor="text">-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-column field="totalMinusPoint"-->
+<!--                         title="Tổng số điểm trừ"-->
+<!--                         [width]="120"-->
+<!--                         class="text-center"-->
+<!--                         headerClass="text-center font-weight-bold">-->
+<!--        <ng-template kendoGridCellTemplate let-dataItem>-->
+<!--          {{dataItem.studentFaultGroup.totalMinusPoint | json}}-->
+<!--        </ng-template>-->
+<!--      </kendo-grid-column>-->
+<!--      <kendo-grid-command-column headerClass="text-center font-weight-bold" title="Thao tác" [width]="120"-->
+<!--                                 [resizable]="false" [columnMenu]="false">-->
+<!--        <ng-template kendoGridCellTemplate let-dataItem="dataItem">-->
+<!--          <div class="d-flex justify-content-around align-items-center">-->
+<!--            <button kendoGridEditCommand ngbTooltip="Sửa" placement="left" container="body"-->
+<!--                    [disabled]=""-->
+<!--                    container="body" (click)="setStudentInfo(dataItem)">-->
+<!--              <i class="fas fa-pencil-alt " style="color: #419197"></i>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </kendo-grid-command-column>-->
+<!--      <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"-->
+<!--                   let-skip="skip" let-pageSize="pageSize">-->
+<!--        <div class="d-flex justify-content-between w-100">-->
+<!--          <div class="p-1 d-flex">-->
+<!--            <kendo-dropdownlist class="w-60px" [data]="pageSizes" [(ngModel)]="_pageSize"-->
+<!--                                (ngModelChange)="pageSizeChange()">-->
+<!--            </kendo-dropdownlist>-->
+<!--            <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}-->
+<!--              - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>-->
+<!--          </div>-->
+<!--          <div class="d-flex">-->
+<!--            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>-->
+<!--            <kendo-pager-numeric-buttons [buttonCount]="buttonCount">-->
+<!--            </kendo-pager-numeric-buttons>-->
+<!--            <kendo-pager-next-buttons></kendo-pager-next-buttons>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+
+<!--    </kendo-grid>-->
+<!--&lt;!&ndash;    <div class="custom-loading-h">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div *ngIf="loading" class="k-i-loading"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </kt-portlet-body>-->
+<!--</kt-portlet>-->
+

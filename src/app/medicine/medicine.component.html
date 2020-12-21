@@ -30,40 +30,40 @@
 <!--</div>-->
 
 
-<kt-portlet>
-  <!-- Search -->
-  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
-                     (click)="isCollapsed = !isCollapsed">
-    <ng-container ktPortletTools>
-      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
-      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
-    </ng-container>
-  </kt-portlet-header>
-  <kt-portlet-body *ngIf="isCollapsed">
-    <div>
-      <form class="row" [formGroup]="form">
-        <div class="col-md-5 row align-items-center mt-2">
-          <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tổ bộ môn:</label>
-          <div class=" col-sm-8 ">
-            <kendo-dropdownlist>
-            </kendo-dropdownlist>
-          </div>
-        </div>
-        <div class="col-md-2 d-flex justify-content-md-end  mt-2">
-          <button type="submit" class="btn  btn-primary" (click)="search()">
-            <i class="fas fa-filter"></i> Tìm kiếm
-          </button>
-        </div>
-      </form>
-    </div>
-  </kt-portlet-body>
-  <!--End Search -->
-</kt-portlet>
+<!--<kt-portlet>-->
+<!--  &lt;!&ndash; Search &ndash;&gt;-->
+<!--&lt;!&ndash;  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"&ndash;&gt;-->
+<!--&lt;!&ndash;                     (click)="isCollapsed = !isCollapsed">&ndash;&gt;-->
+<!--&lt;!&ndash;    <ng-container ktPortletTools>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;  </kt-portlet-header>&ndash;&gt;-->
+<!--&lt;!&ndash;  <kt-portlet-body *ngIf="isCollapsed">&ndash;&gt;-->
+<!--    <div>-->
+<!--      <form class="row" [formGroup]="form">-->
+<!--        <div class="col-md-5 row align-items-center mt-2">-->
+<!--          <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tổ bộ môn:</label>-->
+<!--          <div class=" col-sm-8 ">-->
+<!--            <kendo-dropdownlist>-->
+<!--            </kendo-dropdownlist>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-2 d-flex justify-content-md-end  mt-2">-->
+<!--          <button type="submit" class="btn  btn-primary" (click)="search()">-->
+<!--            <i class="fas fa-filter"></i> Tìm kiếm-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </kt-portlet-body>-->
+<!--  &lt;!&ndash;End Search &ndash;&gt;-->
+<!--</kt-portlet>-->
 
 <kt-portlet>
   <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách nhân viên'" [class]="'card-head-lg bgr-custom'">
     <ng-container ktPortletTools>
-      <button class="btn btn-primary btn-sm mr-2" type="button" (click)="openModalAdd()"  ngbTooltip="Thêm"
+      <button class="btn btn-primary btn-sm mr-2" type="button" (click)="openModalAdd()" ngbTooltip="Thêm"
               placement="bottom">
         <i class="fas fa-plus"></i>
       </button>
@@ -74,28 +74,26 @@
       <kendo-grid *ngIf="isLoading$ | async"
                   [data]="dataKT"
                   [sortable]="true"
-                  [pageSize]="pageSize"
+                  [pageSize]="_pageSize"
+                  [pageable]="true"
                   [skip]="skip"
-                  [pageable]="{
-                    buttonCount: buttonCount,
-                    info: info,
-                    type: type,
-                    pageSizes: pageSizes,
-                    previousNext: previousNext
-                  }"
+                  [reorderable]="true" [resizable]="true"
                   [kendoGridSelectBy]="'id'"
                   [selectable]="{checkboxOnly : true}"
                   (pageChange)="pageChange($event)"
+                  [height]="500"
                   [style]="{'border-radius': '25px'}">
         <kendo-grid-column field="id" title="TT" [width]="45" editable="false">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [width]="200" field="fullName" editor="text" title="Họ và tên"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="ngaysinh" editor="text" title="Ngày sinh"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="sodienthoai" editor="text" title="Số điện thoại nhân viên"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="quequan" editor="text" title="Quê quán nhân viên"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="salary" editor="text" title="Lương">
-        </kendo-grid-column>
+        <kendo-grid-column [width]="200" field="tenthuoc" editor="text" title="Tên thuốc"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="danhmuc" editor="text" title="Danh mục"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="donvinhap" editor="text" title="Đơn vị nhập"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="soluong" editor="text" title="Số lượng"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="nhasanxuat" editor="text" title="Nhà sản xuất"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="mota" editor="text" title="Mô tả"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="giathuocnhap" editor="text" title="Giá thuốc nhập"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="giathuocban" editor="text" title="Giá thuốc bán"></kendo-grid-column>
         <kendo-grid-command-column title="Thao tác" [width]="100">
           <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem="dataItem">
             <div class="d-flex" kendoTooltip>
@@ -112,21 +110,27 @@
             </div>
           </ng-template>
         </kendo-grid-command-column>
-            <ng-template kendoPagerTemplate let-currentPage="currentPage" let-total="total" let-skip="skip" let-pageSize="pageSize">
-              <div class="d-lg-flex d-md-block justify-content-between w-100">
-                <div class="p-1 d-flex d-sm-flex justify-content-between">
-                  <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{skip + 1}} - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
-                </div>
-                <div class="d-flex justify-content-center custom-mt-15">
-                  <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
-                  <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
-                  <kendo-pager-next-buttons></kendo-pager-next-buttons>
-                </div>
-              </div>
-            </ng-template>
-        <ng-template kendoGridNoRecordsTemplate>
-          Không có dữ liệu
+        <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage" let-total="total"
+                     let-skip="skip" let-pageSize="pageSize">
+          <div class="d-flex justify-content-between w-100">
+            <div class="p-1 d-flex">
+              <kendo-dropdownlist class="w-60px" [data]="pageSizes" [(ngModel)]="_pageSize"
+                                  (ngModelChange)="pageSizeChange()">
+              </kendo-dropdownlist>
+              <p class="m-0 pl-3 pt-2">Tổng số: {{total}}. Hiển thị {{total === 0 ? 0 : skip + 1}}
+                - {{pageSize * currentPage >= total ? total : pageSize * currentPage}}</p>
+            </div>
+            <div class="d-flex">
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+              <kendo-pager-numeric-buttons [buttonCount]="buttonCount">
+              </kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+            </div>
+          </div>
         </ng-template>
+            <ng-template kendoGridNoRecordsTemplate>
+              Không có dữ liệu
+            </ng-template>
       </kendo-grid>
       <div class="custom-loading-h">
         <div *ngIf="loading | async" class="k-i-loading"></div>
@@ -134,15 +138,3 @@
     </div>
   </kt-portlet-body>
 </kt-portlet>
-
-<!--<div class="card-header bg-dark-o-20 d-flex justify-content-between">-->
-<!--  <div class="mb-auto mt-auto">-->
-<!--    <h3 style="margin-bottom: 0px"><i class="fa fa-list" style="font-size: larger; color: black"></i>Hồ sơ nhân viên </h3>-->
-<!--  </div>-->
-<!--  &lt;!&ndash;  <div style="margin-top: 10px" kendoTooltip>&ndash;&gt;-->
-<!--  &lt;!&ndash;    <button title="Thêm" kendoButton type="button" [iconClass]="'fas fa-plus'" (click)="openModalAdd()"&ndash;&gt;-->
-<!--  &lt;!&ndash;            style="background: #419197; color: white; font-size: medium; margin-right: 10px"></button>&ndash;&gt;-->
-<!--  &lt;!&ndash;  </div>&ndash;&gt;-->
-<!--</div>-->
-<!--<div class="card-body">-->
-<!--</div>-->

@@ -13,8 +13,8 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getEmployee():Observable<ItemEmployee>{
-    return this.http.get<ItemEmployee>(`${this.API}/api/user/all/1`);
+  getEmployee(body: any):Observable<ItemEmployee>{
+    return this.http.post<ItemEmployee>(`${this.API}/api/user/all`,body);
   }
 
   createEmployee(employee: Employee) {

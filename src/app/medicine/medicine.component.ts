@@ -6,6 +6,7 @@ import {GridDataResult, PageChangeEvent} from "@progress/kendo-angular-grid";
 import {ModalAddEitMedicineComponent} from "./modal-add-eit-medicine/modal-add-eit-medicine.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModalDeleteMedicineComponent} from "./modal-delete-medicine/modal-delete-medicine.component";
+import {GridParam, GridParam1} from "../core/service/model/grid-param";
 
 
 @Component({
@@ -14,7 +15,7 @@ import {ModalDeleteMedicineComponent} from "./modal-delete-medicine/modal-delete
   styleUrls: ['./medicine.component.scss']
 })
 export class MedicineComponent implements OnInit {
-
+  public inforFind: GridParam1;
   isCollapsed = true;
   public form: FormGroup;
   ADD = 'ADD';
@@ -25,9 +26,9 @@ export class MedicineComponent implements OnInit {
   public buttonCount = 5;
   public info = true;
   public type: 'numeric' | 'input' = 'numeric';
-  public pageSizes = true;
+  pageSizes: Array<number> = [5, 10, 20];
   public previousNext = true;
-  public pageSize = 5;
+  public _pageSize = 5;
   public skip = 0;
   // @ViewChild('table') table: GridComponent;
   constructor(private medicineService: MedicineService,
@@ -37,29 +38,30 @@ export class MedicineComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
   }
-  protected pageChange({ skip, take }: PageChangeEvent): void {
-    this.skip = skip;
-    this.pageSize = take;
-    this.loadData();
+  pageSizeChange() {
+    this.skip = this._pageSize * Math.floor(this.skip / this._pageSize);
+    this.loadData()
+  }
+
+  pageChange(event: PageChangeEvent) {
+    this.skip = event.skip;
+    this.loadData()
   }
   loadData() {
+    const body = {
+      skipCount: this.skip,
+      pageSize : this._pageSize
+    }
+    // console.log(this.inforFind)
+    // this.inforFind.skipCount = this.skip;
+    // this.inforFind.pageSize = this.pageSize;
     this.loading.next(true);
-    this.medicineService.getMedicine().subscribe((data) => {
+    this.medicineService.getMedicine(body).subscribe((data) => {
       console.log(data)
       this.dataKT = ({
         data : data.Medicine,
-        total: data.Totalpages
+        total: data.Totalcount
       })
-      // this.dataKT = data
-      // if(this.table !== undefined){
-      //   this.table.data = data
-      // }
-
-      // this.dataKT = {
-      //   data: data.slice(this.skip, this.skip + this.pageSize),
-      //   total: data.length
-      // };
-      // console.log(this.dataKT);
       this.isLoading$.next(true);
       this.loading.next(false);
     });

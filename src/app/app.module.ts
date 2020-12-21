@@ -86,12 +86,13 @@ import { LoginComponent } from './login/login.component';
 import {ErrorInterceptor, JwtInterceptor} from "./_helpers";
 import {fakeBackendProvider} from "./_helpers/fake-backend";
 import {ButtonModule} from "@progress/kendo-angular-buttons";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {DropDownListModule} from "@progress/kendo-angular-dropdowns";
 import {NgbCollapseModule} from "@ng-bootstrap/ng-bootstrap";
 import {EmployeeModule} from "./employee/employee.module";
 import {MedicineModule} from './medicine/medicine.module';
+import { BillComponent } from './bill/bill.component';
 
 
 // tslint:disable-next-line:class-name
@@ -146,47 +147,48 @@ export function getHighlightLanguages() {
 }
 
 @NgModule({
-  declarations: [AppComponent,MedicineComponent, EmployeeComponent, LoginComponent],
-    imports: [
-        BrowserAnimationsModule,
-        CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        // environment.isMockEnabled
-        //   ? HttpClientInMemoryWebApiModule.forRoot(FakeApiService, {
-        //       passThruUnknownUrl: true,
-        //       dataEncapsulation: false,
-        //     })
-        //   : [],
-        NgxPermissionsModule.forRoot(),
-        HighlightModule,
-        PartialsModule,
-        CoreModule,
-        OverlayModule,
-        StoreModule.forRoot(reducers, {metaReducers}),
-        EffectsModule.forRoot([]),
-        StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
-        StoreDevtoolsModule.instrument(),
-        AuthModule.forRoot(),
-        TranslateModule.forRoot(),
-        MatProgressSpinnerModule,
-        InlineSVGModule.forRoot(),
-        ThemeModule,
-        GridModule,
-        TreeViewModule,
-        NotificationModule,
-        InputsModule,
-        SearchModule,
-        ToastrModule.forRoot(toastrConfig),
-        ButtonModule,
-        ReactiveFormsModule,
-        NgxSpinnerModule,
-        DropDownListModule,
-        NgbCollapseModule,
-      EmployeeModule,
-      MedicineModule,
-    ],
+  declarations: [AppComponent,MedicineComponent, EmployeeComponent, LoginComponent, BillComponent],
+  imports: [
+    BrowserAnimationsModule,
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    // environment.isMockEnabled
+    //   ? HttpClientInMemoryWebApiModule.forRoot(FakeApiService, {
+    //       passThruUnknownUrl: true,
+    //       dataEncapsulation: false,
+    //     })
+    //   : [],
+    NgxPermissionsModule.forRoot(),
+    HighlightModule,
+    PartialsModule,
+    CoreModule,
+    OverlayModule,
+    StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+    StoreDevtoolsModule.instrument(),
+    AuthModule.forRoot(),
+    TranslateModule.forRoot(),
+    MatProgressSpinnerModule,
+    InlineSVGModule.forRoot(),
+    ThemeModule,
+    GridModule,
+    TreeViewModule,
+    NotificationModule,
+    InputsModule,
+    SearchModule,
+    ToastrModule.forRoot(toastrConfig),
+    ButtonModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+    DropDownListModule,
+    NgbCollapseModule,
+    EmployeeModule,
+    MedicineModule,
+    FormsModule,
+  ],
   providers: [
     AuthService,
     ConfigService,

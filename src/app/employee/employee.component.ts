@@ -43,12 +43,16 @@ export class EmployeeComponent implements OnInit {
     this.loadData();
   }
   loadData() {
+    const body ={
+      skipCount: this.skip,
+      pageSize: this.pageSize
+    }
     this.loading.next(true);
-    this.employeeService.getEmployee().subscribe((data) => {
+    this.employeeService.getEmployee(body).subscribe((data) => {
       console.log(data)
       this.dataKT = ({
         data : data.Userinfo,
-        total: data.Totalpages
+        total: data.Totalcount
       })
       // this.dataKT = data
       // if(this.table !== undefined){

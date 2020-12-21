@@ -110,13 +110,13 @@ const routes: Routes = [
             (m) => m.StudentsModule
           ),
       },
-      // {
-      //   path: 'system',
-      //   loadChildren: () =>
-      //     import('./views/pages/system/system.module').then(
-      //       (m) => m.SystemModule
-      //     ),
-      // },
+      {
+        path: 'system',
+        loadChildren: () =>
+          import('./views/pages/system/system.module').then(
+            (m) => m.SystemModule
+          ),
+      },
       // {
       //   path: 'categories',
       //   loadChildren: () =>

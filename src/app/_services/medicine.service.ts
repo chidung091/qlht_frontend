@@ -13,8 +13,8 @@ export class MedicineService {
 
   constructor(private http: HttpClient) { }
 
-  getMedicine():Observable<ItemMedicine>{
-    return this.http.get<ItemMedicine>(`${this.API}/api/medicine/all/1`);
+  getMedicine(body: any):Observable<any>{
+    return this.http.post<any>(`${this.API}/api/medicine/all`,body);
   }
 
   createMedicine(medicine: Medicine) {

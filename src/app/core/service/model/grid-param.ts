@@ -13,6 +13,10 @@ export class GridParam {
   skipCount: number;
   maxResultCount: number;
 }
+export class GridParam1 {
+  pageSize: number;
+  skipCount: number;
+}
 
 export enum SortDirection {
   ASC = 0,
