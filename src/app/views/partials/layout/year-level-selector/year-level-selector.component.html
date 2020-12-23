@@ -1,40 +1,40 @@
 <div class="d-flex align-items-center" *ngIf="smasContextModel">
-  <div ngbDropdown class="dropdown dropdown-fluid pr-3" placement="bottom-right">
-    <div ngbDropdownToggle class="d-inline-block">
-      <div class="btn btn-clean" style="border-color: #B5B5C3">
-        {{smasContextModel.level?.schoolLevelName}}
-        <img src="./assets/media/svg/icons/Navigation/Angle-down.svg" style="height: 16px" />
-      </div>
-    </div>
-    <div ngbDropdownMenu class="dropdown-menu">
-      <ul class="navi navi-hover">
-        <ng-container *ngFor="let level of levels$ | async">
-          <li class="navi-item">
-            <a ngbDropdownToggle class="navi-link" (click)="selectLevel(level)">
-              <span class="navi-text"> {{level?.schoolLevelName}}</span>
-            </a>
-          </li>
-        </ng-container>
-      </ul>
-    </div>
-  </div>
-  <div ngbDropdown class="dropdown dropdown-fluid" placement="bottom-right">
-    <div ngbDropdownToggle class="d-inline-block">
-      <div class="btn btn-clean" style="border-color: #B5B5C3">
-        {{smasContextModel.year?.code}}
-        <img src="./assets/media/svg/icons/Navigation/Angle-down.svg" style="height: 16px" />
-      </div>
-    </div>
-    <div ngbDropdownMenu class="dropdown-menu">
-      <ul class="navi navi-hover">
-        <ng-container *ngFor="let year of years$ | async">
-          <li class="navi-item">
-            <a ngbDropdownToggle class="navi-link" (click)="selectYear(year)">
-              <span class="navi-text"> {{year.code}}</span>
-            </a>
-          </li>
-        </ng-container>
-      </ul>
-    </div>
-  </div>
+<!--  <div ngbDropdown class="dropdown dropdown-fluid pr-3" placement="bottom-right">-->
+<!--    <div ngbDropdownToggle class="d-inline-block">-->
+<!--      <div class="btn btn-clean" style="border-color: #B5B5C3">-->
+<!--        {{smasContextModel.level?.schoolLevelName}}-->
+<!--        <img src="./assets/media/svg/icons/Navigation/Angle-down.svg" style="height: 16px" />-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div ngbDropdownMenu class="dropdown-menu">-->
+<!--      <ul class="navi navi-hover">-->
+<!--        <ng-container *ngFor="let level of levels$ | async">-->
+<!--          <li class="navi-item">-->
+<!--            <a ngbDropdownToggle class="navi-link" (click)="selectLevel(level)">-->
+<!--              <span class="navi-text"> {{level?.schoolLevelName}}</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ng-container>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div ngbDropdown class="dropdown dropdown-fluid" placement="bottom-right">-->
+<!--    <div ngbDropdownToggle class="d-inline-block">-->
+<!--      <div class="btn btn-clean" style="border-color: #B5B5C3">-->
+<!--        {{smasContextModel.year?.code}}-->
+<!--        <img src="./assets/media/svg/icons/Navigation/Angle-down.svg" style="height: 16px" />-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div ngbDropdownMenu class="dropdown-menu">-->
+<!--      <ul class="navi navi-hover">-->
+<!--        <ng-container *ngFor="let year of years$ | async">-->
+<!--          <li class="navi-item">-->
+<!--            <a ngbDropdownToggle class="navi-link" (click)="selectYear(year)">-->
+<!--              <span class="navi-text"> {{year.code}}</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ng-container>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>

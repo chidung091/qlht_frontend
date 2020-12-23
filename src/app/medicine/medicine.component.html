@@ -87,7 +87,7 @@
   </kt-portlet-body>
 </kt-portlet>
 <kt-portlet>
-  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh sách nhân viên'" [class]="'card-head-lg bgr-custom'">
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Danh Thuốc'" [class]="'card-head-lg bgr-custom'">
     <ng-container ktPortletTools>
       <button class="btn btn-primary btn-sm mr-2" type="button" (click)="openModalAdd()" ngbTooltip="Thêm"
               placement="bottom">
@@ -122,7 +122,7 @@
         <kendo-grid-column [width]="200" field="giathuocban" editor="text" title="Giá thuốc bán"></kendo-grid-column>
         <kendo-grid-command-column title="Thao tác" [width]="100">
           <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem="dataItem">
-            <div class="d-flex" kendoTooltip>
+            <div class="d-flex justify-content-around align-items-center" kendoTooltip>
               <button kendoGridEditCommand ngbTooltip="Sửa" placement="left" container="body"
                       (click)="openModalEdit(dataItem)"
                       container="body">

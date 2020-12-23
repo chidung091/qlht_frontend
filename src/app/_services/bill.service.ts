@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 export class BillService {
   private API = `http://chidung091.ddns.net:5035`;
   constructor(private http: HttpClient) { }
-  getBill(){
-    return this.http.get(`${this.API}/api/bill/1`)
+  getBill(body: any){
+    return this.http.post<any>(`${this.API}/api/bill/showall`,body)
   }
 }

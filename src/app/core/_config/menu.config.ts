@@ -131,7 +131,7 @@ export class MenuConfig {
         {
           title: 'Nhà thuốc',
           root: true,
-          icon: 'flaticon-user',
+          icon: 'fas fa-capsules',
           // bullet: 'dot',
           permission: [
             // Policies.EMPLOYEEMANAGEMENT_EMPLOYEE,
@@ -146,6 +146,101 @@ export class MenuConfig {
             {
               title: 'Danh sách sản phẩm',
               page: '/system/medicine',
+            },
+            // {
+            //   title: 'Phân công kiêm nhiệm',
+            //   page: '/officers/concurrent-work-assignment',
+            //   permission: Policies.EMPLOYEEMANAGEMENT_CONCURRENTWORKASSIGNMENT,
+            // },
+            // {
+            //   title: 'Phân công chủ nhiệm',
+            //   page: '/officers/head-teacher',
+            //   //permission: 'EmployeeManagement.xxx'
+            // },
+            // // {s
+            // //   title: 'Tiếp nhận chuyển công tác',
+            // //   permission: 'EmployeeManagement.xxx'
+            // // },
+            // {
+            //   title: 'Phân công giáo vụ',
+            //   page: '/officers/assignment-ministry',
+            //   permission: Policies.EMPLOYEEMANAGEMENT_CLASSSUPERVISORASSIGNMENT,
+            // },
+            // {
+            //   title: 'Phân công giảng dạy',
+            //   page: '/officers/assignment-teaching',
+            //   permission: Policies.EMPLOYEEMANAGEMENT_TEACHINGASSIGNMENT,
+            // },
+            // {
+            //   title: 'Khen thưởng - Kỷ luật',
+            //   page: '/officers/employee-praise-discipline',
+            //   permission: Policies.EMPLOYEEMANAGEMENT_EMPLOYEEPRAISEDISCIPLINE,
+            // },
+            // {
+            //   title: 'Đánh giá xếp loại giáo viên',
+            //   page: '/officers/teacher-grading',
+            //   permission: Policies.EMPLOYEEMANAGEMENT_TEACHERGRADING,
+            // },
+            // {
+            //   title: 'Danh hiệu thi đua tập thể',
+            //   page: '/officers/honour-achivement',
+            //   permission: Policies.EMPLOYEEMANAGEMENT_HONOURACHIVEMENT,
+            // },
+            // {
+            //   title: 'Lịch báo giảng',
+            //   page: '/officers/newspaper-teaching-calendar',
+            //   submenu: [
+            //     {
+            //       title: 'Cấu hình phân môn',
+            //       page: '/officers/divisive-configuaration',
+            //     },
+            //     {
+            //       title: 'Phân phối chương trình',
+            //       page: '/officers/distribute-program',
+            //     },
+            //     {
+            //       title: 'Lịch báo giảng',
+            //       page: '/officers/teaching-schedule',
+            //     },
+            //     {
+            //       title: 'Quản lý lịch báo giảng',
+            //       page: '/officers/management-teaching-schedule',
+            //     },
+            //   ]
+            // },
+            // {
+            //   title: 'Đánh giá chuẩn nghề nghiệp',
+            //   page: '/officers/standard-assessment',
+            // },
+            // {
+            //   title: 'Làm thay chủ nhiệm',
+            // },
+            // {
+            //   title: 'Quản lý sử dụng sổ điểm',
+            // },
+            // {
+            //   title: 'Nhập liệu sổ chủ nhiệm',
+            // },
+          ],
+        },
+        {
+          title: 'Hóa đơn',
+          root: true,
+          icon: 'fas fa-money-bill-wave',
+          // bullet: 'dot',
+          permission: [
+            // Policies.EMPLOYEEMANAGEMENT_EMPLOYEE,
+            // Policies.EMPLOYEEMANAGEMENT_CONCURRENTWORKASSIGNMENT,
+            // Policies.EMPLOYEEMANAGEMENT_CLASSSUPERVISORASSIGNMENT,
+            // Policies.EMPLOYEEMANAGEMENT_TEACHINGASSIGNMENT,
+            // Policies.EMPLOYEEMANAGEMENT_EMPLOYEEPRAISEDISCIPLINE,
+            // Policies.EMPLOYEEMANAGEMENT_TEACHERGRADING,
+            // Policies.EMPLOYEEMANAGEMENT_HONOURACHIVEMENT,
+          ],
+          submenu: [
+            {
+              title: 'Danh sách hóa đơn',
+              page: '/system/bill',
             },
             // {
             //   title: 'Phân công kiêm nhiệm',

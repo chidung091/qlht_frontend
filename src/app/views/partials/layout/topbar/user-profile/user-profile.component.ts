@@ -8,6 +8,7 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
 import { currentUser, Logout, User } from '../../../../../core/auth';
 import { Router } from '@angular/router';
+import {AuthenticationService} from "../../../../../_services/authentication.service";
 
 @Component({
   selector: 'kt-user-profile',
@@ -29,7 +30,8 @@ export class UserProfileComponent implements OnInit {
    * @param store: Store<AppState>
    */
   constructor(private store: Store<AppState>,
-              private router: Router,) {
+              private router: Router,
+              private authenticationService: AuthenticationService,) {
   }
 
   /**
@@ -46,8 +48,11 @@ export class UserProfileComponent implements OnInit {
   /**
    * Log out
    */
+  // logout() {
+  //   this.store.dispatch(new Logout());
+  // }
   logout() {
-    this.store.dispatch(new Logout());
+    this.authenticationService.logout();
   }
 
   changePassword(){

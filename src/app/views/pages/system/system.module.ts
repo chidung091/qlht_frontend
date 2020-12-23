@@ -23,11 +23,16 @@ import {UploadFileModule} from '../../upload-file/upload-file.module';
 import {DataInitializationModule} from './data-initialization/data-initialization.module';
 import {SchoolYearModule} from './school-year/school-year.module';
 import {MedicineComponent} from '../../../medicine/medicine.component';
+import {BillComponent} from '../../../bill/bill.component';
 
 const routes: Routes = [
   {
     path: 'medicine',
     component: MedicineComponent,
+  },
+  {
+    path: 'bill',
+    component: BillComponent,
   },
   {
     path: 'subject',

@@ -27,7 +27,7 @@ export class EmployeeComponent implements OnInit {
   public type: 'numeric' | 'input' = 'numeric';
   public pageSizes = true;
   public previousNext = true;
-  public pageSize = 5;
+  public _pageSize = 5;
   public skip = 0;
   // @ViewChild('table') table: GridComponent;
   constructor(private employeeService: EmployeeService,
@@ -39,13 +39,13 @@ export class EmployeeComponent implements OnInit {
   }
   protected pageChange({ skip, take }: PageChangeEvent): void {
     this.skip = skip;
-    this.pageSize = take;
+    this._pageSize = take;
     this.loadData();
   }
   loadData() {
     const body ={
       skipCount: this.skip,
-      pageSize: this.pageSize
+      pageSize: this._pageSize
     }
     this.loading.next(true);
     this.employeeService.getEmployee(body).subscribe((data) => {

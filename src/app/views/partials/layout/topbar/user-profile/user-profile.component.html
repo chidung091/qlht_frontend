@@ -1,4 +1,7 @@
 <!--begin::User-->
+<div class="navi-footer  px-8 py-5">
+  <a href="login" (click)="logout()" class="btn btn-light-primary font-weight-bold">Đăng xuất</a>
+</div>
 <div ngbDropdown placement="bottom-right" *ngIf="user$ | async as _user" class="dropdown dropdown-fluid">
     <!--begin::Toggle-->
     <div ngbDropdownToggle class="topbar-item">
