@@ -7,7 +7,7 @@ import {DetailProduct} from "../_models/detailProduct";
 })
 
 export class BillService {
-  private API = `http://chidung091.ddns.net:5035`;
+  private API = `localhost:5035`;
   constructor(private http: HttpClient) { }
   getBill(body: any){
     return this.http.post<any>(`${this.API}/api/bill/showall`,body)

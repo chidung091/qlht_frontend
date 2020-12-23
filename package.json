@@ -4,6 +4,7 @@
   "description": "ITSOL",
   "scripts": {
     "ng": "ng",
+    "prestart": "git pull && npm install -g",
     "start": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng serve",
     "build": "ng build --prod",
     "test": "ng test",

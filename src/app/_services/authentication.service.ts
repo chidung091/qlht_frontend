@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import {User} from '../_models';
 
 
-const  API = `http://chidung091.ddns.net:5035`;
+const  API = `localhost:5035`;
 
 @Injectable({
   providedIn: 'root'

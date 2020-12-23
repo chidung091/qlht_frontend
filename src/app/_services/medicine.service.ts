@@ -9,7 +9,7 @@ import {ItemMedicine} from "../_models/itemMedicine";
 })
 export class MedicineService {
 
-  private API = `http://chidung091.ddns.net:5035`;
+  private API = `localhost:5035`;
 
   constructor(private http: HttpClient) { }
 
