@@ -28,5 +28,8 @@ export class MedicineService {
   deleteMedicineById(id: string) {
     return this.http.delete<Medicine>(`${this.API}/api/medicine/delete/${id}`);
   }
+  searchByName(body: any) {
+    return this.http.post<any>(`${this.API}/api/medicine/search/name`, body);
+  }
 }
 

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ModalAddEitMedicineComponent } from './modal-add-eit-medicine/modal-add-eit-medicine.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ModalDeleteMedicineComponent } from './modal-delete-medicine/modal-delete-medicine.component';
+import {PartialsModule} from "../views/partials/partials.module";
+import {NgbCollapseModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 
@@ -10,7 +12,9 @@ import { ModalDeleteMedicineComponent } from './modal-delete-medicine/modal-dele
   declarations: [ModalAddEitMedicineComponent, ModalDeleteMedicineComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PartialsModule,
+    NgbCollapseModule
   ],
   entryComponents: [
     ModalAddEitMedicineComponent,

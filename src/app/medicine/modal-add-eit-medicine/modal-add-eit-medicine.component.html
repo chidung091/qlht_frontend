@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title">
-<!--    {{title}}-->
+  Thêm mới thuốc
   </h4>
   <button class="btn-close-h" aria-label="Close" (click)="cancel()">
     <span aria-hidden="true">&times;</span>
@@ -11,118 +11,89 @@
     <form [formGroup]="form">
       <div>
         <div class="form-group">
-          <label class="col-form-label">Email</label>
+          <label class="col-form-label">Tên thuốc <span style="color: red">*</span></label>
           <div class="">
-            <input (focusout)="trimSpace('disciplineLevelName')" type="text" class="form-control"
-                   formControlName="email" name="email"/>
+            <input (focusout)="trimSpace('tenthuoc')" type="text" class="form-control"
+                   formControlName="tenthuoc" name="tenthuoc"/>
           </div>
-<!--          <div class="col-sm-2"></div>-->
-<!--          <div class="col-sm-10"-->
-<!--               *ngIf="submitted && f.disciplineLevelName.errors || f.disciplineLevelName.errors && (f.disciplineLevelName.dirty || f.disciplineLevelName.touched)">-->
-<!--            <div class="text-error">-->
-<!--              <div *ngIf="f.disciplineLevelName.errors.maxlength">-->
-<!--                {{VI_LANG.FIELD.DISCIPLINE_LEVEL_NAME}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.tenthuoc.errors || f.tenthuoc.errors && (f.tenthuoc.dirty || f.tenthuoc.touched)">
+            <div class="text-error">
+              <div *ngIf="f.tenthuoc.errors.required">
+                Tên thuốc không được để trống
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="col-form-label">Password</label>
+          <label class="col-form-label">Mô tả</label>
           <div class="">
-            <input (focusout)="trimSpace('password')" type="text" class="form-control"
-                   formControlName="password"
-                   name="password"/>
+            <input (focusout)="trimSpace('mota')" type="text" class="form-control"
+                   formControlName="mota"
+                   name="mota"/>
           </div>
-<!--          <div class="col-sm-2"></div>-->
-<!--          <div class="col-sm-10"-->
-<!--               *ngIf="submitted && f.decisionNumber.errors || f.decisionNumber.errors && (f.decisionNumber.dirty || f.decisionNumber.touched)">-->
-<!--            <div class="text-error">-->
-<!--              <div *ngIf="f.decisionNumber.errors.maxlength">-->
-<!--                {{VI_LANG.FIELD.DECISION_NUMBER_DISCIPLINE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_250}}-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
         </div>
         <div class="form-group">
-          <label class="col-form-label">Họ và tên</label>
+          <label class="col-form-label">Giá thuốc nhập <span style="color: red">*</span></label>
           <div class="">
-            <input (focusout)="trimSpace('fullName')" type="text" class="form-control" formControlName="fullName"
-                   name="description"/>
+            <input (focusout)="trimSpace('giathuocnhap')" type="number" class="form-control" formControlName="giathuocnhap"
+                   name="giathuocnhap"/>
           </div>
-<!--          <div class="col-sm-2"></div>-->
-<!--          <div class="col-sm-10"-->
-<!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
-<!--            <div class="text-error">-->
-<!--              <div *ngIf="f.description.errors.maxlength">-->
-<!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.giathuocnhap.errors || f.giathuocnhap.errors && (f.giathuocnhap.dirty || f.giathuocnhap.touched)">
+            <div class="text-error">
+              <div *ngIf="f.giathuocnhap.errors.required">
+                Giá thuốc nhập không được để trống
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label class="col-form-label">Ngày sinh</label>
+          <label class="col-form-label">Giá thuốc Bán <span style="color: red">*</span></label>
           <div class="">
-            <input (focusout)="trimSpace('ngaysinh')" type="text" class="form-control" formControlName="ngaysinh"
-                   name="ngaysinh"/>
+            <input (focusout)="trimSpace('giathuocban')" type="number" class="form-control" formControlName="giathuocban"
+                   name="giathuocban"/>
           </div>
-          <!--          <div class="col-sm-2"></div>-->
-          <!--          <div class="col-sm-10"-->
-          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
-          <!--            <div class="text-error">-->
-          <!--              <div *ngIf="f.description.errors.maxlength">-->
-          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10"
+               *ngIf="submitted && f.giathuocban.errors || f.giathuocban.errors && (f.giathuocban.dirty || f.giathuocban.touched)">
+            <div class="text-error">
+              <div *ngIf="f.giathuocban.errors.required">
+                Giá thuốc bán không được để trống
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label class="col-form-label">Số điện thoại:</label>
+          <label class="col-form-label">Đơn vị nhập:</label>
           <div class="">
-            <input (focusout)="trimSpace('sodienthoai')" type="text" class="form-control" formControlName="sodienthoai"
-                   name="sodienthoai"/>
+            <input (focusout)="trimSpace('donvinhap')" type="text" class="form-control" formControlName="donvinhap"
+                   name="donvinhap"/>
           </div>
-          <!--          <div class="col-sm-2"></div>-->
-          <!--          <div class="col-sm-10"-->
-          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
-          <!--            <div class="text-error">-->
-          <!--              <div *ngIf="f.description.errors.maxlength">-->
-          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
         </div>
         <div class="form-group">
-          <label class="col-form-label">Lương</label>
+          <label class="col-form-label">Nhà sản xuất</label>
           <div class="">
-            <input (focusout)="trimSpace('salary')" type="text" class="form-control" formControlName="salary"
-                   name="salary"/>
+            <input (focusout)="trimSpace('nhasanxuat')" type="text" class="form-control" formControlName="nhasanxuat"
+                   name="nhasanxuat"/>
           </div>
-          <!--          <div class="col-sm-2"></div>-->
-          <!--          <div class="col-sm-10"-->
-          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
-          <!--            <div class="text-error">-->
-          <!--              <div *ngIf="f.description.errors.maxlength">-->
-          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
         </div>
         <div class="form-group">
-          <label class="col-form-label">Quê quán</label>
+          <label class="col-form-label">Số lượng</label>
           <div class="">
-            <input (focusout)="trimSpace('quequan')" type="text" class="form-control" formControlName="quequan"
-                   name="quequan"/>
+            <input (focusout)="trimSpace('soluong')" type="number" class="form-control" formControlName="soluong"
+                   name="soluong"/>
           </div>
-          <!--          <div class="col-sm-2"></div>-->
-          <!--          <div class="col-sm-10"-->
-          <!--               *ngIf="submitted && f.description.errors || f.description.errors && (f.description.dirty || f.description.touched)">-->
-          <!--            <div class="text-error">-->
-          <!--              <div *ngIf="f.description.errors.maxlength">-->
-          <!--                {{VI_LANG.FIELD.NOTE}} {{VI_LANG.COMMON_ERROR.MAX_LENGTH_500}}-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Danh mục</label>
+          <div class="">
+            <input (focusout)="trimSpace('danhmuc')" type="text" class="form-control" formControlName="danhmuc"
+                   name="danhmuc"/>
+          </div>
         </div>
         <div class="custom-loading-h">
           <div *ngIf="loading | async" class="k-i-loading"></div>

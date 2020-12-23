@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {MedicineService} from '../_services/medicine.service';
 import {GridDataResult, PageChangeEvent} from "@progress/kendo-angular-grid";
@@ -16,7 +16,7 @@ import {GridParam, GridParam1} from "../core/service/model/grid-param";
 })
 export class MedicineComponent implements OnInit {
   public inforFind: GridParam1;
-  isCollapsed = true;
+  isCollapsed = false;
   public form: FormGroup;
   ADD = 'ADD';
   UPDATE = 'UPDATE';
@@ -32,10 +32,15 @@ export class MedicineComponent implements OnInit {
   public skip = 0;
   // @ViewChild('table') table: GridComponent;
   constructor(private medicineService: MedicineService,
-              private modal: NgbModal
+              private modal: NgbModal,
+              private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      tenthuoc: new FormControl(''),
+      // EmployeeId: new FormControl(''),
+    })
     this.loadData();
   }
   pageSizeChange() {
@@ -64,10 +69,12 @@ export class MedicineComponent implements OnInit {
       })
       this.isLoading$.next(true);
       this.loading.next(false);
+    }, error => {
+      this.loading.next(false);
     });
   }
   openModalAdd() {
-    const modalRef = this.modal.open(ModalAddEitMedicineComponent, {size: 'md', centered: true});
+    const modalRef = this.modal.open(ModalAddEitMedicineComponent, {size: 'lg', centered: true});
     modalRef.componentInstance.actionType = this.ADD;
     modalRef.componentInstance.title = 'Thêm mới sản phẩm thuốc'
     modalRef.result.then(result => {
@@ -100,6 +107,23 @@ export class MedicineComponent implements OnInit {
   }
 
   search() {
+    const body = {
+      skipCount: this.skip,
+      pageSize : this._pageSize,
+      name: this.form.value.tenthuoc,
+    }
 
+    this.loading.next(true);
+    this.medicineService.searchByName(body).subscribe((data) => {
+      console.log(data)
+      this.dataKT = ({
+        data : data.Medicine,
+        total: data.Totalcount
+      })
+      this.isLoading$.next(true);
+      this.loading.next(false);
+    }, error => {
+      this.loading.next(false);
+    });
   }
 }

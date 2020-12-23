@@ -91,7 +91,11 @@
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
         </kendo-grid-column>
         <kendo-grid-column [width]="200" field="fullName" editor="text" title="Họ và tên"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="ngaysinh" editor="text" title="Ngày sinh"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="ngaysinh" editor="text" title="Ngày sinh">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.ngaysinh | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
         <kendo-grid-column [width]="200" field="sodienthoai" editor="text" title="Số điện thoại nhân viên"></kendo-grid-column>
         <kendo-grid-column [width]="200" field="quequan" editor="text" title="Quê quán nhân viên"></kendo-grid-column>
         <kendo-grid-column [width]="200" field="salary" editor="text" title="Lương">

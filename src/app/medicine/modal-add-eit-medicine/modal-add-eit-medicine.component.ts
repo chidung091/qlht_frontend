@@ -22,22 +22,24 @@ export class ModalAddEitMedicineComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      fullName: new FormControl('', [Validators.required,Validators.maxLength(250)]),
-      ngaysinh: new FormControl('', [Validators.required,Validators.maxLength(250)]),
-      sodienthoai: new FormControl('', [Validators.required,Validators.maxLength(250)]),
-      salary: new FormControl('', [Validators.required, Validators.maxLength(250)]),
-      quequan: new FormControl('', [Validators.maxLength(250)]),
+      tenthuoc: new FormControl('', [Validators.required,Validators.required]),
+      mota: new FormControl('', [Validators.required]),
+      giathuocnhap: new FormControl('', [Validators.required,Validators.maxLength(250)]),
+      giathuocban: new FormControl('', [Validators.required,Validators.maxLength(250)]),
+      donvinhap: new FormControl('', [Validators.required,Validators.maxLength(250)]),
+      nhasanxuat: new FormControl('', [Validators.required, Validators.maxLength(250)]),
+      soluong: new FormControl('', [Validators.maxLength(250)]),
+      danhmuc: new FormControl('', [Validators.maxLength(250)]),
     })
     if (this.selectedItem){
-      this.form.get('email').setValue(this.selectedItem.email);
-      this.form.get('password').setValue(this.selectedItem.password);
-      this.form.get('fullName').setValue(this.selectedItem.fullName);
-      this.form.get('ngaysinh').setValue(this.selectedItem.ngaysinh);
-      this.form.get('sodienthoai').setValue(this.selectedItem.sodienthoai);
-      this.form.get('salary').setValue(this.selectedItem.salary);
-      this.form.get('quequan').setValue(this.selectedItem.quequan);
+      this.form.get('tenthuoc').setValue(this.selectedItem.tenthuoc);
+      this.form.get('mota').setValue(this.selectedItem.mota);
+      this.form.get('giathuocnhap').setValue(this.selectedItem.giathuocnhap);
+      this.form.get('giathuocban').setValue(this.selectedItem.giathuocban);
+      this.form.get('donvinhap').setValue(this.selectedItem.donvinhap);
+      this.form.get('nhasanxuat').setValue(this.selectedItem.nhasanxuat);
+      this.form.get('soluong').setValue(this.selectedItem.soluong);
+      this.form.get('danhmuc').setValue(this.selectedItem.danhmuc);
     }
   }
   trimSpace(formName: string) {
@@ -67,13 +69,14 @@ export class ModalAddEitMedicineComponent implements OnInit {
     console.log(this.selectedItem)
     if (this.selectedItem) {
       const put = {
-        email: this.form.get('email').value,
-        password: this.form.get('password').value,
-        fullName: this.form.get('fullName').value,
-        ngaysinh: this.form.get('ngaysinh').value,
-        sodienthoai: this.form.get('sodienthoai').value,
-        salary: this.form.get('salary').value,
-        quequan: this.form.get('quequan').value,
+        tenthuoc: this.form.get('tenthuoc').value,
+        mota: this.form.get('mota').value,
+        giathuocnhap: this.form.get('giathuocnhap').value,
+        giathuocban: this.form.get('giathuocban').value,
+        donvinhap: this.form.get('donvinhap').value,
+        nhasanxuat: this.form.get('nhasanxuat').value,
+        soluong: this.form.get('soluong').value,
+        danhmuc:this.form.get('danhmuc').value,
       }
       this.loading.next(true);
       this.medicineService.updateMedicine(put, this.selectedItem._id).subscribe(() => {
@@ -95,4 +98,7 @@ export class ModalAddEitMedicineComponent implements OnInit {
     }
   }
 
+  search() {
+
+  }
 }

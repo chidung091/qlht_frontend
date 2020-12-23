@@ -69,7 +69,7 @@ export class EmployeeComponent implements OnInit {
     });
   }
   openModalAdd() {
-    const modalRef = this.modal.open(ModalAddEitEmployeeComponent, {size: 'md', centered: true});
+    const modalRef = this.modal.open(ModalAddEitEmployeeComponent, {size: 'lg', centered: true});
     modalRef.componentInstance.actionType = this.ADD;
     modalRef.componentInstance.title = 'Thêm mới nhân viên'
     modalRef.result.then(result => {
