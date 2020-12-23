@@ -1,0 +1,150 @@
+.k-dropdown{
+  width: 100%;
+}
+.btn-success{
+  color: #ffffff !important;
+  background-color: #1BC5BD !important;
+  border-color: #1BC5BD !important;
+
+}
+
+.col-md-8{
+  .k-datepicker{
+    width: 12.4em !important;
+  }
+}
+.table-violation{
+  .k-header{
+    vertical-align: middle;
+  }
+  th{
+    white-space: normal;
+  }
+}
+//table student
+.header-lam-student{
+  background: #f8f9fa;
+  width: 100%;
+}
+.no-data{
+  width: 100%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+.td-lam-stt-student{
+  font-weight: bold;
+  width: 10%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+.td-lam-img-student{
+  font-weight: bold;
+  width: 20%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+.td-lam-name-student{
+  font-weight: bold;
+  width: 70%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+.td-stt-student{
+  width: 10%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+.td-img-student{
+  width: 20%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+.td-name-student{
+  width: 70%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 60px;
+}
+
+//table fault
+.header-lam{
+  background: #f8f9fa;
+  width: 100%;
+  .td-lam-stt{
+    border: .025px solid #dee2e6;
+  }
+  .td-lam-full-name{
+    border: .025px solid #dee2e6;
+  }
+}
+.td-lam-stt{
+  width: 10%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 55px;
+}
+
+.td-lam-full-name{
+  font-weight: bold;
+  width: 18%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 55px;
+}
+.td-full-name{
+  width: 18%;
+  padding: 10px;
+  border: .025px solid #dee2e6;
+  height: 55px;
+}
+.img-student{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media all and (max-width: 768px) {
+  .class-name{
+    margin-top: 1.25rem;
+  }
+  .field-edit{
+    padding-left: 6.5px !important;
+  }
+  .label-txt{
+    padding-right: 12.5px !important;
+  }
+  .content-violation{
+    .col-sm-8{
+      justify-content: flex-start !important;
+    }
+  }
+}
+
+@media all and (max-width: 992px){
+  .content-violation{
+    margin-top: 1.25rem;
+  }
+
+  .content-violation{
+    .col-sm-8{
+      justify-content: flex-start !important;
+    }
+  }
+}
+.custom{
+  cursor: pointer;
+}
+.custom:hover {
+  background: #def8f8;
+}
+.custom-fault:hover {
+  background: #f8f8f8;
+}
+.activeStudent{
+  background: #def8f8;
+}

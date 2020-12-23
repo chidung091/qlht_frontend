@@ -57,7 +57,12 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate(['students/employee']);
+          console.log(data)
+          const bien = ({
+            data: data.id
+          })
+          console.log(bien.data)
+          this.router.navigate(['system/medicine']);
           this.spinner.show();
         },
         error => {

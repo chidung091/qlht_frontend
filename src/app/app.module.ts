@@ -93,6 +93,9 @@ import {NgbCollapseModule} from "@ng-bootstrap/ng-bootstrap";
 import {EmployeeModule} from "./employee/employee.module";
 import {MedicineModule} from './medicine/medicine.module';
 import { BillComponent } from './bill/bill.component';
+import { DetailProductComponent } from './bill/detail-product/detail-product.component';
+import {ModalAddBillComponent} from "./bill/modal-add-bill/modal-add-bill.component";
+import {DatePickerModule} from "@progress/kendo-angular-dateinputs";
 
 
 // tslint:disable-next-line:class-name
@@ -147,7 +150,7 @@ export function getHighlightLanguages() {
 }
 
 @NgModule({
-  declarations: [AppComponent,MedicineComponent, EmployeeComponent, LoginComponent, BillComponent],
+  declarations: [AppComponent,MedicineComponent, EmployeeComponent, LoginComponent, BillComponent, DetailProductComponent,ModalAddBillComponent],
   imports: [
     BrowserAnimationsModule,
     CommonModule,
@@ -188,6 +191,7 @@ export function getHighlightLanguages() {
     EmployeeModule,
     MedicineModule,
     FormsModule,
+    DatePickerModule,
   ],
   providers: [
     AuthService,
@@ -237,6 +241,10 @@ export function getHighlightLanguages() {
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     fakeBackendProvider
+  ],
+  entryComponents: [
+    DetailProductComponent,
+    ModalAddBillComponent
   ],
   bootstrap: [AppComponent],
 })

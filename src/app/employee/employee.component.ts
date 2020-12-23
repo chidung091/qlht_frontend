@@ -25,7 +25,7 @@ export class EmployeeComponent implements OnInit {
   public buttonCount = 5;
   public info = true;
   public type: 'numeric' | 'input' = 'numeric';
-  public pageSizes = true;
+  pageSizes: Array<number> = [5, 10, 20];
   public previousNext = true;
   public _pageSize = 5;
   public skip = 0;
@@ -37,10 +37,14 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
   }
-  protected pageChange({ skip, take }: PageChangeEvent): void {
-    this.skip = skip;
-    this._pageSize = take;
-    this.loadData();
+  pageSizeChange() {
+    this.skip = this._pageSize * Math.floor(this.skip / this._pageSize);
+    this.loadData()
+  }
+
+  pageChange(event: PageChangeEvent) {
+    this.skip = event.skip;
+    this.loadData()
   }
   loadData() {
     const body ={
@@ -54,16 +58,6 @@ export class EmployeeComponent implements OnInit {
         data : data.Userinfo,
         total: data.Totalcount
       })
-      // this.dataKT = data
-      // if(this.table !== undefined){
-      //   this.table.data = data
-      // }
-
-      // this.dataKT = {
-      //   data: data.slice(this.skip, this.skip + this.pageSize),
-      //   total: data.length
-      // };
-      // console.log(this.dataKT);
       this.isLoading$.next(true);
       this.loading.next(false);
     });

@@ -5,14 +5,32 @@ export class SanPham{
   soluong?: number;
   tongtiensp?: number;
 }
-export class Userinfo {
+export class Billinfo {
   _id?: string;
   loaihd?: string;
   SanPham?: [];
+  thoigianhd?:Date;
 }
 export class Bill {
   success?: boolean;
   message?: string;
   Totalpages?: number;
-  Userinfo?: [];
+  Billinfo?: [];
+}
+
+export class CategoryFault {
+  faultInfos: FaultInfo[];
+  success: boolean;
+  message:string;
+}
+export class FaultInfo {
+  _id: string;
+  tenthuoc:string;
+  mota: string;
+  giathuocnhap: number;
+  giathuocban: number;
+  donvinhap: string;
+  nhasanxuat: string;
+  soluong: number;
+  danhmuc: string;
 }

@@ -4,6 +4,11 @@ import {GridDataResult, PageChangeEvent} from '@progress/kendo-angular-grid';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder} from "@angular/forms";
 import {BillService} from "../_services/bill.service";
+import {ModalDeleteEmployeeComponent} from "../employee/modal-delete-employee/modal-delete-employee.component";
+import {DetailProductComponent} from "./detail-product/detail-product.component";
+import {ModalAddEitEmployeeComponent} from "../employee/modal-add-eit-employee/modal-add-eit-employee.component";
+import {ModalAddEitMedicineComponent} from "../medicine/modal-add-eit-medicine/modal-add-eit-medicine.component";
+import {ModalAddBillComponent} from "./modal-add-bill/modal-add-bill.component";
 
 @Component({
   selector: 'kt-bill',
@@ -40,7 +45,7 @@ export class BillComponent implements OnInit {
     this.billService.getBill(body).subscribe((data) => {
       console.log(data)
       this.dataBill = ({
-        data : data.Userinfo,
+        data : data.Billinfo,
         total: data.Totalpages
       })
       console.log(data)
@@ -57,7 +62,13 @@ export class BillComponent implements OnInit {
   }
 
   openModalAdd() {
-
+    const modalRef = this.modal.open(ModalAddBillComponent, {size: 'lg', centered: true});
+    modalRef.componentInstance.title = 'Thêm mới hóa đơn'
+    modalRef.result.then(result => {
+      if (result === 'create') {
+        this.loadData();
+      }
+    }).catch(error => error)
   }
   pageChange(event: PageChangeEvent) {
     this.skip = event.skip;
@@ -73,6 +84,13 @@ export class BillComponent implements OnInit {
   }
 
   openModalDelete($event: MouseEvent, dataItem: any) {
-
+    const modalRef = this.modal.open(DetailProductComponent, {size: 'lg', centered: true});
+    modalRef.componentInstance.selectedItem = dataItem;
+    console.log(dataItem)
+    modalRef.result.then(result => {
+      if (result === 'delete') {
+        this.loadData();
+      }
+    }).catch(error => error)
   }
 }

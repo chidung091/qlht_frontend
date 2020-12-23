@@ -1,0 +1,67 @@
+<div class="col-xl-7 content-violation">
+  <div class="row">
+    <div class="col-md-10 col-sm-8 col-10 d-flex align-items-center justify-content-end">
+      <p class="mb-0 px-2">Ngày vi phạm:</p>
+<!--      <kendo-datepicker [(ngModel)]="dateCreate"-->
+<!--                        [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"-->
+<!--                        [format]="'dd/MM/yyyy'">-->
+<!--      </kendo-datepicker>-->
+    </div>
+<!--    <div class="col-md-2 col-sm-4 col-2 d-flex justify-content-end">-->
+<!--      <div class="btn-save d-flex flex-row justify-content-end">-->
+<!--        <button kendoButton [iconClass]="'fas fa-save'" class="btn  btn-primary" ngbTooltip="Lưu" [disabled]="checkFault"-->
+<!--                (click)="save()"></button>-->
+<!--        <button kendoButton [iconClass]="'fas fa-arrow-left'" class="ml-1 text-white"-->
+<!--                routerLink="/students/violate-rules"></button>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+
+  <div class="table-lam mt-5">
+    <div class="header-lam d-flex justify-content-between align-items-center">
+      <div class="td-lam-stt text-center"></div>
+      <div class=" td-lam-full-name justify-content-center d-flex align-items-center"> Lỗi vi phạm</div>
+      <div class="td-lam-full-name justify-content-center d-flex align-items-center"> Số lần vi phạm</div>
+      <div class="td-lam-full-name justify-content-center d-flex align-items-center"> Điểm trừ</div>
+      <div class="td-lam-full-name justify-content-center d-flex align-items-center"> Tổng số điểm trừ</div>
+      <div class="td-lam-full-name justify-content-center d-flex align-items-center">Ghi chú</div>
+    </div>
+    <ng-container>
+      <div class="no-data justify-content-center d-flex align-items-center">Không có dữ liệu</div>
+    </ng-container>
+<!--    <ng-container>-->
+<!--      <div class=" d-flex justify-content-between align-items-center custom-fault"-->
+<!--           >-->
+<!--        <div class="td-lam-stt d-flex align-items-center">-->
+<!--          <input class="w-100" type="checkbox" >-->
+<!--        </div>-->
+<!--        <div class="td-full-name d-flex align-items-center">{{data.faultName}}</div>-->
+<!--        <div class="td-full-name justify-content-center d-flex align-items-center">-->
+<!--          <input class="form-control w-100" type="number" [disabled]="!data.isSelected"-->
+<!--                 [(ngModel)]="data.numberFault">-->
+<!--        </div>-->
+<!--        <div class="td-full-name justify-content-center d-flex align-items-center"> {{data.minusMark}}</div>-->
+<!--        <div-->
+<!--          class="td-full-name text-center"> {{data.minusMark * (data.numberFault != null ? data.numberFault : 0) }}</div>-->
+<!--        <div class="td-full-name justify-content-center d-flex align-items-center">-->
+<!--          <input class="form-control w-100" type="text" [disabled]="!data.isSelected"-->
+<!--                 [(ngModel)]="data.description">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--    <div class="header-lam d-flex justify-content-between align-items-center">-->
+<!--      <div class="td-lam-stt text-center"></div>-->
+<!--      <div class="td-lam-full-name text-center d-flex align-items-center">{{countStudentFault()}} Lỗi vi phạm-->
+<!--      </div>-->
+<!--      <div class="td-lam-full-name text-center d-flex align-items-center"> {{ countTotalStudentFault() }} lần vi-->
+<!--        phạm-->
+<!--      </div>-->
+<!--      <div class="td-lam-full-name text-center d-flex align-items-center"></div>-->
+<!--      <div class="td-lam-full-name justify-content-center d-flex align-items-center">{{totalMinusPoint}}</div>-->
+<!--      <div class="td-lam-full-name text-center d-flex align-items-center"></div>-->
+<!--    </div>-->
+  </div>
+<!--  <div class="custom-loading-h">-->
+<!--    <div *ngIf="loadingTableFault | async" class="k-i-loading"></div>-->
+<!--  </div>-->
+</div>

@@ -39,6 +39,7 @@
                   [data]="dataBill"
                   [sortable]="true"
                   [pageSize]="_pageSize"
+                  [sort]="true"
                   [pageable]="true"
                   [skip]="skip"
                   [reorderable]="true" [resizable]="true"
@@ -51,29 +52,18 @@
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
         </kendo-grid-column>
         <kendo-grid-column [width]="200" field="loaihd" editor="text" title="Loại hóa đơn"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="tenthuoc" editor="text" title="Tên thuốc">
+        <kendo-grid-column [width]="200" field="thoigianhd" editor="text" title="Thời gian tạo hóa đơn">
           <ng-template kendoGridCellTemplate let-dataItem>
-            {{dataItem.sanpham.tenthuoc | json}}
+            {{dataItem.thoigianhd | date: 'dd/MM/yyyy'}}
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [width]="200" field="donvinhap" editor="text" title="Đơn vị nhập"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="soluong" editor="text" title="Số lượng"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="nhasanxuat" editor="text" title="Nhà sản xuất"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="mota" editor="text" title="Mô tả"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="giathuocnhap" editor="text" title="Giá thuốc nhập"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="giathuocban" editor="text" title="Giá thuốc bán"></kendo-grid-column>
-        <kendo-grid-command-column title="Thao tác" [width]="100">
+        <kendo-grid-command-column title="Xem sản phẩm" [width]="100">
           <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem="dataItem">
             <div class="d-flex justify-content-around align-items-center" kendoTooltip>
-              <button kendoGridEditCommand ngbTooltip="Sửa" placement="left" container="body"
-                      (click)="openModalEdit(dataItem)"
-                      container="body">
-                <i class="fas fa-pencil-alt " style="color: #419197"></i>
-              </button>
-              <button kendoGridEditCommand ngbTooltip="Xóa" placement="left" container="body"
+              <button kendoGridEditCommand ngbTooltip="Xem chi tiết sản phẩm" placement="left" container="body"
                       (click)="openModalDelete($event, dataItem)"
                       container="body">
-                <i class="far fa-trash-alt " style="color: #419197"></i>
+                <i class="fas fa-eye" style="color: #419197"></i>
               </button>
             </div>
           </ng-template>

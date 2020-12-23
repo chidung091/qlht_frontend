@@ -27,8 +27,13 @@ export class AuthenticationService {
   login(email: string, password: string) {
     return this.http.post<any>(API + '/auth/sign_in', { email, password })
       .pipe(map(user => {
+        const bien = ({
+          id: user.id,
+          token: user.token,
+        })
+        localStorage.setItem('id', JSON.stringify(bien.id));
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('currentUser', JSON.stringify(bien.token));
         this.currentUserSubject.next(user);
         return user;
       }));
