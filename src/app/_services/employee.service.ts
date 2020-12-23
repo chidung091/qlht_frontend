@@ -28,4 +28,7 @@ export class EmployeeService {
   deleteEmployeeById(id: string) {
     return this.http.delete<Employee>(`${this.API}/api/user/delete/${id}`);
   }
+  searchByName(body: any){
+    return this.http.post<any>(`${this.API}/api/user/search/name`, body);
+  }
 }

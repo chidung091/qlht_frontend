@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {GridDataResult, PageChangeEvent} from '@progress/kendo-angular-grid';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BillService} from "../_services/bill.service";
-import {ModalDeleteEmployeeComponent} from "../employee/modal-delete-employee/modal-delete-employee.component";
 import {DetailProductComponent} from "./detail-product/detail-product.component";
-import {ModalAddEitEmployeeComponent} from "../employee/modal-add-eit-employee/modal-add-eit-employee.component";
-import {ModalAddEitMedicineComponent} from "../medicine/modal-add-eit-medicine/modal-add-eit-medicine.component";
 import {ModalAddBillComponent} from "./modal-add-bill/modal-add-bill.component";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'kt-bill',
@@ -17,6 +15,7 @@ import {ModalAddBillComponent} from "./modal-add-bill/modal-add-bill.component";
 })
 export class BillComponent implements OnInit {
   isCollapsed = false;
+  form: FormGroup;
   public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   dataBill: GridDataResult;
@@ -31,6 +30,9 @@ export class BillComponent implements OnInit {
               private billService: BillService) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      ngay: new FormControl(null),
+    })
     this.loadData();
   }
   loadData(){
@@ -58,7 +60,24 @@ export class BillComponent implements OnInit {
   }
 
   search() {
-
+    const body = {
+      skipCount: this.skip,
+      pageSize : this._pageSize,
+      date: this.form.get('ngay').value ? formatDate(this.form.value.ngay,
+        'yyyy-MM-dd', 'en') : '',
+    }
+    this.billService.getBillByDate(body).subscribe(data=> {
+      this.dataBill = ({
+        data : data.Billinfo,
+        total: data.Totalpages
+      })
+      console.log(data)
+      console.log(data.Userinfor)
+      this.isLoading$.next(true);
+      this.loading.next(false);
+    }, error => {
+      this.loading.next(false);
+    });
   }
 
   openModalAdd() {

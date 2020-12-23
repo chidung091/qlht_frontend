@@ -1,5 +1,4 @@
 <kt-portlet>
-  <!-- Search -->
   <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
                      (click)="isCollapsed = !isCollapsed">
     <ng-container ktPortletTools>
@@ -7,25 +6,23 @@
       <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
     </ng-container>
   </kt-portlet-header>
-  <kt-portlet-body *ngIf="isCollapsed">
-    <div>
-<!--      <form class="row" [formGroup]="form">-->
-        <div class="col-md-5 row align-items-center mt-2">
-          <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tổ bộ môn:</label>
-          <div class=" col-sm-8 ">
-            <kendo-dropdownlist>
-            </kendo-dropdownlist>
-          </div>
+  <kt-portlet-body [ngbCollapse]="isCollapsed">
+    <form class="row" [formGroup]="form">
+      <div class="col-md-9 row align-items-center mt-2">
+        <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tên nhân viên :</label>
+        <div class=" col-sm-8 ">
+          <input type="text" class="form-control mr-10" maxlength="100" placeholder="Nhập tên nhân viên cần tìm ..."
+                 id="name" formControlName="name" />
         </div>
-        <div class="col-md-2 d-flex justify-content-md-end  mt-2">
-          <button type="submit" class="btn  btn-primary" (click)="search()">
-            <i class="fas fa-filter"></i> Tìm kiếm
-          </button>
-        </div>
-<!--      </form>-->
-    </div>
+      </div>
+      <div class="col-md-2 d-flex justify-content-md-end  mt-2">
+        <button type="submit" class="btn btn-primary" (click)="search()">
+          <i class="fas fa-filter"></i> Tìm kiếm
+        </button>
+      </div>
+
+    </form>
   </kt-portlet-body>
-  <!--End Search -->
 </kt-portlet>
 
 <kt-portlet>

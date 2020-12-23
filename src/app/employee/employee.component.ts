@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {EmployeeService} from '../_services/employee.service';
 import {GridDataResult, PageChangeEvent} from "@progress/kendo-angular-grid";
@@ -15,7 +15,7 @@ import {ModalDeleteEmployeeComponent} from "./modal-delete-employee/modal-delete
 })
 export class EmployeeComponent implements OnInit {
 
-  isCollapsed = true;
+  isCollapsed = false;
   public form: FormGroup;
   ADD = 'ADD';
   UPDATE = 'UPDATE';
@@ -31,10 +31,15 @@ export class EmployeeComponent implements OnInit {
   public skip = 0;
   // @ViewChild('table') table: GridComponent;
   constructor(private employeeService: EmployeeService,
-              private modal: NgbModal
+              private modal: NgbModal,
+              private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      name: new FormControl(''),
+      // EmployeeId: new FormControl(''),
+    })
     this.loadData();
   }
   pageSizeChange() {
@@ -59,6 +64,26 @@ export class EmployeeComponent implements OnInit {
         total: data.Totalcount
       })
       this.isLoading$.next(true);
+      this.loading.next(false);
+    });
+  }
+
+  search() {
+    const body = {
+      skipCount: this.skip,
+      pageSize : this._pageSize,
+      name: this.form.value.name,
+    }
+    this.loading.next(true);
+    this.employeeService.searchByName(body).subscribe((data) => {
+      console.log(data)
+      this.dataKT = ({
+        data : data.Userinfo,
+        total: data.Totalcount
+      })
+      this.isLoading$.next(true);
+      this.loading.next(false);
+    }, error => {
       this.loading.next(false);
     });
   }
@@ -93,9 +118,5 @@ export class EmployeeComponent implements OnInit {
         this.loadData();
       }
     }).catch(error => error)
-  }
-
-  search() {
-
   }
 }

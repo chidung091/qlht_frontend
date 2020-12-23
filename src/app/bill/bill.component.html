@@ -7,12 +7,13 @@
     </ng-container>
   </kt-portlet-header>
   <kt-portlet-body [ngbCollapse]="isCollapsed">
-<!--    <form class="row" [formGroup]="form">-->
+    <form class="row" [formGroup]="form">
       <div class="col-md-9 row align-items-center mt-2">
-        <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Tên thuốc :</label>
+        <label class="col-sm-3 col-md-3 pr-md-0 mt-2">Ngày tạo hóa đơn :</label>
         <div class=" col-sm-8 ">
-<!--          <input type="text" class="form-control mr-10" maxlength="100" placeholder="Nhập tên thuốc cần tìm ..."-->
-<!--                 id="tenthuoc" formControlName="tenthuoc" />-->
+          <kendo-datepicker [incompleteDateValidation]="true" class="kendo-date" [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
+                            [format]="'dd/MM/yyyy'" aria-label="Ngày kỷ luật" formControlName="ngay">
+          </kendo-datepicker>
         </div>
       </div>
       <div class="col-md-2 d-flex justify-content-md-end  mt-2">
@@ -21,7 +22,7 @@
         </button>
       </div>
 
-<!--    </form>-->
+    </form>
   </kt-portlet-body>
 </kt-portlet>
 <kt-portlet>

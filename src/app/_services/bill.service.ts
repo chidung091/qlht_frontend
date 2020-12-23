@@ -18,4 +18,7 @@ export class BillService {
   getAllMedicine():any {
     return this.http.get<any>(`${this.API}/api/medicine/getall`)
   }
+  getBillByDate(body: any) {
+    return this.http.post<any>(`${this.API}/api/bill/search/date`,body)
+  }
 }

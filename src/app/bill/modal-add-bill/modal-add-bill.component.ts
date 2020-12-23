@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {BillService} from '../../_services/bill.service';
-import {Medicine} from "../../_models/medicine";
 import {CategoryFault, FaultInfo} from "../../_models/bill";
 
 @Component({
@@ -38,7 +37,7 @@ export class ModalAddBillComponent implements OnInit {
         } as FaultInfo;
         this.faultCategory.faultInfos.push(item);
       });
-      console.log(data)
+      console.log(this.faultCategory.faultInfos)
     });
   }
 }
