@@ -12,9 +12,11 @@ import {
 import { tap } from 'rxjs/operators';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { NotiService } from '../../../service/service-model/notification.service';
+import {AuthenticationService} from '../../../../_services/authentication.service';
+
 @Injectable()
 export class InterceptService implements HttpInterceptor {
-  constructor(private notiService: NotiService, private auth: OAuthService) {}
+  constructor(private notiService: NotiService, private auth: AuthenticationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     return next
@@ -58,7 +60,7 @@ export class InterceptService implements HttpInterceptor {
   getAdditionalHeaders(existingHeaders?: HttpHeaders) {
     const headers = {} as any;
 
-    const token = this.auth.getAccessToken();
+    const token = this.auth.currentUserValue;
     if (!existingHeaders?.has('Authorization') && token) {
       headers['Accept-Language'] = 'vi';
       headers.Authorization = `Bearer ${token}`;

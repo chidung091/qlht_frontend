@@ -3,6 +3,7 @@ import {BillService} from '../../_services/bill.service';
 import {CategoryFault, FaultInfo, SanPham} from "../../_models/bill";
 import {MedicineService} from "../../_services/medicine.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NotiService} from '../../core/service/service-model/notification.service';
 
 @Component({
   selector: 'kt-modal-add-bill',
@@ -15,6 +16,8 @@ export class ModalAddBillComponent implements OnInit {
   public _pageSize = 100;
   public skip = 0;
   array = [];
+  selectedItemsList = [];
+  checkedIDs = [];
   public faultCategory = {
     faultInfos: [],
     success: true,
@@ -22,7 +25,8 @@ export class ModalAddBillComponent implements OnInit {
   } as CategoryFault;
   constructor(private billService: BillService,
               private medicineService: MedicineService,
-              private _NgbActiveModal: NgbActiveModal,) { }
+              private _NgbActiveModal: NgbActiveModal,
+              private notiService: NotiService,) { }
 
   ngOnInit(): void {
     this.loadData()
@@ -43,6 +47,8 @@ export class ModalAddBillComponent implements OnInit {
       // dateFault: this.dateFault ? formatDate(this.dateFault, 'yyyy-MM-dd', 'en') : '',
     }
     this.billService.create(body).subscribe(data =>{
+      this.activeModal.close('create');
+      this.notiService.updateSuccess();
       console.log(data)
     })
   }
@@ -56,8 +62,10 @@ export class ModalAddBillComponent implements OnInit {
     });
   }
 
+
   getStudentInfor(data,i) {
     console.log(data)
+
     this.array.push(data)
     console.log('array',this.array)
     // this.medicine.forEach(x =>{
@@ -72,5 +80,9 @@ export class ModalAddBillComponent implements OnInit {
     //   console.log(item)
     //   console.log(this.medicine)
     // })
+  }
+
+  changeSL() {
+
   }
 }

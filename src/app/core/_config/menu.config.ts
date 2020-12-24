@@ -366,6 +366,54 @@ export class MenuConfig {
             // },
           ],
         },
+        {
+          title: 'Thống kê',
+          root: true,
+          icon: 'flaticon2-user-outline-symbol',
+          // translate: 'MENU.DASHBOARD',
+          // bullet: 'dot',
+          permission: [
+            // Policies.PUPILMANAGEMENT_PUPIL
+          ],
+          submenu: [
+            {
+              title: 'Thống kê doanh số cửa hàng',
+              page: '/students/thongke',
+            },
+            // {
+            //   title: 'Tiếp nhận học sinh chuyển trường',
+            //   page: '/students/reception-students',
+            // },
+            // {
+            //   title: 'Điểm danh',
+            //   page: '/students/take-attendance',
+            // },
+            // {
+            //   title: 'Vi phạm',
+            //   page: '/students/violate-rules',
+            // },
+            // {
+            //   title: 'Sổ đánh giá học sinh',
+            //   page: '/students/student-assessment',
+            // },
+            // {
+            //   title: 'Đánh giá khen thưởng',
+            //   page: '/students/evaluation-rewardt',
+            // },
+            // {
+            //   title: 'Xếp loại thi đua cho lớp',
+            //   page: '/students/ranking-emulation',
+            // },
+            // {
+            //   title: 'Sổ ghi nhận xét',
+            //   page: '/students/comment-book',
+            // },
+            // {
+            //   title: 'Đăng kí môn tự chọn',
+            //   page: '/students/elective-subjects',
+            // },
+          ],
+        },
         // {
         //   title: 'Hướng dẫn',
         //   root: true,

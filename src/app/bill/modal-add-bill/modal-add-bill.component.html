@@ -15,18 +15,23 @@
         <div class="td-lam-full-name justify-content-center d-flex align-items-center">giá thuốc bán</div>
         <div class="td-lam-full-name justify-content-center d-flex align-items-center"> donvinhap</div>
 <!--        <div class="td-lam-full-name justify-content-center d-flex align-items-center"> Tổng số điểm trừ</div>-->
-<!--        <div class="td-lam-full-name justify-content-center d-flex align-items-center">soluong</div>-->
+        <div class="td-lam-full-name justify-content-center d-flex align-items-center">soluong</div>
       </div>
 
 
       <div class="  d-flex justify-content-between align-items-center custom-fault"
-           *ngFor="let data of medicine; let i = index" (click)="getStudentInfor(data,i)">
+           *ngFor="let data of medicine; let i = index">
         <div class="td-lam-stt d-flex align-items-center">
-          <button class="btn btn-primary btn-sm mr-2" type="button" ngbTooltip="Thêm"
-                  placement="bottom">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
+<!--          <button class="btn btn-primary btn-sm mr-2" type="button" ngbTooltip="Thêm"-->
+<!--                  placement="bottom" (click)="getStudentInfor(data,i)">-->
+<!--            <i class="fas fa-plus"></i>-->
+<!--          </button>-->
+          <input type="checkbox"   (change)="getStudentInfor(data,i)" />
+
+
+
+
+      </div>
         <div class="td-full-name d-flex align-items-center">{{data.tenthuoc}}</div>
         <div class="td-full-name d-flex align-items-center">{{data.giathuocban}}</div>
 <!--        <div class="td-full-name justify-content-center d-flex align-items-center">-->
@@ -36,10 +41,9 @@
         <div class="td-full-name justify-content-center d-flex align-items-center"> {{data.donvinhap}}</div>
         <!--        <div-->
         <!--          class="td-full-name text-center"> {{data.minusMark * (data.numberFault != null ? data.numberFault : 0) }}</div>-->
-<!--        <div class="td-full-name justify-content-center d-flex align-items-center">-->
-<!--          <input class="form-control w-100" type="text"-->
-<!--                 [(ngModel)]="data.soluong">-->
-<!--        </div>-->
+        <div class="td-full-name justify-content-center d-flex align-items-center">
+          <input class="form-control w-100" type="text" placeholder="nhập số lượng" [(ngModel)]="data.soluong" >
+        </div>
       </div>
     </div>
   </div>
@@ -54,15 +58,11 @@
       <p class="mb-0 px-2">Ngày tạo hóa đơn:</p>
       <kendo-datepicker [(ngModel)]="dateCreate"
                         [formatPlaceholder]="{year: 'yyyy', month: 'mm', day: 'dd'}"
-                        [format]="'dd/MM/yyyy'">
+                        [format]="'dd/MM/yyyy'" formControlName="thoigianhd">
       </kendo-datepicker>
     </div>
   </div>
 
-
-  <button (click)="onSubmit()">
-    Lưu
-  </button>
 <!--  <div class="custom-loading-h">-->
 <!--    <div *ngIf="loadingTableFault | async" class="k-i-loading"></div>-->
 <!--  </div>-->

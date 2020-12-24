@@ -48,6 +48,8 @@
                   (pageChange)="pageChange($event)"
                   [height]="500"
                   [style]="{'border-radius': '25px'}">
+
+
         <kendo-grid-column field="id" title="TT" [width]="45" editable="false">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
         </kendo-grid-column>
