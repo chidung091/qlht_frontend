@@ -84,7 +84,7 @@ export class LevelSchoolComponent implements OnInit, OnDestroy {
     })
   }
 
-  logout() {
-    this.store.dispatch(new Logout());
-  }
+  // logout() {
+  //   this.store.dispatch(new Logout());
+  // }
 }

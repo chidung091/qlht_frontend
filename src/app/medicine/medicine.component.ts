@@ -7,6 +7,7 @@ import {ModalAddEitMedicineComponent} from "./modal-add-eit-medicine/modal-add-e
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModalDeleteMedicineComponent} from "./modal-delete-medicine/modal-delete-medicine.component";
 import {GridParam, GridParam1} from "../core/service/model/grid-param";
+import {SortDescriptor} from "@progress/kendo-data-query";
 
 
 @Component({
@@ -31,11 +32,20 @@ export class MedicineComponent implements OnInit {
   public _pageSize = 5;
   public skip = 0;
   // @ViewChild('table') table: GridComponent;
+  public sort: SortDescriptor[] = [
+    {
+      field: 'tenthuoc',
+      dir: 'asc'
+    }
+  ];
   constructor(private medicineService: MedicineService,
               private modal: NgbModal,
               private fb: FormBuilder,
   ) { }
-
+  public sortChange(sort: SortDescriptor[]): void {
+    this.sort = sort;
+    this.loadData();
+  }
   ngOnInit(): void {
     this.form = this.fb.group({
       tenthuoc: new FormControl(''),

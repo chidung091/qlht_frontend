@@ -8,6 +8,7 @@ import {DetailProduct} from "../_models/detailProduct";
 
 export class BillService {
   private API = `http://localhost:5035`;
+  // private API = `http://chidung091.ddns.net:5035`;
   constructor(private http: HttpClient) { }
   getBill(body: any){
     return this.http.post<any>(`${this.API}/api/bill/showall`,body)
@@ -20,5 +21,8 @@ export class BillService {
   }
   getBillByDate(body: any) {
     return this.http.post<any>(`${this.API}/api/bill/search/date`,body)
+  }
+  create(body: any){
+    return this.http.post<any>(`${this.API}/api/bill`,body)
   }
 }

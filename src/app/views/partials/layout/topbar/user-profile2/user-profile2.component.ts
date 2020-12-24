@@ -43,7 +43,7 @@ export class UserProfile2Component implements OnInit {
 	/**
 	 * Log out
 	 */
-	logout() {
-		this.store.dispatch(new Logout());
-	}
+	// logout() {
+	// 	this.store.dispatch(new Logout());
+	// }
 }

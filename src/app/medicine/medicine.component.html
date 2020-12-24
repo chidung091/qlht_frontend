@@ -99,7 +99,8 @@
     <div class="col-lg-12">
       <kendo-grid *ngIf="isLoading$ | async"
                   [data]="dataKT"
-                  [sortable]="true"
+                  [sort]="sort"
+                  (sortChange)="sortChange($event)"
                   [pageSize]="_pageSize"
                   [pageable]="true"
                   [skip]="skip"
@@ -113,13 +114,13 @@
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
         </kendo-grid-column>
         <kendo-grid-column [width]="200" field="tenthuoc" editor="text" title="Tên thuốc"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="danhmuc" editor="text" title="Danh mục"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="donvinhap" editor="text" title="Đơn vị nhập"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="soluong" editor="text" title="Số lượng"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="nhasanxuat" editor="text" title="Nhà sản xuất"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="mota" editor="text" title="Mô tả"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="giathuocnhap" editor="text" title="Giá thuốc nhập"></kendo-grid-column>
-        <kendo-grid-column [width]="200" field="giathuocban" editor="text" title="Giá thuốc bán"></kendo-grid-column>
+        <kendo-grid-column [width]="100" field="danhmuc" editor="text" title="Danh mục"></kendo-grid-column>
+        <kendo-grid-column [width]="50" field="donvinhap" editor="text" title="Đơn vị nhập"></kendo-grid-column>
+        <kendo-grid-column [width]="50" field="soluong" editor="text" title="Số lượng"></kendo-grid-column>
+        <kendo-grid-column [width]="100" field="nhasanxuat" editor="text" title="Nhà sản xuất"></kendo-grid-column>
+        <kendo-grid-column [width]="300" field="mota" editor="text" title="Mô tả"></kendo-grid-column>
+        <kendo-grid-column [width]="100" field="giathuocnhap" editor="text" title="Giá thuốc nhập"></kendo-grid-column>
+        <kendo-grid-column [width]="100" field="giathuocban" editor="text" title="Giá thuốc bán"></kendo-grid-column>
         <kendo-grid-command-column title="Thao tác" [width]="100">
           <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem="dataItem">
             <div class="d-flex justify-content-around align-items-center" kendoTooltip>

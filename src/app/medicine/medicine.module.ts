@@ -5,17 +5,19 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { ModalDeleteMedicineComponent } from './modal-delete-medicine/modal-delete-medicine.component';
 import {PartialsModule} from "../views/partials/partials.module";
 import {NgbCollapseModule} from "@ng-bootstrap/ng-bootstrap";
+import {TextBoxModule} from "@progress/kendo-angular-inputs";
 
 
 
 @NgModule({
   declarations: [ModalAddEitMedicineComponent, ModalDeleteMedicineComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    PartialsModule,
-    NgbCollapseModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        PartialsModule,
+        NgbCollapseModule,
+        TextBoxModule
+    ],
   entryComponents: [
     ModalAddEitMedicineComponent,
     ModalDeleteMedicineComponent

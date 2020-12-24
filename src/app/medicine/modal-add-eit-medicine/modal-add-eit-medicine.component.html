@@ -30,10 +30,13 @@
         <div class="form-group">
           <label class="col-form-label">Mô tả</label>
           <div class="">
-            <input (focusout)="trimSpace('mota')" type="text" class="form-control"
-                   formControlName="mota"
-                   name="mota"/>
+<!--            <input (focusout)="trimSpace('mota'   )" type="text" class="form-control"-->
+<!--                   formControlName="mota"-->
+<!--                   name="mota"/>-->
           </div>
+          <textarea kendoTextArea class="form-control w-100"
+                    formControlName="mota"
+                    name="mota"></textarea>
         </div>
         <div class="form-group">
           <label class="col-form-label">Giá thuốc nhập <span style="color: red">*</span></label>
