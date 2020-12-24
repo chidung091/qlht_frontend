@@ -9,7 +9,7 @@ import {ItemEmployee} from '../_models/ItemEmployee';
 })
 export class EmployeeService {
 
-  private API = `localhost:5035`;
+  private API = `http://localhost:5035`;
 
   constructor(private http: HttpClient) { }
 

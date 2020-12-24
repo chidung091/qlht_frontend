@@ -10,6 +10,7 @@ export class Billinfo {
   loaihd?: string;
   SanPham?: [];
   thoigianhd?:Date;
+  tongiien?:number;
 }
 export class Bill {
   success?: boolean;
