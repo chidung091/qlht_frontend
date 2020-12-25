@@ -369,7 +369,7 @@ export class MenuConfig {
         {
           title: 'Thống kê',
           root: true,
-          icon: 'flaticon2-user-outline-symbol',
+          icon: 'far fa-list-alt',
           // translate: 'MENU.DASHBOARD',
           // bullet: 'dot',
           permission: [

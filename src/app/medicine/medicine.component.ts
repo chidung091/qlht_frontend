@@ -117,6 +117,7 @@ export class MedicineComponent implements OnInit {
   }
 
   search() {
+    this.skip = 0;
     const body = {
       skipCount: this.skip,
       pageSize : this._pageSize,

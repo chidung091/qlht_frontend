@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {BillService} from '../../_services/bill.service';
-import {CategoryFault, FaultInfo, SanPham} from "../../_models/bill";
+import {CategoryFault} from "../../_models/bill";
 import {MedicineService} from "../../_services/medicine.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {NotiService} from '../../core/service/service-model/notification.service';
+import {formatDate} from "@angular/common";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'kt-modal-add-bill',
@@ -11,7 +13,8 @@ import {NotiService} from '../../core/service/service-model/notification.service
   styleUrls: ['./modal-add-bill.component.scss']
 })
 export class ModalAddBillComponent implements OnInit {
-  dateCreate: Date;
+  dateCreate: Date= new Date();
+  public loadingTableFault: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   medicine: any;
   public _pageSize = 100;
   public skip = 0;
@@ -39,16 +42,17 @@ export class ModalAddBillComponent implements OnInit {
     this.activeModal.dismiss();
   }
   onSubmit(){
+    console.log(this.dateCreate)
+    console.log(this.dateCreate)
     const body = {
       loaihd: "xuat",
       sanpham:this.array,
-      idnv: "5fe0cc3dcc3ee539d454f3ac",
-      thoigianhd: "2020-11-29"
-      // dateFault: this.dateFault ? formatDate(this.dateFault, 'yyyy-MM-dd', 'en') : '',
+      idnv: JSON.parse(localStorage.getItem('id')),
+      thoigianhd: this.dateCreate ? formatDate(this.dateCreate, 'yyyy-MM-dd', 'en') : '',
     }
     this.billService.create(body).subscribe(data =>{
       this.activeModal.close('create');
-      this.notiService.updateSuccess();
+      this.notiService.createSuccess();
       console.log(data)
     })
   }
