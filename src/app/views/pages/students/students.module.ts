@@ -28,6 +28,7 @@ import {ElectiveSubjectsComponent} from './elective-subjects/elective-subjects.c
 import {PopupModule} from '@progress/kendo-angular-popup';
 import { DetailCommentBookComponent } from './comment-book/detail-comment-book/detail-comment-book.component';
 import {EmployeeComponent} from "../../../employee/employee.component";
+import {StatisticalComponent} from "../../../statistical/statistical.component";
 
 
 const StudentRoutes: Routes = [
@@ -38,6 +39,10 @@ const StudentRoutes: Routes = [
   {
     path: 'employee',
     component: EmployeeComponent,
+  },
+  {
+    path: 'thongke',
+    component: StatisticalComponent,
   },
   {
     path: 'student-records',

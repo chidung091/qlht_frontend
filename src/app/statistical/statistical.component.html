@@ -1,0 +1,67 @@
+<kt-portlet>
+  <kt-portlet-header [icon]="'fas fa-filter'" [title]="'Tìm kiếm'" [class]="'card-head-lg bgr-custom'"
+                     (click)="isCollapsed = !isCollapsed">
+    <ng-container ktPortletTools>
+      <i [hidden]="isCollapsed" class="fas fa-angle-double-down"></i>
+      <i [hidden]="!isCollapsed" class="fas fa-angle-double-up"></i>
+    </ng-container>
+  </kt-portlet-header>
+  <kt-portlet-body [ngbCollapse]="isCollapsed">
+    <div class="row">
+      <div class="col-md-9 row align-items-center mt-2">
+        <label class="col-sm-5 col-md-3 pr-md-0 mt-2">Chọn tháng, năm :</label>
+        <kendo-datepicker style="width: 75%"
+          #shortDate
+          [format]="'MMMM yyyy'"
+          [activeView]="'year'"
+          [bottomView]="'year'"
+          [(ngModel)]="filter"
+        >
+        </kendo-datepicker>
+      </div>
+      <div class="col-md-2 d-flex justify-content-md-end  mt-2">
+        <button type="submit" class="btn btn-primary" (click)="search()">
+          <i class="fas fa-filter"></i> Tìm kiếm
+        </button>
+      </div>
+
+    </div>
+  </kt-portlet-body>
+</kt-portlet>
+<kt-portlet>
+  <kt-portlet-header [icon]="'fa fa-list'" [title]="'Thống kê sản phẩm theo doanh số'" [class]="'card-head-lg bgr-custom'">
+  </kt-portlet-header>
+  <kt-portlet-body>
+    <div class="col-lg-12">
+      <kendo-grid
+                  [data]="dataKT"
+                  [sortable]="true"
+                  [reorderable]="true" [resizable]="true"
+                  [kendoGridSelectBy]="'id'"
+                  [selectable]="{checkboxOnly : true}"
+                  [height]="500"
+                  [style]="{'border-radius': '25px'}">
+
+
+        <kendo-grid-column field="id" title="TT" [width]="45" editable="false">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">{{rowIndex + 1}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" field="year" editor="text" title="Năm"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="month" editor="text" title="Tháng"></kendo-grid-column>
+        <kendo-grid-column [width]="200" field="thoigianhd" editor="text" title="Thời gian tạo hóa đơn">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.thoigianhd | date: 'dd/MM/yyyy'}}
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" field="tongtien" editor="text" title="Tổng tiền"></kendo-grid-column>
+        <ng-template kendoGridNoRecordsTemplate>
+          Không có dữ liệu
+        </ng-template>
+      </kendo-grid>
+      <div class="mt-5" style="font-weight: bold">Doanh thu của tháng là : {{ doanhThu}}</div>
+      <div class="custom-loading-h">
+        <div *ngIf="loading | async" class="k-i-loading"></div>
+      </div>
+    </div>
+  </kt-portlet-body>
+</kt-portlet>

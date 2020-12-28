@@ -96,6 +96,7 @@ import { BillComponent } from './bill/bill.component';
 import { DetailProductComponent } from './bill/detail-product/detail-product.component';
 import {ModalAddBillComponent} from "./bill/modal-add-bill/modal-add-bill.component";
 import {DatePickerModule} from "@progress/kendo-angular-dateinputs";
+import { StatisticalComponent } from './statistical/statistical.component';
 
 
 // tslint:disable-next-line:class-name
@@ -150,7 +151,7 @@ export function getHighlightLanguages() {
 }
 
 @NgModule({
-  declarations: [AppComponent,MedicineComponent, EmployeeComponent, LoginComponent, BillComponent, DetailProductComponent,ModalAddBillComponent],
+  declarations: [AppComponent,MedicineComponent, EmployeeComponent, LoginComponent, BillComponent, DetailProductComponent,ModalAddBillComponent, StatisticalComponent],
   imports: [
     BrowserAnimationsModule,
     CommonModule,

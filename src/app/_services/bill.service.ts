@@ -25,4 +25,10 @@ export class BillService {
   create(body: any){
     return this.http.post<any>(`${this.API}/api/bill`,body)
   }
+  thongKeDoanhSo(body: any){
+    return this.http.post<any>(`${this.API}/api/thongke/doanhso`,body)
+  }
+  thongKeSanPhamCuaDoanhSo(body: any){
+    return this.http.post<any>(`${this.API}/api/thongke/spcuadoanhso`,body)
+  }
 }

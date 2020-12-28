@@ -50,10 +50,14 @@ export class ModalAddBillComponent implements OnInit {
       idnv: JSON.parse(localStorage.getItem('id')),
       thoigianhd: this.dateCreate ? formatDate(this.dateCreate, 'yyyy-MM-dd', 'en') : '',
     }
+    this.loadingTableFault.next(true);
     this.billService.create(body).subscribe(data =>{
       this.activeModal.close('create');
       this.notiService.createSuccess();
+      this.loadingTableFault.next(false);
       console.log(data)
+    },error => {
+      this.loadingTableFault.next(false);
     })
   }
   loadData() {

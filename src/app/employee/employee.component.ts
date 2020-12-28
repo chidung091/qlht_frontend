@@ -22,9 +22,9 @@ export class EmployeeComponent implements OnInit {
   dataKT: GridDataResult;
   public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public buttonCount = 5;
   public info = true;
   public type: 'numeric' | 'input' = 'numeric';
+  public buttonCount = 5;
   pageSizes: Array<number> = [5, 10, 20];
   public previousNext = true;
   public _pageSize = 5;
