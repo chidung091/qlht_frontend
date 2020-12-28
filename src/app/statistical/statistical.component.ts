@@ -33,7 +33,7 @@ export class StatisticalComponent implements OnInit {
 
   search() {
     const body = {
-      thang: this.filter.getMonth(),
+      thang: this.filter.getMonth()+1,
       nam : this.filter.getFullYear(),
     }
     this.billService.thongKeDoanhSo(body).subscribe(datas =>{
